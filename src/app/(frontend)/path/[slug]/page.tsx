@@ -6,6 +6,9 @@ import { generatePageMetadata } from '@/lib/seo'
 import { RichTextRenderer } from '@/components/content/RichTextRenderer'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
+import { ReactionButtons } from '@/components/social/ReactionButtons'
+import { CommentList } from '@/components/social/CommentList'
+import { ShareButtons } from '@/components/social/ShareButtons'
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
@@ -98,6 +101,15 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
           className="[&_h2]:text-2xl [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:mt-8 [&_h3]:mb-3"
         />
       )}
+
+      {/* Реакции и шеринг */}
+      <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">
+        <ReactionButtons contentType="guides" contentId={String(гайд.id)} />
+        <ShareButtons title={гайд.title} url={`${САЙТ_URL}/path/${гайд.slug}`} />
+      </div>
+
+      {/* Комментарии */}
+      <CommentList contentType="guides" contentId={String(гайд.id)} />
 
       {/* Навигация предыдущий/следующий */}
       <nav className="flex justify-between pt-8 border-t border-[var(--color-border)]">

@@ -44,6 +44,9 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
               <Link href="/framework" className="hover:text-[var(--color-primary)] transition-colors">
                 framework/
               </Link>
+              <Link href="/posts" className="hover:text-[var(--color-primary)] transition-colors">
+                posts/
+              </Link>
               <form action="/search" method="GET" className="flex">
                 <input
                   type="text"
@@ -78,6 +81,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
               <Link href="/path">path/</Link>
               <Link href="/tools">tools/</Link>
               <Link href="/framework">framework/</Link>
+              <Link href="/posts">posts/</Link>
               <Link href="/search">search</Link>
             </div>
             <p className="text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">

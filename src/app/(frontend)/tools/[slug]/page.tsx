@@ -8,6 +8,9 @@ import { CodeBlock } from '@/components/content/CodeBlock'
 import { ToolCard } from '@/components/cards/ToolCard'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
+import { ReactionButtons } from '@/components/social/ReactionButtons'
+import { CommentList } from '@/components/social/CommentList'
+import { ShareButtons } from '@/components/social/ShareButtons'
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
@@ -231,6 +234,15 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
           ))}
         </div>
       )}
+
+      {/* Реакции и шеринг */}
+      <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">
+        <ReactionButtons contentType="tools" contentId={String(инструмент.id)} />
+        <ShareButtons title={инструмент.title} url={`${САЙТ_URL}/tools/${инструмент.slug}`} />
+      </div>
+
+      {/* Комментарии */}
+      <CommentList contentType="tools" contentId={String(инструмент.id)} />
 
       {/* Связанные инструменты */}
       {связанные.length > 0 && (

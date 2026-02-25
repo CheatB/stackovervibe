@@ -7,6 +7,7 @@ const ссылки = [
   { href: '/path', label: 'path/' },
   { href: '/tools', label: 'tools/' },
   { href: '/framework', label: 'framework/' },
+  { href: '/posts', label: 'posts/' },
   { href: '/search', label: 'search' },
 ]
 

@@ -95,6 +95,76 @@ export async function getRelatedTools(toolId: number | string, categoryId?: numb
   return docs
 }
 
+/** Получить опубликованные посты с пагинацией */
+export async function getPosts(страница = 1, лимит = 10) {
+  const payload = await getPayloadClient()
+  return payload.find({
+    collection: 'posts',
+    where: { status: { equals: 'published' } },
+    sort: '-publishedAt',
+    page: страница,
+    limit: лимит,
+    depth: 1,
+  })
+}
+
+/** Получить пост по slug */
+export async function getPostBySlug(slug: string) {
+  const payload = await getPayloadClient()
+  const { docs } = await payload.find({
+    collection: 'posts',
+    where: {
+      slug: { equals: slug },
+      status: { equals: 'published' },
+    },
+    limit: 1,
+    depth: 2,
+  })
+  return docs[0] ?? null
+}
+
+/** Получить комментарии к контенту */
+export async function getComments(contentType: string, contentId: string) {
+  const payload = await getPayloadClient()
+  const { docs } = await payload.find({
+    collection: 'comments',
+    where: {
+      contentType: { equals: contentType },
+      contentId: { equals: contentId },
+    },
+    sort: '-createdAt',
+    limit: 100,
+    depth: 1,
+  })
+  return docs
+}
+
+/** Получить посты пользователя */
+export async function getUserPosts(userId: number | string) {
+  const payload = await getPayloadClient()
+  const { docs } = await payload.find({
+    collection: 'posts',
+    where: {
+      author: { equals: userId },
+      status: { equals: 'published' },
+    },
+    sort: '-publishedAt',
+    limit: 100,
+  })
+  return docs
+}
+
+/** Получить пользователя по Telegram username */
+export async function getUserByUsername(username: string) {
+  const payload = await getPayloadClient()
+  const { docs } = await payload.find({
+    collection: 'users',
+    where: { telegramUsername: { equals: username } },
+    limit: 1,
+  })
+  return docs[0] ?? null
+}
+
 /** Получить все категории */
 export async function getCategories() {
   const payload = await getPayloadClient()
