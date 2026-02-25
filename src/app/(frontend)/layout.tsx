@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MobileMenu } from '@/components/layout/MobileMenu'
+import { CookieBanner } from '@/components/analytics/CookieBanner'
+import { YandexMetrika } from '@/components/analytics/YandexMetrika'
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import '@/styles/globals.css'
 import '@/styles/effects.css'
 
@@ -89,6 +92,10 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
             </p>
           </div>
         </footer>
+        {/* Аналитика + Cookie-баннер */}
+        <CookieBanner />
+        <YandexMetrika />
+        <GoogleAnalytics />
       </body>
     </html>
   )
