@@ -1,0 +1,35 @@
+/* === Эффекты — заготовки (реализация в Этапе 4) === */
+
+/* CRT-скенлайны */
+.crt-overlay {
+  /* TODO: этап 4.3.1 */
+}
+
+/* Глитч-эффект */
+.glitch {
+  /* TODO: этап 4.3.2 */
+}
+
+/* Неоновое свечение */
+.neon {
+  /* TODO: этап 4.3.3 */
+}
+
+.neon-primary {
+  box-shadow: 0 0 10px var(--color-primary), 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.neon-secondary {
+  box-shadow: 0 0 10px var(--color-secondary), 0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+/* Мигающий курсор */
+.cursor-blink::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
