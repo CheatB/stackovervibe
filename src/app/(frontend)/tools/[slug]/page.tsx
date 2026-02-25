@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getToolBySlug, getRelatedTools } from '@/lib/payload'
+import { getToolBySlug, getRelatedTools, getTools } from '@/lib/payload'
 import { RichTextRenderer } from '@/components/content/RichTextRenderer'
 import { CodeBlock } from '@/components/content/CodeBlock'
 import { ToolCard } from '@/components/cards/ToolCard'
+
+/** Статическая генерация — все опубликованные инструменты */
+export async function generateStaticParams() {
+  const инструменты = await getTools()
+  return инструменты.map((и) => ({ slug: и.slug }))
+}
 
 /** Маппинг типов → лейблы и цвета */
 const типИнструмента: Record<string, { лейбл: string; цвет: string }> = {

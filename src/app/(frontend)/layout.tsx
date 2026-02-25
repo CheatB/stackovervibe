@@ -26,11 +26,18 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
             >
               {'>'} stackovervibe<span className="cursor-blink"> </span>
             </Link>
-            <div className="flex gap-6 text-sm">
+            <div className="flex items-center gap-6 text-sm">
               <Link href="/path">Путь новичка</Link>
               <Link href="/tools">Инструменты</Link>
               <Link href="/framework">Фреймворк</Link>
-              <Link href="/search">Поиск</Link>
+              <form action="/search" method="GET" className="flex">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="Поиск..."
+                  className="w-32 focus:w-48 transition-all px-3 py-1 text-xs rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
+                />
+              </form>
             </div>
           </nav>
         </header>
