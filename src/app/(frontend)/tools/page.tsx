@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getTools, getCategories } from '@/lib/payload'
 import { ToolCard } from '@/components/cards/ToolCard'
 import { ToolsFilter } from '@/components/ToolsFilter'
+import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 
 export const metadata: Metadata = {
   title: 'Инструменты',
@@ -23,6 +24,7 @@ export default async function ToolsPage({ searchParams }: ПараметрыПо
 
   return (
     <div className="space-y-8">
+      <BreadcrumbNav items={[{ label: 'tools' }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">Инструменты</h1>
         <p className="text-[var(--color-text-muted)] max-w-2xl">

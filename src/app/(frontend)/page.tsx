@@ -1,8 +1,25 @@
 import Link from 'next/link'
+import { JsonLd } from '@/components/seo/JsonLd'
+
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
 export default function HomePage() {
   return (
     <div className="space-y-16">
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'Stackovervibe',
+          url: САЙТ_URL,
+          description: 'Структурированная база знаний по вайбкодингу.',
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: `${САЙТ_URL}/search?q={search_term_string}`,
+            'query-input': 'required name=search_term_string',
+          },
+        }}
+      />
       {/* Hero */}
       <section className="text-center py-16">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">

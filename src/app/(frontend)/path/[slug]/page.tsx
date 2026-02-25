@@ -2,7 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getGuideBySlug, getPathGuides } from '@/lib/payload'
+import { generatePageMetadata } from '@/lib/seo'
 import { RichTextRenderer } from '@/components/content/RichTextRenderer'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
+
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
 interface ПараметрыСтраницы {
   params: Promise<{ slug: string }>
@@ -14,10 +19,12 @@ export async function generateMetadata({ params }: ПараметрыСтран�
   const гайд = await getGuideBySlug(slug)
   if (!гайд) return { title: 'Не найдено' }
 
-  return {
+  return generatePageMetadata({
     title: гайд.seoTitle || гайд.title,
     description: гайд.seoDescription || гайд.excerpt || undefined,
-  }
+    url: `/path/${slug}`,
+    type: 'article',
+  })
 }
 
 /** Статическая генерация — все опубликованные гайды из пути */
@@ -43,14 +50,33 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
 
   return (
     <article className="max-w-3xl mx-auto space-y-8">
-      {/* Хлебные крошки */}
-      <nav className="text-sm text-[var(--color-text-muted)]">
-        <Link href="/path" className="hover:text-[var(--color-primary)]">
-          Путь новичка
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-[var(--color-text)]">{гайд.title}</span>
-      </nav>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: гайд.title,
+          description: гайд.excerpt || undefined,
+          url: `${САЙТ_URL}/path/${гайд.slug}`,
+          publisher: { '@type': 'Organization', name: 'Stackovervibe' },
+          ...(гайд.publishedAt && { datePublished: гайд.publishedAt }),
+          ...(гайд.updatedAt && { dateModified: гайд.updatedAt }),
+        }}
+      />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Главная', item: САЙТ_URL },
+            { '@type': 'ListItem', position: 2, name: 'Путь новичка', item: `${САЙТ_URL}/path` },
+            { '@type': 'ListItem', position: 3, name: гайд.title },
+          ],
+        }}
+      />
+      <BreadcrumbNav items={[
+        { label: 'path', href: '/path' },
+        { label: гайд.title },
+      ]} />
 
       {/* Заголовок */}
       <header>

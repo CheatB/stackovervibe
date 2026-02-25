@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { generatePageMetadata } from '@/lib/seo'
 import { RichTextRenderer } from '@/components/content/RichTextRenderer'
+import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 
 export async function generateMetadata(): Promise<Metadata> {
   const страница = await getFrameworkPage()
   if (!страница) return { title: 'Фреймворк' }
 
-  return {
+  return generatePageMetadata({
     title: страница.seoTitle || 'Фреймворк',
     description: страница.seoDescription || 'Методология работы с ИИ-ассистентами',
-  }
+    url: '/framework',
+  })
 }
 
 async function getFrameworkPage() {
@@ -41,6 +43,7 @@ export default async function FrameworkPage() {
 
   return (
     <article className="max-w-3xl mx-auto space-y-8">
+      <BreadcrumbNav items={[{ label: 'framework' }]} />
       <h1 className="text-3xl md:text-4xl">{страница.title}</h1>
       {страница.content && <RichTextRenderer content={страница.content} />}
     </article>

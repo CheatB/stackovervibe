@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 
 export const metadata: Metadata = {
   title: 'Поиск',
@@ -105,6 +106,7 @@ export default async function SearchPage({ searchParams }: ПараметрыП�
 
   return (
     <div className="space-y-8">
+      <BreadcrumbNav items={[{ label: 'search' }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">Поиск</h1>
       </div>

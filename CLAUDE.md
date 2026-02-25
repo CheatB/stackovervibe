@@ -32,7 +32,7 @@ main
 
 **Фаза:** 5 — Выполнение
 **Этап:** 1 — Инфраструктура + Каркас
-**Следующая задача:** Этап 3 — SEO
+**Следующая задача:** Этап 4 — Дизайн-сессия
 
 ### Выполнено:
 - [x] 1.1 Инициализация проекта (1.1.1–1.1.5)
@@ -64,9 +64,15 @@ main
 - [x] 2.15 Фреймворк (/framework из CMS)
 - [x] 2.16 Поиск (/search + API + поле в Header)
 
+- [x] 3.1 SEO-хелпер generatePageMetadata (OG + Twitter Card)
+- [x] 3.2 JSON-LD (WebSite + SearchAction, Article, HowTo, BreadcrumbList)
+- [x] 3.3 sitemap.ts + robots.ts
+- [x] 3.4 Open Graph (дефолтный og-default.png, OG в metadata)
+- [x] 3.5 BreadcrumbNav (стиль ~/path/to/page) на всех страницах
+
 ### Не сделано (ближайшее):
-- [ ] Этап 3: SEO (metadata, JSON-LD, sitemap, OG, хлебные крошки)
 - [ ] Этап 4: Дизайн-сессия (frontend-design скилл)
+- [ ] og-default.png заменить на реальную картинку 1200x630
 
 ---
 

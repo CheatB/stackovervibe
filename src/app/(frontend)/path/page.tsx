@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getPathGuides } from '@/lib/payload'
 import { PathStepCard } from '@/components/cards/PathStepCard'
+import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 
 export const metadata: Metadata = {
   title: 'Путь новичка',
@@ -13,6 +14,7 @@ export default async function PathPage() {
 
   return (
     <div className="space-y-8">
+      <BreadcrumbNav items={[{ label: 'path' }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">Путь новичка</h1>
         <p className="text-[var(--color-text-muted)] max-w-2xl">

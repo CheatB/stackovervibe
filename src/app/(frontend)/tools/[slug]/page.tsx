@@ -2,9 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getToolBySlug, getRelatedTools, getTools } from '@/lib/payload'
+import { generatePageMetadata } from '@/lib/seo'
 import { RichTextRenderer } from '@/components/content/RichTextRenderer'
 import { CodeBlock } from '@/components/content/CodeBlock'
 import { ToolCard } from '@/components/cards/ToolCard'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
+
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
 /** Статическая генерация — все опубликованные инструменты */
 export async function generateStaticParams() {
@@ -29,10 +34,11 @@ export async function generateMetadata({ params }: ПараметрыСтран�
   const инструмент = await getToolBySlug(slug)
   if (!инструмент) return { title: 'Не найдено' }
 
-  return {
+  return generatePageMetadata({
     title: инструмент.seoTitle || инструмент.title,
     description: инструмент.seoDescription || инструмент.shortDescription || undefined,
-  }
+    url: `/tools/${slug}`,
+  })
 }
 
 export default async function ToolSlugPage({ params }: ПараметрыСтраницы) {
@@ -55,14 +61,30 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      {/* Хлебные крошки */}
-      <nav className="text-sm text-[var(--color-text-muted)]">
-        <Link href="/tools" className="hover:text-[var(--color-primary)]">
-          Инструменты
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-[var(--color-text)]">{инструмент.title}</span>
-      </nav>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'HowTo',
+          name: инструмент.title,
+          description: инструмент.shortDescription || undefined,
+          url: `${САЙТ_URL}/tools/${инструмент.slug}`,
+        }}
+      />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Главная', item: САЙТ_URL },
+            { '@type': 'ListItem', position: 2, name: 'Инструменты', item: `${САЙТ_URL}/tools` },
+            { '@type': 'ListItem', position: 3, name: инструмент.title },
+          ],
+        }}
+      />
+      <BreadcrumbNav items={[
+        { label: 'tools', href: '/tools' },
+        { label: инструмент.title },
+      ]} />
 
       {/* Шапка */}
       <header className="space-y-3">
