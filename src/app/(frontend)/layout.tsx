@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { MobileMenu } from '@/components/layout/MobileMenu'
 import '@/styles/globals.css'
 import '@/styles/effects.css'
 
@@ -17,48 +18,72 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
   return (
     <html lang="ru" className="dark">
       <body className="min-h-screen flex flex-col">
-        {/* Header */}
-        <header className="border-b border-[var(--color-border)] px-6 py-4">
+        {/* CRT-скенлайны */}
+        <div className="crt-overlay" />
+
+        {/* Header — терминальный стиль */}
+        <header className="relative border-b border-[var(--color-border)] px-6 py-3">
           <nav className="max-w-6xl mx-auto flex items-center justify-between">
             <Link
               href="/"
-              className="font-[family-name:var(--font-heading)] text-[var(--color-primary)] text-lg"
+              className="font-[family-name:var(--font-code)] text-[var(--color-primary)] text-sm"
             >
-              {'>'} stackovervibe<span className="cursor-blink"> </span>
+              <span className="text-[var(--color-text-muted)]">visitor@</span>stackovervibe
+              <span className="text-[var(--color-text-muted)]">:~$</span>
+              <span className="cursor-blink"> </span>
             </Link>
-            <div className="flex items-center gap-6 text-sm">
-              <Link href="/path">Путь новичка</Link>
-              <Link href="/tools">Инструменты</Link>
-              <Link href="/framework">Фреймворк</Link>
+
+            {/* Десктоп навигация */}
+            <div className="hidden md:flex items-center gap-5 font-[family-name:var(--font-code)] text-xs">
+              <Link href="/path" className="hover:text-[var(--color-primary)] transition-colors">
+                path/
+              </Link>
+              <Link href="/tools" className="hover:text-[var(--color-primary)] transition-colors">
+                tools/
+              </Link>
+              <Link href="/framework" className="hover:text-[var(--color-primary)] transition-colors">
+                framework/
+              </Link>
               <form action="/search" method="GET" className="flex">
                 <input
                   type="text"
                   name="q"
-                  placeholder="Поиск..."
-                  className="w-32 focus:w-48 transition-all px-3 py-1 text-xs rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
+                  placeholder="grep -r '...'"
+                  className="w-28 focus:w-40 transition-all px-2 py-1 text-xs rounded border border-[var(--color-border)] bg-transparent text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none"
                 />
               </form>
             </div>
+
+            {/* Мобильное меню */}
+            <MobileMenu />
           </nav>
         </header>
 
         {/* Контент */}
         <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-8">{children}</main>
 
-        {/* Footer */}
-        <footer className="border-t border-[var(--color-border)] px-6 py-6 text-center text-[var(--color-text-muted)] text-sm">
-          <pre className="font-[family-name:var(--font-code)] text-xs mb-4 text-[var(--color-border)] select-none">
-{`  _____ _             _    _____       _     _
- / ____| |           | |  / ____|     (_)   | |
-| (___ | |_ __ _  ___| |_| |  ____   ___ _ __| |__  ___
- \\___ \\| __/ _\` |/ __| __| | / __ \\ / / | '_ \\| '_ \\ / _ \\
- ____) | || (_| | (__| |_| |__| \\ V /| | |_) | |_) |  __/
-|_____/ \\__\\__,_|\\___|\\__|\\_____|_\\_/ |_|_.__/|_.__/ \\___|`}
-          </pre>
-          <p>
-            &copy; {new Date().getFullYear()} Stackovervibe.
-            Сделано с помощью ИИ и кофе.
-          </p>
+        {/* Footer — ASCII + ретро */}
+        <footer className="border-t border-[var(--color-border)] px-6 py-8 text-center">
+          <div className="max-w-6xl mx-auto">
+            <pre className="font-[family-name:var(--font-code)] text-[0.4rem] sm:text-[0.5rem] mb-6 text-[var(--color-border)] select-none leading-tight overflow-hidden">
+{`╔══════════════════════════════════════════╗
+║  STACKOVERVIBE v1.0                      ║
+║  База знаний по вайбкодингу              ║
+║  ──────────────────────────              ║
+║  > Путь новичка   > Инструменты          ║
+║  > Фреймворк      > Поиск               ║
+╚══════════════════════════════════════════╝`}
+            </pre>
+            <div className="flex justify-center gap-6 mb-4 font-[family-name:var(--font-code)] text-xs text-[var(--color-text-muted)]">
+              <Link href="/path">path/</Link>
+              <Link href="/tools">tools/</Link>
+              <Link href="/framework">framework/</Link>
+              <Link href="/search">search</Link>
+            </div>
+            <p className="text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">
+              &copy; {new Date().getFullYear()} stackovervibe // собрано нейросетью и кофеином
+            </p>
+          </div>
         </footer>
       </body>
     </html>
