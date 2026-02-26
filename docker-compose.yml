@@ -28,6 +28,19 @@ services:
       timeout: 5s
       retries: 5
 
+  seed:
+    build:
+      context: .
+      target: seeder
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/stackovervibe
+    command: ["npx", "payload", "run", "src/seed/index.ts"]
+    profiles: ["seed"]
+
 volumes:
   pgdata:
   uploads:
