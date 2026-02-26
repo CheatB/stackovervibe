@@ -30,9 +30,9 @@ main
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 7 — SO-style Feed + Q&A (Epic)
-**Этап:** Код написан, деплой
-**Следующая задача:** Docker build + deploy на VPS
+**Фаза:** 7 — SO-style Feed + Q&A (Epic) ✅ ЗАВЕРШЕНА
+**Этап:** Задеплоено, всё работает
+**Следующая задача:** 6.4 Финальное тестирование (Lighthouse, SEO)
 
 ### Выполнено:
 - [x] 1.1 Инициализация проекта (1.1.1–1.1.5)
@@ -108,8 +108,8 @@ main
 - [x] 7.15 Search расширен (questions + posts)
 - [x] 7.16 Navigation обновлена (header + footer + mobile)
 - [x] 7.17 ViewsTracker на path/[slug], tools/[slug], posts/[slug], questions/[slug]
-- [ ] 7.18 Docker build + deploy на VPS
-- [ ] 7.19 Payload миграции (Questions + Answers + новые поля)
+- [x] 7.18 Docker build + deploy на VPS
+- [x] 7.19 Payload миграции (Questions + Answers + новые поля)
 
 ### Не сделано (требует деплой/CMS):
 - [ ] 6.4 Финальное тестирование (Lighthouse, broken links, mobile, SEO — после деплоя)
