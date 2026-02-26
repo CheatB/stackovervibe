@@ -38,7 +38,7 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/stackovervibe
-    command: ["npx", "payload", "run", "src/seed/index.ts"]
+    command: ["npx", "tsx", "src/seed/index.ts"]
     profiles: ["seed"]
 
 volumes:

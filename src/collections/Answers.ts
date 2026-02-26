@@ -8,11 +8,12 @@ const инкрементОтветов: CollectionAfterChangeHook = async ({ doc
   if (!questionId) return doc
 
   try {
-    const вопрос = await req.payload.findByID({ collection: 'questions', id: questionId })
+    const вопрос = await req.payload.findByID({ collection: 'questions', id: questionId, req })
     await req.payload.update({
       collection: 'questions',
       id: questionId,
       data: { answersCount: ((вопрос as any).answersCount || 0) + 1 },
+      req,
     })
   } catch { /* вопрос не найден */ }
 
@@ -25,12 +26,13 @@ const декрементОтветов: CollectionAfterDeleteHook = async ({ doc
   if (!questionId) return doc
 
   try {
-    const вопрос = await req.payload.findByID({ collection: 'questions', id: questionId })
+    const вопрос = await req.payload.findByID({ collection: 'questions', id: questionId, req })
     const текущее = (вопрос as any).answersCount || 0
     await req.payload.update({
       collection: 'questions',
       id: questionId,
       data: { answersCount: Math.max(0, текущее - 1) },
+      req,
     })
   } catch { /* вопрос не найден */ }
 
