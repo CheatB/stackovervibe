@@ -26,6 +26,7 @@ const типИнструмента: Record<string, { лейбл: string; цве�
   hook: { лейбл: 'Хук', цвет: 'var(--color-secondary)' },
   command: { лейбл: 'Команда', цвет: 'var(--color-accent)' },
   rule: { лейбл: 'Правило', цвет: 'var(--color-danger)' },
+  plugin: { лейбл: 'Плагин', цвет: 'var(--color-warning, #f59e0b)' },
 }
 
 interface ПараметрыСтраницы {
@@ -216,6 +217,24 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
             <div>
               <span className="text-sm text-[var(--color-text-muted)]">Аргументы: </span>
               <span className="text-sm">{инструмент.commandFields.args}</span>
+            </div>
+          )}
+        </section>
+      )}
+
+      {инструмент.toolType === 'plugin' && инструмент.pluginFields && (
+        <section className="p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)]">
+          <h2 className="text-xl mb-3">Параметры плагина</h2>
+          {инструмент.pluginFields.integration && (
+            <div className="mb-4">
+              <h3 className="text-sm text-[var(--color-text-muted)] mb-2">Интеграция</h3>
+              <RichTextRenderer content={инструмент.pluginFields.integration} />
+            </div>
+          )}
+          {инструмент.pluginFields.configuration && (
+            <div>
+              <h3 className="text-sm text-[var(--color-text-muted)] mb-2">Конфигурация</h3>
+              <CodeBlock code={инструмент.pluginFields.configuration} language="json" />
             </div>
           )}
         </section>

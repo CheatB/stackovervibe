@@ -44,6 +44,7 @@ export const Tools: CollectionConfig = {
         { label: 'Хук', value: 'hook' },
         { label: 'Команда', value: 'command' },
         { label: 'Правило', value: 'rule' },
+        { label: 'Плагин', value: 'plugin' },
       ],
       admin: {
         position: 'sidebar',
@@ -208,6 +209,26 @@ export const Tools: CollectionConfig = {
             { label: 'Средний', value: 'medium' },
             { label: 'Низкий', value: 'low' },
           ],
+        },
+      ],
+    },
+    {
+      name: 'pluginFields',
+      type: 'group',
+      label: 'Параметры плагина',
+      admin: {
+        condition: (data) => data?.toolType === 'plugin',
+      },
+      fields: [
+        {
+          name: 'integration',
+          type: 'richText',
+          label: 'Интеграция',
+        },
+        {
+          name: 'configuration',
+          type: 'code',
+          label: 'Пример конфигурации',
         },
       ],
     },

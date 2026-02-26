@@ -8,6 +8,7 @@ const типыИнструментов = [
   { value: 'hook', label: 'Хуки' },
   { value: 'command', label: 'Команды' },
   { value: 'rule', label: 'Правила' },
+  { value: 'plugin', label: 'Плагины' },
 ]
 
 interface ToolsFilterProps {

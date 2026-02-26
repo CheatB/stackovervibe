@@ -10,7 +10,8 @@
     "lint": "next lint",
     "payload": "payload",
     "generate:types": "payload generate:types",
-    "generate:schema": "payload generate:db-schema"
+    "generate:schema": "payload generate:db-schema",
+    "seed": "payload run src/seed/index.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.77.0",
