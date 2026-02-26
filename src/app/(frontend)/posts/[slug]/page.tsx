@@ -8,6 +8,7 @@ import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 import { ReactionButtons } from '@/components/social/ReactionButtons'
 import { CommentList } from '@/components/social/CommentList'
 import { ShareButtons } from '@/components/social/ShareButtons'
+import { ViewsTracker } from '@/components/ViewsTracker'
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
@@ -45,6 +46,7 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
 
   return (
     <article className="max-w-3xl mx-auto space-y-8">
+      <ViewsTracker contentType="post" contentId={String(пост.id)} />
       <JsonLd
         data={{
           '@context': 'https://schema.org',

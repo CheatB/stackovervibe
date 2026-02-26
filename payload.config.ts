@@ -14,6 +14,8 @@ import { Pages } from '@/collections/Pages'
 import { Posts } from '@/collections/Posts'
 import { Comments } from '@/collections/Comments'
 import { Reactions } from '@/collections/Reactions'
+import { Questions } from '@/collections/Questions'
+import { Answers } from '@/collections/Answers'
 import { SiteSettings } from '@/globals/SiteSettings'
 import { Navigation } from '@/globals/Navigation'
 
@@ -31,7 +33,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Guides, Tools, Categories, Tags, Media, Pages, Posts, Comments, Reactions],
+  collections: [Users, Guides, Tools, Categories, Tags, Media, Pages, Posts, Comments, Reactions, Questions, Answers],
 
   globals: [SiteSettings, Navigation],
 

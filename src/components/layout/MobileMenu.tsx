@@ -8,6 +8,7 @@ const ссылки = [
   { href: '/tools', label: 'tools/' },
   { href: '/framework', label: 'framework/' },
   { href: '/posts', label: 'posts/' },
+  { href: '/questions', label: 'questions/' },
   { href: '/search', label: 'search' },
 ]
 

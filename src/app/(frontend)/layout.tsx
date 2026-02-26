@@ -7,6 +7,9 @@ import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import '@/styles/globals.css'
 import '@/styles/effects.css'
 
+/** Все фронтенд-страницы рендерятся динамически (SSR) — данные из CMS всегда свежие */
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: {
     default: 'Stackovervibe — База знаний по вайбкодингу',
@@ -50,6 +53,9 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
               <Link href="/posts" className="hover:text-[var(--color-primary)] transition-colors">
                 posts/
               </Link>
+              <Link href="/questions" className="hover:text-[var(--color-primary)] transition-colors">
+                questions/
+              </Link>
               <form action="/search" method="GET" className="flex">
                 <input
                   type="text"
@@ -77,7 +83,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
 ║  База знаний по вайбкодингу              ║
 ║  ──────────────────────────              ║
 ║  > Путь новичка   > Инструменты          ║
-║  > Фреймворк      > Поиск               ║
+║  > Фреймворк      > Вопросы             ║
 ╚══════════════════════════════════════════╝`}
             </pre>
             <div className="flex justify-center gap-6 mb-4 font-[family-name:var(--font-code)] text-xs text-[var(--color-text-muted)]">
@@ -85,6 +91,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
               <Link href="/tools">tools/</Link>
               <Link href="/framework">framework/</Link>
               <Link href="/posts">posts/</Link>
+              <Link href="/questions">questions/</Link>
               <Link href="/search">search</Link>
             </div>
             <p className="text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">

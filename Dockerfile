@@ -13,12 +13,13 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# --- Сборка ---
+# --- Сборка (без подключения к БД — compile only) ---
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+ENV PAYLOAD_SECRET=build-time-secret-not-used
+RUN npx next build --experimental-build-mode compile
 
 # --- Production ---
 FROM base AS runner

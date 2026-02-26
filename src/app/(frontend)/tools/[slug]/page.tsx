@@ -11,13 +11,18 @@ import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 import { ReactionButtons } from '@/components/social/ReactionButtons'
 import { CommentList } from '@/components/social/CommentList'
 import { ShareButtons } from '@/components/social/ShareButtons'
+import { ViewsTracker } from '@/components/ViewsTracker'
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
 /** Статическая генерация — все опубликованные инструменты */
 export async function generateStaticParams() {
-  const инструменты = await getTools()
-  return инструменты.map((и) => ({ slug: и.slug }))
+  try {
+    const инструменты = await getTools()
+    return инструменты.map((и) => ({ slug: и.slug }))
+  } catch {
+    return []
+  }
 }
 
 /** Маппинг типов → лейблы и цвета */
@@ -65,6 +70,7 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      <ViewsTracker contentType="tool" contentId={String(инструмент.id)} />
       <JsonLd
         data={{
           '@context': 'https://schema.org',

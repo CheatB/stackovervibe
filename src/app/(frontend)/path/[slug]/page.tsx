@@ -9,6 +9,7 @@ import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
 import { ReactionButtons } from '@/components/social/ReactionButtons'
 import { CommentList } from '@/components/social/CommentList'
 import { ShareButtons } from '@/components/social/ShareButtons'
+import { ViewsTracker } from '@/components/ViewsTracker'
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
@@ -32,8 +33,12 @@ export async function generateMetadata({ params }: ПараметрыСтран�
 
 /** Статическая генерация — все опубликованные гайды из пути */
 export async function generateStaticParams() {
-  const гайды = await getPathGuides()
-  return гайды.map((г) => ({ slug: г.slug }))
+  try {
+    const гайды = await getPathGuides()
+    return гайды.map((г) => ({ slug: г.slug }))
+  } catch {
+    return []
+  }
 }
 
 export default async function GuideSlugPage({ params }: ПараметрыСтраницы) {
@@ -53,6 +58,7 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
 
   return (
     <article className="max-w-3xl mx-auto space-y-8">
+      <ViewsTracker contentType="guide" contentId={String(гайд.id)} />
       <JsonLd
         data={{
           '@context': 'https://schema.org',

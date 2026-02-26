@@ -94,6 +94,14 @@ export const Guides: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    /* Просмотры */
+    {
+      name: 'views',
+      type: 'number',
+      defaultValue: 0,
+      label: 'Просмотры',
+      admin: { position: 'sidebar', readOnly: true },
+    },
     /* Реакции */
     {
       name: 'likes',

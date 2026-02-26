@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Отсутствуют обязательные поля' }, { status: 400 })
   }
 
-  if (!['guide', 'tool', 'post'].includes(contentType)) {
+  if (!['guide', 'tool', 'post', 'question', 'answer'].includes(contentType)) {
     return NextResponse.json({ error: 'Неизвестный тип контента' }, { status: 400 })
   }
 
@@ -47,7 +47,10 @@ export async function POST(request: NextRequest) {
   })
 
   /* Обновить счётчик на документе */
-  const коллекция = contentType === 'guide' ? 'guides' : contentType === 'tool' ? 'tools' : 'posts'
+  const маппинг: Record<string, string> = {
+    guide: 'guides', tool: 'tools', post: 'posts', question: 'questions', answer: 'answers',
+  }
+  const коллекция = маппинг[contentType]
   const поле = type === 'like' ? 'likes' : 'dislikes'
 
   try {

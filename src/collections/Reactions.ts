@@ -22,6 +22,8 @@ export const Reactions: CollectionConfig = {
         { label: 'Гайд', value: 'guide' },
         { label: 'Инструмент', value: 'tool' },
         { label: 'Пост', value: 'post' },
+        { label: 'Вопрос', value: 'question' },
+        { label: 'Ответ', value: 'answer' },
       ],
     },
     {

@@ -245,6 +245,14 @@ export const Tools: CollectionConfig = {
       label: 'SEO-описание',
       admin: { position: 'sidebar' },
     },
+    /* Просмотры */
+    {
+      name: 'views',
+      type: 'number',
+      defaultValue: 0,
+      label: 'Просмотры',
+      admin: { position: 'sidebar', readOnly: true },
+    },
     /* Реакции */
     {
       name: 'likes',

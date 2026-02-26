@@ -20,6 +20,7 @@ export function generatePageMetadata(options: {
   return {
     title,
     description,
+    ...(url ? { alternates: { canonical: `${САЙТ_URL}${url}` } } : {}),
     openGraph: {
       title: fullTitle,
       description,

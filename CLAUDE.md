@@ -30,9 +30,9 @@ main
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 5 — Выполнение
-**Этап:** 1 — Инфраструктура + Каркас
-**Следующая задача:** 6.4-6.5 (требует деплой) или деплой на VPS
+**Фаза:** 7 — SO-style Feed + Q&A (Epic)
+**Этап:** Код написан, деплой
+**Следующая задача:** Docker build + deploy на VPS
 
 ### Выполнено:
 - [x] 1.1 Инициализация проекта (1.1.1–1.1.5)
@@ -49,10 +49,10 @@ main
 - [x] 2.7 Pages коллекция (досрочно)
 - [x] Globals: Navigation, SiteSettings (досрочно)
 
-### Заблокировано (ждёт DNS):
-- [ ] 1.6.1 DNS A-запись stackovervibe.ru → 109.172.36.108 (Иван настраивает)
-- [ ] 1.6.3 certbot SSL (после DNS)
-- [ ] 1.6.6 Проверка https://stackovervibe.ru
+- [x] 1.6.1 DNS A-запись stackovervibe.ru → 109.172.36.108
+- [x] 1.6.3 certbot SSL (Let's Encrypt, auto-renew)
+- [x] 1.6.5 Docker containers running (app + postgres)
+- [x] 1.6.6 https://stackovervibe.ru — работает!
 
 - [x] 2.8 RichTextRenderer (Lexical → React)
 - [x] 2.9 CodeBlock (терминальный стиль, копирование, скачивание)
@@ -89,6 +89,27 @@ main
 - [x] 6.1 Аналитика (YandexMetrika + GoogleAnalytics с consent check)
 - [x] 6.2 Cookie-баннер (localStorage, один показ, принять/отклонить)
 - [x] 6.3 Политика конфиденциальности (/privacy)
+
+### Epic: SO-style Feed + Q&A (Фаза 7)
+- [x] 7.1 Questions коллекция (status, closedAs, views, answersCount, likes, dislikes, slug, SEO)
+- [x] 7.2 Answers коллекция (isAccepted, голоса, hookи для answersCount)
+- [x] 7.3 Views API (/api/views, in-memory дедупликация по IP)
+- [x] 7.4 Feed API (/api/feed, агрегация guides+tools+questions+posts)
+- [x] 7.5 Tags расширены (description, SEO-поля)
+- [x] 7.6 Reactions/Comments расширены (question/answer типы)
+- [x] 7.7 Shared утилиты (транслит → utils.ts, дата → date.ts, auth → auth.ts)
+- [x] 7.8 Компоненты: FeedCard, FeedFilters, InfiniteScroll, Sidebar
+- [x] 7.9 MarkdownEditor + AnswerCard + ViewsTracker
+- [x] 7.10 Главная переделана (ASCII лого → фильтры → лента + сайдбар)
+- [x] 7.11 Q&A: /questions (список), /questions/ask, /questions/[slug] (вопрос+ответы)
+- [x] 7.12 Q&A: /questions/[slug]/edit, API закрытия/принятия ответа
+- [x] 7.13 Tag pages: /tags/[slug]
+- [x] 7.14 SEO: JSON-LD QAPage, canonical URL, sitemap (questions/posts/tags)
+- [x] 7.15 Search расширен (questions + posts)
+- [x] 7.16 Navigation обновлена (header + footer + mobile)
+- [x] 7.17 ViewsTracker на path/[slug], tools/[slug], posts/[slug], questions/[slug]
+- [ ] 7.18 Docker build + deploy на VPS
+- [ ] 7.19 Payload миграции (Questions + Answers + новые поля)
 
 ### Не сделано (требует деплой/CMS):
 - [ ] 6.4 Финальное тестирование (Lighthouse, broken links, mobile, SEO — после деплоя)

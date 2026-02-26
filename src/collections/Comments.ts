@@ -63,6 +63,7 @@ export const Comments: CollectionConfig = {
         { label: 'Гайд', value: 'guide' },
         { label: 'Инструмент', value: 'tool' },
         { label: 'Пост', value: 'post' },
+        { label: 'Вопрос', value: 'question' },
       ],
       admin: { position: 'sidebar' },
     },

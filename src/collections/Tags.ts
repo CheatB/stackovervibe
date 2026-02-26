@@ -24,5 +24,25 @@ export const Tags: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'description',
+      type: 'textarea',
+      label: 'Описание',
+      admin: {
+        description: 'Описание тега для страницы /tags/[slug]',
+      },
+    },
+    {
+      name: 'seoTitle',
+      type: 'text',
+      label: 'SEO-заголовок',
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'seoDescription',
+      type: 'textarea',
+      label: 'SEO-описание',
+      admin: { position: 'sidebar' },
+    },
   ],
 }
