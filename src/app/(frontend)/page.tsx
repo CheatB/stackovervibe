@@ -66,6 +66,7 @@ export default async function HomePage({
         {/* Лента */}
         <div className="flex-1 min-w-0">
           <InfiniteScroll
+            key={`${текущийТип}-${текущаяСортировка}`}
             initialItems={лента.items}
             initialPage={1}
             hasMore={лента.hasMore}
