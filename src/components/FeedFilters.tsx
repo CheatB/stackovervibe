@@ -9,6 +9,7 @@ const ТИПЫ_КОНТЕНТА = [
   { value: "tool", label: "Инструменты" },
   { value: "question", label: "Вопросы" },
   { value: "post", label: "Посты" },
+  { value: "framework", label: "Фреймворки" },
 ];
 
 /** Варианты сортировки */

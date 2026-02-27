@@ -47,6 +47,7 @@ export default async function QuestionsPage({
         : null,
       publishedAt: (в.publishedAt as string) || (в.createdAt as string),
       hasAcceptedAnswer: false,
+      downloads: 0,
     };
   });
 

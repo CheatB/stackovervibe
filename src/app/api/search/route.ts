@@ -1,40 +1,41 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getPayloadClient } from '@/lib/payload'
+import { NextRequest, NextResponse } from "next/server";
+import { getPayloadClient } from "@/lib/payload";
 
-const РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ = 20
+const РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ = 20;
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = request.nextUrl
-  const запрос = searchParams.get('q')?.trim()
-  const тип = searchParams.get('type') // guides | tools | questions | all
-  const страница = Math.max(1, Number(searchParams.get('page')) || 1)
+  const { searchParams } = request.nextUrl;
+  const запрос = searchParams.get("q")?.trim();
+  const тип = searchParams.get("type"); // guides | tools | questions | all
+  const страница = Math.max(1, Number(searchParams.get("page")) || 1);
 
   if (!запрос || запрос.length < 2) {
-    return NextResponse.json({ results: [], total: 0 })
+    return NextResponse.json({ results: [], total: 0 });
   }
 
-  const payload = await getPayloadClient()
+  const payload = await getPayloadClient();
   const результаты: Array<{
-    id: number | string
-    title: string
-    slug: string
-    type: 'guide' | 'tool' | 'question' | 'post'
-    excerpt?: string | null
-    url: string
-  }> = []
+    id: number | string;
+    title: string;
+    slug: string;
+    type: "guide" | "tool" | "question" | "post" | "framework";
+    excerpt?: string | null;
+    url: string;
+  }> = [];
 
-  let итого = 0
+  let итого = 0;
 
-  const искатьГайды = !тип || тип === 'guides' || тип === 'all'
-  const искатьИнструменты = !тип || тип === 'tools' || тип === 'all'
-  const искатьВопросы = !тип || тип === 'questions' || тип === 'all'
-  const искатьПосты = !тип || тип === 'posts' || тип === 'all'
+  const искатьГайды = !тип || тип === "guides" || тип === "all";
+  const искатьИнструменты = !тип || тип === "tools" || тип === "all";
+  const искатьВопросы = !тип || тип === "questions" || тип === "all";
+  const искатьПосты = !тип || тип === "posts" || тип === "all";
+  const искатьФреймворки = !тип || тип === "frameworks" || тип === "all";
 
   if (искатьГайды) {
     const { docs, totalDocs } = await payload.find({
-      collection: 'guides',
+      collection: "guides",
       where: {
-        status: { equals: 'published' },
+        status: { equals: "published" },
         or: [
           { title: { contains: запрос } },
           { excerpt: { contains: запрос } },
@@ -42,27 +43,27 @@ export async function GET(request: NextRequest) {
       },
       limit: РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ,
       page: страница,
-    })
+    });
 
-    итого += totalDocs
+    итого += totalDocs;
 
     for (const гайд of docs) {
       результаты.push({
         id: гайд.id,
         title: гайд.title,
         slug: гайд.slug,
-        type: 'guide',
+        type: "guide",
         excerpt: гайд.excerpt,
         url: `/path/${гайд.slug}`,
-      })
+      });
     }
   }
 
   if (искатьИнструменты) {
     const { docs, totalDocs } = await payload.find({
-      collection: 'tools',
+      collection: "tools",
       where: {
-        status: { equals: 'published' },
+        status: { equals: "published" },
         or: [
           { title: { contains: запрос } },
           { shortDescription: { contains: запрос } },
@@ -70,69 +71,97 @@ export async function GET(request: NextRequest) {
       },
       limit: РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ,
       page: страница,
-    })
+    });
 
-    итого += totalDocs
+    итого += totalDocs;
 
     for (const инструмент of docs) {
       результаты.push({
         id: инструмент.id,
         title: инструмент.title,
         slug: инструмент.slug,
-        type: 'tool',
+        type: "tool",
         excerpt: инструмент.shortDescription,
         url: `/tools/${инструмент.slug}`,
-      })
+      });
     }
   }
 
   if (искатьВопросы) {
     const { docs, totalDocs } = await payload.find({
-      collection: 'questions',
+      collection: "questions",
       where: {
-        status: { in: ['published', 'closed'] },
+        status: { in: ["published", "closed"] },
         title: { contains: запрос },
       },
       limit: РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ,
       page: страница,
-    })
+    });
 
-    итого += totalDocs
+    итого += totalDocs;
 
     for (const вопрос of docs) {
       результаты.push({
         id: вопрос.id,
         title: вопрос.title,
         slug: вопрос.slug,
-        type: 'question',
+        type: "question",
         excerpt: null,
         url: `/questions/${вопрос.slug}`,
-      })
+      });
     }
   }
 
   if (искатьПосты) {
     const { docs, totalDocs } = await payload.find({
-      collection: 'posts',
+      collection: "posts",
       where: {
-        status: { equals: 'published' },
+        status: { equals: "published" },
         title: { contains: запрос },
       },
       limit: РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ,
       page: страница,
-    })
+    });
 
-    итого += totalDocs
+    итого += totalDocs;
 
     for (const пост of docs) {
       результаты.push({
         id: пост.id,
         title: пост.title,
         slug: пост.slug,
-        type: 'post',
+        type: "post",
         excerpt: null,
         url: `/posts/${пост.slug}`,
-      })
+      });
+    }
+  }
+
+  if (искатьФреймворки) {
+    const { docs, totalDocs } = await payload.find({
+      collection: "frameworks",
+      where: {
+        status: { equals: "published" },
+        or: [
+          { title: { contains: запрос } },
+          { description: { contains: запрос } },
+        ],
+      },
+      limit: РЕЗУЛЬТАТОВ_НА_СТРАНИЦУ,
+      page: страница,
+    });
+
+    итого += totalDocs;
+
+    for (const ф of docs) {
+      результаты.push({
+        id: ф.id,
+        title: ф.title,
+        slug: ф.slug,
+        type: "framework",
+        excerpt: ф.description,
+        url: `/framework/${ф.slug}`,
+      });
     }
   }
 
@@ -141,5 +170,5 @@ export async function GET(request: NextRequest) {
     total: итого,
     query: запрос,
     page: страница,
-  })
+  });
 }

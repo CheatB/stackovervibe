@@ -30,9 +30,9 @@ main
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 8 — React Bits анимации ✅ ЗАВЕРШЕНА
-**Этап:** Все компоненты + интеграция готовы, Docker build пройден
-**Следующая задача:** Восстановить .env на проде → docker compose up → деплой
+**Фаза:** 9 — Frameworks UGC-каталог ✅ ЗАВЕРШЕНА
+**Этап:** Код готов, TypeScript 0 ошибок, миграция создана. Нужен деплой на прод.
+**Следующая задача:** Деплой (git push → CI → prod)
 
 ### Выполнено:
 - [x] 1.1 Инициализация проекта (1.1.1–1.1.5)
@@ -118,10 +118,32 @@ main
 - [x] 8.4 Интеграция: HeroSection (GlitchText+DecryptedText+FaultyTerminal), LayoutEffects (ClickSpark+Noise), SidebarStats (CountUp), AnimatedContent на PathStepCard/ToolCard, BlurText на заголовках, ScrollVelocity на главной, ElectricBorder на CTA, FooterGrid (GridMotion)
 - [x] 8.5 TypeScript check + Docker build — пройдены
 
-### Не сделано (требует деплой/CMS):
-- [ ] Восстановить .env на проде → docker compose up
-- [ ] 6.4 Финальное тестирование (Lighthouse, broken links, mobile, SEO — после деплоя)
-- [ ] 6.5 Первичный контент (категории, теги, гайды, инструменты — через CMS после деплоя)
+### Фаза 9: Frameworks UGC-каталог AI-методологий
+- [x] 9.1 Коллекция Frameworks (title, slug, description, body, author, tags, stack, level, githubUrl, status, views, likes, dislikes, downloads)
+- [x] 9.2 Reactions + Comments расширены типом 'framework'
+- [x] 9.3 API: POST /api/frameworks, PUT /api/frameworks/[id], POST /api/frameworks/[id]/download
+- [x] 9.4 lexical-to-markdown.ts — конвертер Lexical AST → Markdown
+- [x] 9.5 Data layer: getFrameworks, getFrameworkBySlug, getPopularFrameworks, getUserFrameworks, getSiteStats + frameworks
+- [x] 9.6 Feed: getFeedPage + frameworks, FeedItem type 'framework' + downloads
+- [x] 9.7 Страницы: /framework (листинг), /framework/create, /framework/[slug] (детали + JSON-LD), /framework/[slug]/edit
+- [x] 9.8 DownloadButton — скачивание .md с подсказкой "Закинь в Claude, Cursor или любой AI"
+- [x] 9.9 FeedCard + FeedFilters — framework тип, downloads вместо answers
+- [x] 9.10 Search API — поиск frameworks (title + description)
+- [x] 9.11 Sitemap — frameworks URLs
+- [x] 9.12 Sidebar — описание "AI-методологии", SidebarStats + frameworks count
+- [x] 9.13 Profile — секция "Фреймворки" + счётчик
+- [x] 9.14 Views + Reactions API — framework тип
+- [x] 9.15 Миграция Payload (20260227_182730)
+- [x] 9.16 TypeScript 0 ошибок, Docker build pass
+
+### Деплой
+- [x] .env восстановлен на проде (109.172.36.108)
+- [x] Docker containers запущены на проде
+- [x] https://stackovervibe.ru — 200 OK с SSL
+
+### Не сделано:
+- [ ] 6.4 Финальное тестирование (Lighthouse, broken links, mobile, SEO)
+- [ ] 6.5 Первичный контент (категории, теги, гайды, инструменты — через CMS)
 - [ ] og-default.png заменить на реальную картинку 1200x630
 
 ---

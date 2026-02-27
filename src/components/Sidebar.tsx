@@ -8,6 +8,7 @@ interface SidebarProps {
     tools: number;
     questions: number;
     posts: number;
+    frameworks: number;
   };
 }
 
@@ -15,7 +16,7 @@ interface SidebarProps {
 const НАВИГАЦИЯ = [
   { путь: "/path", лейбл: "path/", описание: "Путь новичка" },
   { путь: "/tools", лейбл: "tools/", описание: "Инструменты" },
-  { путь: "/framework", лейбл: "framework/", описание: "Фреймворк" },
+  { путь: "/framework", лейбл: "framework/", описание: "AI-методологии" },
   { путь: "/questions", лейбл: "questions/", описание: "Вопросы" },
 ];
 

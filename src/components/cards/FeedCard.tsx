@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { форматДату } from "@/lib/date";
 
-/** Элемент ленты — может быть гайдом, инструментом, вопросом или постом */
+/** Элемент ленты — может быть гайдом, инструментом, вопросом, постом или фреймворком */
 export interface FeedItem {
   id: number | string;
-  type: "guide" | "tool" | "question" | "post";
+  type: "guide" | "tool" | "question" | "post" | "framework";
   title: string;
   slug: string;
   url: string;
@@ -12,6 +12,7 @@ export interface FeedItem {
   votes: number;
   views: number;
   answersCount: number;
+  downloads: number;
   tags: Array<{ title: string; slug: string }>;
   author: { displayName?: string; telegramUsername?: string } | null;
   publishedAt: string;
@@ -27,6 +28,7 @@ const ПРЕФИКСЫ_ТИПОВ: Record<
   tool: { текст: "[tool]", цвет: "var(--color-secondary)" },
   question: { текст: "[question]", цвет: "var(--color-accent)" },
   post: { текст: "[post]", цвет: "var(--color-text-muted)" },
+  framework: { текст: "[framework]", цвет: "var(--color-secondary)" },
 };
 
 interface FeedCardProps {
@@ -62,17 +64,24 @@ export function FeedCard({ элемент }: FeedCardProps) {
           <span className="text-[var(--color-text-muted)]">голос</span>
         </div>
 
-        {/* Ответы */}
-        <div
-          className={`flex flex-col items-center px-1.5 py-0.5 rounded border ${
-            элемент.hasAcceptedAnswer
-              ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
-              : "border-[var(--color-border)] text-[var(--color-text-muted)]"
-          }`}
-        >
-          <span className="text-base font-bold">{элемент.answersCount}</span>
-          <span className="text-[10px]">ответов</span>
-        </div>
+        {/* Ответы / Скачивания */}
+        {элемент.type === "framework" ? (
+          <div className="flex flex-col items-center px-1.5 py-0.5 rounded border border-[var(--color-border)] text-[var(--color-text-muted)]">
+            <span className="text-base font-bold">{элемент.downloads}</span>
+            <span className="text-[10px]">скач.</span>
+          </div>
+        ) : (
+          <div
+            className={`flex flex-col items-center px-1.5 py-0.5 rounded border ${
+              элемент.hasAcceptedAnswer
+                ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                : "border-[var(--color-border)] text-[var(--color-text-muted)]"
+            }`}
+          >
+            <span className="text-base font-bold">{элемент.answersCount}</span>
+            <span className="text-[10px]">ответов</span>
+          </div>
+        )}
 
         {/* Просмотры */}
         <div className="flex flex-col items-center text-[var(--color-text-muted)]">
@@ -96,13 +105,17 @@ export function FeedCard({ элемент }: FeedCardProps) {
           >
             ↑{элемент.votes} голос
           </span>
-          <span
-            className={
-              элемент.hasAcceptedAnswer ? "text-[var(--color-primary)]" : ""
-            }
-          >
-            ✓{элемент.answersCount} ответ
-          </span>
+          {элемент.type === "framework" ? (
+            <span>↓{элемент.downloads} скач.</span>
+          ) : (
+            <span
+              className={
+                элемент.hasAcceptedAnswer ? "text-[var(--color-primary)]" : ""
+              }
+            >
+              ✓{элемент.answersCount} ответ
+            </span>
+          )}
           <span>{элемент.views} просм.</span>
         </div>
 

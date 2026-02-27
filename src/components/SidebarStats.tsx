@@ -8,6 +8,7 @@ interface SidebarStatsProps {
     tools: number;
     questions: number;
     posts: number;
+    frameworks: number;
   };
 }
 
@@ -33,6 +34,11 @@ export function SidebarStats({ stats }: SidebarStatsProps) {
       лейбл: "посты",
       значение: stats.posts,
       цвет: "text-[var(--color-text)]",
+    },
+    {
+      лейбл: "фреймворки",
+      значение: stats.frameworks,
+      цвет: "text-[var(--color-secondary)]",
     },
   ];
 

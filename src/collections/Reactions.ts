@@ -1,53 +1,54 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const Reactions: CollectionConfig = {
-  slug: 'reactions',
+  slug: "reactions",
   admin: {
-    group: 'Система',
-    defaultColumns: ['contentType', 'contentId', 'type', 'createdAt'],
+    group: "Система",
+    defaultColumns: ["contentType", "contentId", "type", "createdAt"],
   },
   access: {
     read: () => true,
     create: () => true,
     update: () => false,
-    delete: ({ req }) => req.user?.role === 'admin',
+    delete: ({ req }) => req.user?.role === "admin",
   },
   fields: [
     {
-      name: 'contentType',
-      type: 'select',
+      name: "contentType",
+      type: "select",
       required: true,
-      label: 'Тип контента',
+      label: "Тип контента",
       options: [
-        { label: 'Гайд', value: 'guide' },
-        { label: 'Инструмент', value: 'tool' },
-        { label: 'Пост', value: 'post' },
-        { label: 'Вопрос', value: 'question' },
-        { label: 'Ответ', value: 'answer' },
+        { label: "Гайд", value: "guide" },
+        { label: "Инструмент", value: "tool" },
+        { label: "Пост", value: "post" },
+        { label: "Вопрос", value: "question" },
+        { label: "Ответ", value: "answer" },
+        { label: "Фреймворк", value: "framework" },
       ],
     },
     {
-      name: 'contentId',
-      type: 'text',
+      name: "contentId",
+      type: "text",
       required: true,
-      label: 'ID контента',
+      label: "ID контента",
     },
     {
-      name: 'type',
-      type: 'select',
+      name: "type",
+      type: "select",
       required: true,
-      label: 'Тип реакции',
+      label: "Тип реакции",
       options: [
-        { label: 'Лайк', value: 'like' },
-        { label: 'Дизлайк', value: 'dislike' },
+        { label: "Лайк", value: "like" },
+        { label: "Дизлайк", value: "dislike" },
       ],
     },
     {
-      name: 'fingerprint',
-      type: 'text',
+      name: "fingerprint",
+      type: "text",
       required: true,
-      label: 'Отпечаток',
+      label: "Отпечаток",
       admin: { readOnly: true },
     },
   ],
-}
+};
