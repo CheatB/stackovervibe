@@ -23,17 +23,44 @@
 }
 
 @keyframes glitch-anim {
-  0% { transform: translate(0); }
-  10% { transform: translate(-2px, 1px); }
-  20% { transform: translate(2px, -1px); clip-path: inset(20% 0 60% 0); }
-  30% { transform: translate(-1px, 2px); }
-  40% { transform: translate(1px, -2px); clip-path: inset(60% 0 10% 0); }
-  50% { transform: translate(-2px, 0); }
-  60% { transform: translate(2px, 1px); clip-path: inset(40% 0 30% 0); }
-  70% { transform: translate(0, -1px); }
-  80% { transform: translate(-1px, 2px); clip-path: inset(10% 0 70% 0); }
-  90% { transform: translate(1px, 0); }
-  100% { transform: translate(0); clip-path: none; }
+  0% {
+    transform: translate(0);
+  }
+  10% {
+    transform: translate(-2px, 1px);
+  }
+  20% {
+    transform: translate(2px, -1px);
+    clip-path: inset(20% 0 60% 0);
+  }
+  30% {
+    transform: translate(-1px, 2px);
+  }
+  40% {
+    transform: translate(1px, -2px);
+    clip-path: inset(60% 0 10% 0);
+  }
+  50% {
+    transform: translate(-2px, 0);
+  }
+  60% {
+    transform: translate(2px, 1px);
+    clip-path: inset(40% 0 30% 0);
+  }
+  70% {
+    transform: translate(0, -1px);
+  }
+  80% {
+    transform: translate(-1px, 2px);
+    clip-path: inset(10% 0 70% 0);
+  }
+  90% {
+    transform: translate(1px, 0);
+  }
+  100% {
+    transform: translate(0);
+    clip-path: none;
+  }
 }
 
 /* Цветовой сдвиг при глитче */
@@ -62,57 +89,109 @@
 }
 
 @keyframes glitch-color-1 {
-  0%, 100% { transform: translate(0); opacity: 0; }
-  20% { transform: translate(-3px, 0); opacity: 0.6; }
-  40% { transform: translate(3px, 0); opacity: 0; }
-  60% { transform: translate(-2px, 0); opacity: 0.4; }
-  80% { transform: translate(2px, 0); opacity: 0; }
+  0%,
+  100% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-3px, 0);
+    opacity: 0.6;
+  }
+  40% {
+    transform: translate(3px, 0);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-2px, 0);
+    opacity: 0.4;
+  }
+  80% {
+    transform: translate(2px, 0);
+    opacity: 0;
+  }
 }
 
 @keyframes glitch-color-2 {
-  0%, 100% { transform: translate(0); opacity: 0; }
-  10% { transform: translate(3px, 0); opacity: 0; }
-  30% { transform: translate(-3px, 0); opacity: 0.6; }
-  50% { transform: translate(2px, 0); opacity: 0; }
-  70% { transform: translate(-2px, 0); opacity: 0.4; }
-  90% { transform: translate(0); opacity: 0; }
+  0%,
+  100% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translate(3px, 0);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-3px, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(2px, 0);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-2px, 0);
+    opacity: 0.4;
+  }
+  90% {
+    transform: translate(0);
+    opacity: 0;
+  }
 }
 
 /* === Неоновое свечение (4.3.3) === */
 .neon-primary {
-  box-shadow: 0 0 10px var(--color-primary), 0 0 20px rgba(0, 255, 65, 0.3);
+  box-shadow:
+    0 0 10px var(--color-primary),
+    0 0 20px rgba(0, 255, 65, 0.3);
 }
 
 .neon-primary:hover {
-  box-shadow: 0 0 15px var(--color-primary), 0 0 30px rgba(0, 255, 65, 0.4), 0 0 60px rgba(0, 255, 65, 0.15);
+  box-shadow:
+    0 0 15px var(--color-primary),
+    0 0 30px rgba(0, 255, 65, 0.4),
+    0 0 60px rgba(0, 255, 65, 0.15);
 }
 
 .neon-secondary {
-  box-shadow: 0 0 10px var(--color-secondary), 0 0 20px rgba(255, 0, 255, 0.3);
+  box-shadow:
+    0 0 10px var(--color-secondary),
+    0 0 20px rgba(255, 0, 255, 0.3);
 }
 
 .neon-secondary:hover {
-  box-shadow: 0 0 15px var(--color-secondary), 0 0 30px rgba(255, 0, 255, 0.4), 0 0 60px rgba(255, 0, 255, 0.15);
+  box-shadow:
+    0 0 15px var(--color-secondary),
+    0 0 30px rgba(255, 0, 255, 0.4),
+    0 0 60px rgba(255, 0, 255, 0.15);
 }
 
 .neon-text {
-  text-shadow: 0 0 7px var(--color-primary), 0 0 15px rgba(0, 255, 65, 0.5);
+  text-shadow:
+    0 0 7px var(--color-primary),
+    0 0 15px rgba(0, 255, 65, 0.5);
 }
 
 /* === Мигающий курсор (4.3.4) === */
 .cursor-blink::after {
-  content: '█';
+  content: "█";
   animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Подчёркивающий мигающий курсор */
 .cursor-underline::after {
-  content: '_';
+  content: "_";
   animation: blink 1s step-end infinite;
 }
 
@@ -121,30 +200,123 @@
   overflow: hidden;
   border-right: 2px solid var(--color-primary);
   white-space: nowrap;
-  animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+  animation:
+    typing 2s steps(30, end),
+    blink-caret 0.75s step-end infinite;
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: var(--color-primary); }
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--color-primary);
+  }
+}
+
+/* === StarBorder — звёздная рамка === */
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 0;
+  }
+}
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 0;
+  }
+}
+.animate-star-movement-bottom {
+  animation: star-movement-bottom linear infinite alternate;
+}
+.animate-star-movement-top {
+  animation: star-movement-top linear infinite alternate;
+}
+
+/* === GlitchText: авто-глитч через JS === */
+.glitch.glitching {
+  animation: glitch-anim 0.3s ease-in-out;
+}
+.glitch.glitching::before {
+  opacity: 0.8;
+  color: var(--color-accent);
+  animation: glitch-color-1 0.3s ease-in-out;
+}
+.glitch.glitching::after {
+  opacity: 0.8;
+  color: var(--color-secondary);
+  animation: glitch-color-2 0.3s ease-in-out;
 }
 
 /* === Reduced motion (4.3.6) === */
 @media (prefers-reduced-motion: reduce) {
-  .glitch:hover { animation: none; }
+  .glitch:hover {
+    animation: none;
+  }
   .glitch:hover::before,
-  .glitch:hover::after { animation: none; opacity: 0; }
-  .cursor-blink::after { animation: none; opacity: 1; }
-  .cursor-underline::after { animation: none; opacity: 1; }
-  .typewriter { animation: none; border-right: none; width: auto; }
-  .crt-overlay { display: none; }
-  .neon-primary { box-shadow: none; border: 1px solid var(--color-primary); }
-  .neon-secondary { box-shadow: none; border: 1px solid var(--color-secondary); }
-  .neon-primary:hover { box-shadow: none; }
-  .neon-secondary:hover { box-shadow: none; }
+  .glitch:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+  .cursor-blink::after {
+    animation: none;
+    opacity: 1;
+  }
+  .cursor-underline::after {
+    animation: none;
+    opacity: 1;
+  }
+  .typewriter {
+    animation: none;
+    border-right: none;
+    width: auto;
+  }
+  .crt-overlay {
+    display: none;
+  }
+  .neon-primary {
+    box-shadow: none;
+    border: 1px solid var(--color-primary);
+  }
+  .neon-secondary {
+    box-shadow: none;
+    border: 1px solid var(--color-secondary);
+  }
+  .neon-primary:hover {
+    box-shadow: none;
+  }
+  .neon-secondary:hover {
+    box-shadow: none;
+  }
+  .animate-star-movement-bottom,
+  .animate-star-movement-top {
+    animation: none;
+  }
+  .glitch.glitching {
+    animation: none;
+  }
+  .glitch.glitching::before,
+  .glitch.glitching::after {
+    animation: none;
+    opacity: 0;
+  }
 }

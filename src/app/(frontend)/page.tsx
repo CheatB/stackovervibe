@@ -1,74 +1,74 @@
-import { getFeedPage, getHotQuestions, getSiteStats } from '@/lib/payload'
-import { JsonLd } from '@/components/seo/JsonLd'
-import { FeedFilters } from '@/components/FeedFilters'
-import { InfiniteScroll } from '@/components/InfiniteScroll'
-import { Sidebar } from '@/components/Sidebar'
+import { getFeedPage, getHotQuestions, getSiteStats } from "@/lib/payload";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { FeedFilters } from "@/components/FeedFilters";
+import { InfiniteScroll } from "@/components/InfiniteScroll";
+import { Sidebar } from "@/components/Sidebar";
+import { HeroSection } from "@/components/HeroSection";
+import ScrollVelocity from "@/components/animations/ScrollVelocity";
 
-const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-
-const ASCII_LOGO = `
- ███████╗████████╗ █████╗  ██████╗██╗  ██╗
- ██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝
- ███████╗   ██║   ███████║██║     █████╔╝
- ╚════██║   ██║   ██╔══██║██║     ██╔═██╗
- ███████║   ██║   ██║  ██║╚██████╗██║  ██╗
- ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
-      O V E R V I B E`.trimStart()
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ type?: string; sort?: string }>
+  searchParams: Promise<{ type?: string; sort?: string }>;
 }) {
-  const { type, sort } = await searchParams
-  const текущийТип = type || 'all'
-  const текущаяСортировка = sort || 'new'
+  const { type, sort } = await searchParams;
+  const текущийТип = type || "all";
+  const текущаяСортировка = sort || "new";
 
   const [лента, горячие, статистика] = await Promise.all([
-    getFeedPage({ type: текущийТип, sort: текущаяСортировка, page: 1, limit: 20 }),
+    getFeedPage({
+      type: текущийТип,
+      sort: текущаяСортировка,
+      page: 1,
+      limit: 20,
+    }),
     getHotQuestions(5),
     getSiteStats(),
-  ])
+  ]);
 
-  const searchParamsObj: Record<string, string> = {}
-  if (текущийТип !== 'all') searchParamsObj.type = текущийТип
-  if (текущаяСортировка !== 'new') searchParamsObj.sort = текущаяСортировка
+  const searchParamsObj: Record<string, string> = {};
+  if (текущийТип !== "all") searchParamsObj.type = текущийТип;
+  if (текущаяСортировка !== "new") searchParamsObj.sort = текущаяСортировка;
 
   return (
     <div>
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: 'Stackovervibe',
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Stackovervibe",
           url: САЙТ_URL,
-          description: 'Структурированная база знаний по вайбкодингу.',
+          description: "Структурированная база знаний по вайбкодингу.",
           potentialAction: {
-            '@type': 'SearchAction',
+            "@type": "SearchAction",
             target: `${САЙТ_URL}/search?q={search_term_string}`,
-            'query-input': 'required name=search_term_string',
+            "query-input": "required name=search_term_string",
           },
         }}
       />
 
       <h1 className="sr-only">Stackovervibe — база знаний по вайбкодингу</h1>
 
-      {/* ASCII Logo */}
-      <section className="text-center mb-8 pt-4">
-        <pre
-          className="text-[var(--color-primary)] text-[0.35rem] sm:text-[0.5rem] md:text-xs leading-tight font-[family-name:var(--font-code)] neon-text select-none overflow-hidden"
-          aria-hidden="true"
-        >
-          {ASCII_LOGO}
-        </pre>
-        <p className="text-sm text-[var(--color-text-muted)] mt-3 font-[family-name:var(--font-code)]">
-          база знаний по вайбкодингу // гайды, инструменты, вопросы
-        </p>
-      </section>
+      {/* ASCII Logo + GlitchText + DecryptedText + FaultyTerminal фон */}
+      <HeroSection />
 
       {/* Разделитель */}
       <div className="text-center text-[var(--color-border)] font-[family-name:var(--font-code)] text-xs select-none mb-6 overflow-hidden">
         ════════════════════════════════════════
+      </div>
+
+      {/* ScrollVelocity — бегущая строка тегов */}
+      <div className="mb-6 -mx-4 sm:-mx-6 overflow-hidden opacity-40">
+        <ScrollVelocity
+          texts={[
+            "cursor · claude · copilot · vibe-coding · prompt · ai-tools · framework · hooks · rules ·",
+            "cursor · claude · copilot · vibe-coding · prompt · ai-tools · framework · hooks · rules ·",
+          ]}
+          velocity={40}
+          className="text-[var(--color-text-muted)]"
+        />
       </div>
 
       {/* Фильтры */}
@@ -98,5 +98,5 @@ export default async function HomePage({
         </aside>
       </div>
     </div>
-  )
+  );
 }

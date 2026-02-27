@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SidebarStats } from "@/components/SidebarStats";
 
 interface SidebarProps {
   hotQuestions?: Array<{ title: string; slug: string }>;
@@ -72,7 +73,7 @@ export function Sidebar({ hotQuestions = [], stats }: SidebarProps) {
         </div>
       )}
 
-      {/* Блок 3: Статистика */}
+      {/* Блок 3: Статистика с CountUp */}
       {stats && (
         <div className="border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] overflow-hidden">
           <div className="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-bg)]">
@@ -80,32 +81,7 @@ export function Sidebar({ hotQuestions = [], stats }: SidebarProps) {
               $ cat stats.txt
             </span>
           </div>
-          <div className="p-3 space-y-1.5 font-[family-name:var(--font-code)] text-sm">
-            <div className="flex justify-between">
-              <span className="text-[var(--color-text-muted)]">гайды</span>
-              <span className="text-[var(--color-primary)]">
-                {stats.guides}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[var(--color-text-muted)]">
-                инструменты
-              </span>
-              <span className="text-[var(--color-secondary)]">
-                {stats.tools}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[var(--color-text-muted)]">вопросы</span>
-              <span className="text-[var(--color-accent)]">
-                {stats.questions}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[var(--color-text-muted)]">посты</span>
-              <span className="text-[var(--color-text)]">{stats.posts}</span>
-            </div>
-          </div>
+          <SidebarStats stats={stats} />
         </div>
       )}
     </aside>

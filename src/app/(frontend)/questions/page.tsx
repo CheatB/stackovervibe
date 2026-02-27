@@ -1,60 +1,72 @@
-import Link from 'next/link'
-import { getQuestions } from '@/lib/payload'
-import { generatePageMetadata } from '@/lib/seo'
-import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
-import { FeedCard } from '@/components/cards/FeedCard'
-import type { FeedItem } from '@/components/cards/FeedCard'
+import Link from "next/link";
+import { getQuestions } from "@/lib/payload";
+import { generatePageMetadata } from "@/lib/seo";
+import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
+import { FeedCard } from "@/components/cards/FeedCard";
+import type { FeedItem } from "@/components/cards/FeedCard";
+import ElectricBorder from "@/components/animations/ElectricBorder";
 
 export const metadata = generatePageMetadata({
-  title: 'Вопросы',
-  description: 'Вопросы и ответы по вайбкодингу. Задавайте вопросы, делитесь опытом, помогайте другим.',
-  url: '/questions',
-})
+  title: "Вопросы",
+  description:
+    "Вопросы и ответы по вайбкодингу. Задавайте вопросы, делитесь опытом, помогайте другим.",
+  url: "/questions",
+});
 
 export default async function QuestionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const { page: pageStr } = await searchParams
-  const страница = Math.max(1, Number(pageStr) || 1)
-  const { docs, totalPages } = await getQuestions(страница, 20)
+  const { page: pageStr } = await searchParams;
+  const страница = Math.max(1, Number(pageStr) || 1);
+  const { docs, totalPages } = await getQuestions(страница, 20);
 
   const элементы: FeedItem[] = docs.map((в) => {
-    const автор = typeof в.author === 'object' ? в.author : null
+    const автор = typeof в.author === "object" ? в.author : null;
     return {
       id: в.id,
-      type: 'question',
+      type: "question",
       title: в.title,
       slug: в.slug,
       url: `/questions/${в.slug}`,
-      excerpt: '',
+      excerpt: "",
       votes: ((в.likes as number) || 0) - ((в.dislikes as number) || 0),
       views: (в.views as number) || 0,
       answersCount: (в.answersCount as number) || 0,
       tags: Array.isArray(в.tags)
-        ? в.tags.filter((t: any) => typeof t === 'object').map((t: any) => ({ title: t.title, slug: t.slug }))
+        ? в.tags
+            .filter((t: any) => typeof t === "object")
+            .map((t: any) => ({ title: t.title, slug: t.slug }))
         : [],
-      author: автор ? { displayName: (автор as any).displayName, telegramUsername: (автор as any).telegramUsername } : null,
+      author: автор
+        ? {
+            displayName: (автор as any).displayName,
+            telegramUsername: (автор as any).telegramUsername,
+          }
+        : null,
       publishedAt: (в.publishedAt as string) || (в.createdAt as string),
       hasAcceptedAnswer: false,
-    }
-  })
+    };
+  });
 
   return (
     <div>
-      <BreadcrumbNav items={[{ label: 'questions', href: '/questions' }]} />
+      <BreadcrumbNav items={[{ label: "questions", href: "/questions" }]} />
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
         <h1 className="text-2xl font-bold font-[family-name:var(--font-code)]">
-          <span className="text-[var(--color-text-muted)]">$</span> ls questions/
+          <span className="text-[var(--color-text-muted)]">$</span> ls
+          questions/
         </h1>
-        <Link
-          href="/questions/ask"
-          className="self-start sm:self-auto px-4 py-2 bg-[var(--color-primary)] text-[var(--color-bg)] font-bold text-sm rounded font-[family-name:var(--font-code)] hover:opacity-90 transition neon-primary"
-        >
-          + задать вопрос
-        </Link>
+        <ElectricBorder borderRadius={6} speed={0.8} chaos={0.3}>
+          <Link
+            href="/questions/ask"
+            className="self-start sm:self-auto px-4 py-2 bg-[var(--color-primary)] text-[var(--color-bg)] font-bold text-sm rounded font-[family-name:var(--font-code)] hover:opacity-90 transition block"
+          >
+            + задать вопрос
+          </Link>
+        </ElectricBorder>
       </div>
 
       {элементы.length === 0 ? (
@@ -94,5 +106,5 @@ export default async function QuestionsPage({
         </nav>
       )}
     </div>
-  )
+  );
 }

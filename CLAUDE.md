@@ -30,9 +30,9 @@ main
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 7 — SO-style Feed + Q&A (Epic) ✅ ЗАВЕРШЕНА
-**Этап:** Задеплоено, всё работает
-**Следующая задача:** 6.4 Финальное тестирование (Lighthouse, SEO)
+**Фаза:** 8 — React Bits анимации ✅ ЗАВЕРШЕНА
+**Этап:** Все компоненты + интеграция готовы, Docker build пройден
+**Следующая задача:** Восстановить .env на проде → docker compose up → деплой
 
 ### Выполнено:
 - [x] 1.1 Инициализация проекта (1.1.1–1.1.5)
@@ -111,7 +111,15 @@ main
 - [x] 7.18 Docker build + deploy на VPS
 - [x] 7.19 Payload миграции (Questions + Answers + новые поля)
 
+### Фаза 8: React Bits анимации
+- [x] 8.1 Установка зависимостей (motion, gsap, ogl)
+- [x] 8.2 14 анимационных компонентов (DecryptedText, GlitchText, ClickSpark, Noise, FaultyTerminal, AnimatedContent, BlurText, StarBorder, ElectricBorder, CountUp, ScrollVelocity, PixelTransition, GridMotion, TextCursor)
+- [x] 8.3 CSS: StarBorder keyframes, GlitchText .glitching, reduced-motion правила
+- [x] 8.4 Интеграция: HeroSection (GlitchText+DecryptedText+FaultyTerminal), LayoutEffects (ClickSpark+Noise), SidebarStats (CountUp), AnimatedContent на PathStepCard/ToolCard, BlurText на заголовках, ScrollVelocity на главной, ElectricBorder на CTA, FooterGrid (GridMotion)
+- [x] 8.5 TypeScript check + Docker build — пройдены
+
 ### Не сделано (требует деплой/CMS):
+- [ ] Восстановить .env на проде → docker compose up
 - [ ] 6.4 Финальное тестирование (Lighthouse, broken links, mobile, SEO — после деплоя)
 - [ ] 6.5 Первичный контент (категории, теги, гайды, инструменты — через CMS после деплоя)
 - [ ] og-default.png заменить на реальную картинку 1200x630

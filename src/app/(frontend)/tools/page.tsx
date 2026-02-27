@@ -1,32 +1,36 @@
-import type { Metadata } from 'next'
-import { getTools, getCategories } from '@/lib/payload'
-import { ToolCard } from '@/components/cards/ToolCard'
-import { ToolsFilter } from '@/components/ToolsFilter'
-import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
+import type { Metadata } from "next";
+import { getTools, getCategories } from "@/lib/payload";
+import { ToolCard } from "@/components/cards/ToolCard";
+import { ToolsFilter } from "@/components/ToolsFilter";
+import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
+import AnimatedContent from "@/components/animations/AnimatedContent";
+import BlurText from "@/components/animations/BlurText";
 
 export const metadata: Metadata = {
-  title: 'Инструменты',
+  title: "Инструменты",
   description:
-    'Каталог скиллов, хуков, команд и правил для вайбкодинга. Копируй и используй.',
-}
+    "Каталог скиллов, хуков, команд и правил для вайбкодинга. Копируй и используй.",
+};
 
 interface ПараметрыПоиска {
-  searchParams: Promise<{ type?: string; category?: string }>
+  searchParams: Promise<{ type?: string; category?: string }>;
 }
 
 export default async function ToolsPage({ searchParams }: ПараметрыПоиска) {
-  const { type: тип, category: категория } = await searchParams
+  const { type: тип, category: категория } = await searchParams;
 
   const [инструменты, категории] = await Promise.all([
     getTools({ toolType: тип, category: категория }),
     getCategories(),
-  ])
+  ]);
 
   return (
     <div className="space-y-8">
-      <BreadcrumbNav items={[{ label: 'tools' }]} />
+      <BreadcrumbNav items={[{ label: "tools" }]} />
       <div>
-        <h1 className="text-3xl md:text-4xl mb-4">Инструменты</h1>
+        <h1 className="text-3xl md:text-4xl mb-4">
+          <BlurText text="Инструменты" delay={80} />
+        </h1>
         <p className="text-[var(--color-text-muted)] max-w-2xl">
           Каталог скиллов, хуков, команд и правил. Фильтруй по типу и категории.
         </p>
@@ -46,27 +50,33 @@ export default async function ToolsPage({ searchParams }: ПараметрыПо
       {инструменты.length === 0 ? (
         <div className="p-8 border border-[var(--color-border)] rounded-lg text-center">
           <p className="text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">
-            {'>'} Ничего не найдено. Попробуй другие фильтры.
+            {">"} Ничего не найдено. Попробуй другие фильтры.
           </p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {инструменты.map((инструмент) => (
-            <ToolCard
+          {инструменты.map((инструмент, индекс) => (
+            <AnimatedContent
               key={инструмент.id}
-              заголовок={инструмент.title}
-              slug={инструмент.slug}
-              тип={инструмент.toolType}
-              описание={инструмент.shortDescription}
-              категория={
-                typeof инструмент.category === 'object' && инструмент.category
-                  ? инструмент.category.title
-                  : null
-              }
-            />
+              delay={индекс * 0.05}
+              direction="vertical"
+              distance={20}
+            >
+              <ToolCard
+                заголовок={инструмент.title}
+                slug={инструмент.slug}
+                тип={инструмент.toolType}
+                описание={инструмент.shortDescription}
+                категория={
+                  typeof инструмент.category === "object" && инструмент.category
+                    ? инструмент.category.title
+                    : null
+                }
+              />
+            </AnimatedContent>
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }
