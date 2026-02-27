@@ -184,17 +184,17 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
           <h2 className="text-xl mb-3">Параметры хука</h2>
           <dl className="space-y-2 text-sm">
             {инструмент.hookFields.trigger && (
-              <div className="flex gap-2">
-                <dt className="text-[var(--color-text-muted)]">Триггер:</dt>
-                <dd className="font-[family-name:var(--font-code)] text-[var(--color-secondary)]">
+              <div className="flex flex-wrap gap-x-2 gap-y-1">
+                <dt className="text-[var(--color-text-muted)] shrink-0">Триггер:</dt>
+                <dd className="font-[family-name:var(--font-code)] text-[var(--color-secondary)] break-all">
                   {инструмент.hookFields.trigger}
                 </dd>
               </div>
             )}
             {инструмент.hookFields.condition && (
-              <div className="flex gap-2">
-                <dt className="text-[var(--color-text-muted)]">Условие:</dt>
-                <dd className="font-[family-name:var(--font-code)]">
+              <div className="flex flex-wrap gap-x-2 gap-y-1">
+                <dt className="text-[var(--color-text-muted)] shrink-0">Условие:</dt>
+                <dd className="font-[family-name:var(--font-code)] break-all">
                   {инструмент.hookFields.condition}
                 </dd>
               </div>
@@ -261,7 +261,7 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
       )}
 
       {/* Реакции и шеринг */}
-      <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-[var(--color-border)]">
         <ReactionButtons contentType="tools" contentId={String(инструмент.id)} />
         <ShareButtons title={инструмент.title} url={`${САЙТ_URL}/tools/${инструмент.slug}`} />
       </div>

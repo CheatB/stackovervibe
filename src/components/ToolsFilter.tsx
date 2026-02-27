@@ -34,8 +34,17 @@ export function ToolsFilter({ текущийТип, текущаяКатегор
 
   return (
     <div className="flex flex-wrap gap-4">
-      {/* Фильтр по типу */}
-      <div className="flex flex-wrap gap-1">
+      {/* Фильтр по типу — select на мобиле, кнопки на десктопе */}
+      <select
+        value={текущийТип ?? ''}
+        onChange={(e) => обновитьФильтр('type', e.target.value)}
+        className="sm:hidden px-3 py-1.5 text-sm rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
+      >
+        {типыИнструментов.map((тип) => (
+          <option key={тип.value} value={тип.value}>{тип.label}</option>
+        ))}
+      </select>
+      <div className="hidden sm:flex flex-wrap gap-1">
         {типыИнструментов.map((тип) => (
           <button
             key={тип.value}

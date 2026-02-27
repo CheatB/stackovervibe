@@ -35,7 +35,7 @@ export function Sidebar({ hotQuestions = [], stats }: SidebarProps) {
               href={ссылка.путь}
               className="flex items-center gap-3 px-2 py-1.5 rounded text-sm hover:bg-[var(--color-primary)]/5 group transition-colors"
             >
-              <span className="font-[family-name:var(--font-code)] text-[var(--color-primary)] min-w-[100px]">
+              <span className="font-[family-name:var(--font-code)] text-[var(--color-primary)] shrink-0">
                 {ссылка.лейбл}
               </span>
               <span className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors">

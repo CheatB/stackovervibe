@@ -130,7 +130,7 @@ export default async function QuestionPage({ params }: { params: Promise<{ slug:
         )}
 
         {/* Автор + реакции */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <ReactionButtons
             contentType="question"
             contentId={String(вопрос.id)}

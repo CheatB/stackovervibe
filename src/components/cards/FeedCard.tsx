@@ -145,8 +145,8 @@ export function FeedCard({ элемент }: FeedCardProps) {
           </div>
 
           {/* Автор и дата */}
-          <div className="ml-auto flex items-center gap-1 text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)] whitespace-nowrap">
-            <span>{имяАвтора}</span>
+          <div className="ml-auto flex items-center gap-1 text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)] shrink-0">
+            <span className="truncate max-w-[100px]">{имяАвтора}</span>
             <span>·</span>
             <time dateTime={элемент.publishedAt}>
               {форматДату(элемент.publishedAt)}

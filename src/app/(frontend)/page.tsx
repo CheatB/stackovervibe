@@ -67,7 +67,7 @@ export default async function HomePage({
       </section>
 
       {/* Разделитель */}
-      <div className="text-center text-[var(--color-border)] font-[family-name:var(--font-code)] text-xs select-none mb-6">
+      <div className="text-center text-[var(--color-border)] font-[family-name:var(--font-code)] text-xs select-none mb-6 overflow-hidden">
         ════════════════════════════════════════
       </div>
 

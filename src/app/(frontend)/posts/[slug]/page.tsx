@@ -89,7 +89,7 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
 
       {пост.content && <RichTextRenderer content={пост.content} />}
 
-      <div className="flex items-center gap-6 pt-6 border-t border-[var(--color-border)]">
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 border-t border-[var(--color-border)]">
         <ReactionButtons
           contentType="post"
           contentId={String(пост.id)}
