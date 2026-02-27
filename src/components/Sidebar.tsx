@@ -20,7 +20,7 @@ const НАВИГАЦИЯ = [
 
 export function Sidebar({ hotQuestions = [], stats }: SidebarProps) {
   return (
-    <aside className="space-y-4">
+    <aside className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
       {/* Блок 1: Навигация */}
       <div className="border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] overflow-hidden">
         <div className="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-bg)]">

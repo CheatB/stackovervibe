@@ -45,13 +45,13 @@ export default async function QuestionsPage({
     <div>
       <BreadcrumbNav items={[{ label: 'questions', href: '/questions' }]} />
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
         <h1 className="text-2xl font-bold font-[family-name:var(--font-code)]">
           <span className="text-[var(--color-text-muted)]">$</span> ls questions/
         </h1>
         <Link
           href="/questions/ask"
-          className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-bg)] font-bold text-sm rounded font-[family-name:var(--font-code)] hover:opacity-90 transition neon-primary"
+          className="self-start sm:self-auto px-4 py-2 bg-[var(--color-primary)] text-[var(--color-bg)] font-bold text-sm rounded font-[family-name:var(--font-code)] hover:opacity-90 transition neon-primary"
         >
           + задать вопрос
         </Link>

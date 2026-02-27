@@ -75,7 +75,7 @@ export default async function HomePage({
       <FeedFilters />
 
       {/* Лента + Сайдбар */}
-      <div className="flex gap-6 mt-6">
+      <div className="flex flex-col lg:flex-row gap-6 mt-6">
         {/* Лента */}
         <div className="flex-1 min-w-0">
           <InfiniteScroll
@@ -86,8 +86,8 @@ export default async function HomePage({
           />
         </div>
 
-        {/* Сайдбар — скрыт на мобилке */}
-        <aside className="hidden lg:block w-72 flex-shrink-0">
+        {/* Сайдбар — компактный на мобиле, полный на десктопе */}
+        <aside className="w-full lg:w-72 lg:flex-shrink-0">
           <Sidebar
             hotQuestions={горячие.map((в: any) => ({
               title: в.title,

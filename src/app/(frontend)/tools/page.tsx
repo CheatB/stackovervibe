@@ -50,7 +50,7 @@ export default async function ToolsPage({ searchParams }: ПараметрыПо
           </p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {инструменты.map((инструмент) => (
             <ToolCard
               key={инструмент.id}

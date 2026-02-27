@@ -81,9 +81,6 @@ export function FeedCard({ элемент }: FeedCardProps) {
         </div>
       </div>
 
-      {/* Мобильная статистика — горизонтальная */}
-      <div className="sm:hidden w-full" />
-
       {/* Контент */}
       <div className="flex-1 min-w-0">
         {/* Мобильная статистика */}

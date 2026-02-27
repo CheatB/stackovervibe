@@ -28,7 +28,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         <div className="crt-overlay" />
 
         {/* Header — терминальный стиль */}
-        <header className="relative border-b border-[var(--color-border)] px-6 py-3">
+        <header className="relative border-b border-[var(--color-border)] px-4 sm:px-6 py-3">
           <nav className="max-w-6xl mx-auto flex items-center justify-between">
             <Link
               href="/"
@@ -72,10 +72,10 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         </header>
 
         {/* Контент */}
-        <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-8">{children}</main>
+        <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8">{children}</main>
 
         {/* Footer — ASCII + ретро */}
-        <footer className="border-t border-[var(--color-border)] px-6 py-8 text-center">
+        <footer className="border-t border-[var(--color-border)] px-4 sm:px-6 py-8 text-center">
           <div className="max-w-6xl mx-auto">
             <pre className="font-[family-name:var(--font-code)] text-[0.4rem] sm:text-[0.5rem] mb-6 text-[var(--color-border)] select-none leading-tight overflow-hidden">
 {`╔══════════════════════════════════════════╗
@@ -86,7 +86,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
 ║  > Фреймворк      > Вопросы             ║
 ╚══════════════════════════════════════════╝`}
             </pre>
-            <div className="flex justify-center gap-6 mb-4 font-[family-name:var(--font-code)] text-xs text-[var(--color-text-muted)]">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-4 font-[family-name:var(--font-code)] text-xs text-[var(--color-text-muted)]">
               <Link href="/path">path/</Link>
               <Link href="/tools">tools/</Link>
               <Link href="/framework">framework/</Link>

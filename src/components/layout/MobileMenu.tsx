@@ -19,7 +19,7 @@ export function MobileMenu() {
     <div className="md:hidden">
       <button
         onClick={() => setОткрыто(!открыто)}
-        className="text-[var(--color-primary)] font-[family-name:var(--font-code)] text-sm"
+        className="text-[var(--color-primary)] font-[family-name:var(--font-code)] text-sm px-3 py-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
         aria-label={открыто ? 'Закрыть меню' : 'Открыть меню'}
       >
         {открыто ? '[x]' : '[=]'}

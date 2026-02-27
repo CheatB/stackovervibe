@@ -43,7 +43,7 @@ export function FeedFilters() {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="flex flex-wrap items-center gap-3">
       {/* Десктоп: кнопки типов */}
       <div className="hidden sm:flex gap-1">
         {ТИПЫ_КОНТЕНТА.map((тип) => (
@@ -65,7 +65,7 @@ export function FeedFilters() {
       <select
         value={текущийТип}
         onChange={(e) => обновитьПараметр("type", e.target.value)}
-        className="sm:hidden px-3 py-1.5 text-sm rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
+        className="sm:hidden flex-1 px-3 py-1.5 text-sm rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
       >
         {ТИПЫ_КОНТЕНТА.map((тип) => (
           <option key={тип.value} value={тип.value}>
@@ -74,11 +74,11 @@ export function FeedFilters() {
         ))}
       </select>
 
-      {/* Сортировка */}
+      {/* Сортировка — прижата к правому краю через ml-auto */}
       <select
         value={текущаяСортировка}
         onChange={(e) => обновитьПараметр("sort", e.target.value)}
-        className="px-3 py-1.5 text-sm rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
+        className="ml-auto px-3 py-1.5 text-sm rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:border-[var(--color-primary)] outline-none font-[family-name:var(--font-code)]"
       >
         {ВАРИАНТЫ_СОРТИРОВКИ.map((вариант) => (
           <option key={вариант.value} value={вариант.value}>

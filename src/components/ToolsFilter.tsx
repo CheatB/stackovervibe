@@ -35,7 +35,7 @@ export function ToolsFilter({ текущийТип, текущаяКатегор
   return (
     <div className="flex flex-wrap gap-4">
       {/* Фильтр по типу */}
-      <div className="flex gap-1">
+      <div className="flex flex-wrap gap-1">
         {типыИнструментов.map((тип) => (
           <button
             key={тип.value}
