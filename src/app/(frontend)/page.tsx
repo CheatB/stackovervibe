@@ -4,7 +4,6 @@ import { FeedFilters } from "@/components/FeedFilters";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { Sidebar } from "@/components/Sidebar";
 import { HeroSection } from "@/components/HeroSection";
-import ScrollVelocity from "@/components/animations/ScrollVelocity";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -57,18 +56,6 @@ export default async function HomePage({
       {/* Разделитель */}
       <div className="text-center text-[var(--color-border)] font-[family-name:var(--font-code)] text-xs select-none mb-6 overflow-hidden">
         ════════════════════════════════════════
-      </div>
-
-      {/* ScrollVelocity — бегущая строка тегов */}
-      <div className="mb-6 -mx-4 sm:-mx-6 overflow-hidden opacity-40">
-        <ScrollVelocity
-          texts={[
-            "cursor · claude · copilot · vibe-coding · prompt · ai-tools · framework · hooks · rules ·",
-            "cursor · claude · copilot · vibe-coding · prompt · ai-tools · framework · hooks · rules ·",
-          ]}
-          velocity={40}
-          className="text-[var(--color-text-muted)]"
-        />
       </div>
 
       {/* Фильтры */}
