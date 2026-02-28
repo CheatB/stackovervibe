@@ -1,69 +1,71 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const Users: CollectionConfig = {
-  slug: 'users',
-  auth: true,
+  slug: "users",
+  auth: {
+    useAPIKey: true,
+  },
   admin: {
-    useAsTitle: 'email',
-    group: 'Система',
-    defaultColumns: ['email', 'displayName', 'role'],
+    useAsTitle: "email",
+    group: "Система",
+    defaultColumns: ["email", "displayName", "role"],
   },
   access: {
     read: () => true,
-    create: ({ req }) => req.user?.role === 'admin',
+    create: ({ req }) => req.user?.role === "admin",
     update: ({ req, id }) => {
-      if (req.user?.role === 'admin') return true
-      return req.user?.id === id
+      if (req.user?.role === "admin") return true;
+      return req.user?.id === id;
     },
-    delete: ({ req }) => req.user?.role === 'admin',
+    delete: ({ req }) => req.user?.role === "admin",
   },
   fields: [
     {
-      name: 'telegramId',
-      type: 'number',
+      name: "telegramId",
+      type: "number",
       unique: true,
-      label: 'Telegram ID',
+      label: "Telegram ID",
       admin: { readOnly: true },
     },
     {
-      name: 'telegramUsername',
-      type: 'text',
-      label: 'Telegram Username',
+      name: "telegramUsername",
+      type: "text",
+      label: "Telegram Username",
       admin: { readOnly: true },
     },
     {
-      name: 'displayName',
-      type: 'text',
-      label: 'Отображаемое имя',
+      name: "displayName",
+      type: "text",
+      label: "Отображаемое имя",
     },
     {
-      name: 'avatarUrl',
-      type: 'text',
-      label: 'URL аватарки',
+      name: "avatarUrl",
+      type: "text",
+      label: "URL аватарки",
       admin: { readOnly: true },
     },
     {
-      name: 'role',
-      type: 'select',
-      defaultValue: 'user',
-      label: 'Роль',
+      name: "role",
+      type: "select",
+      defaultValue: "user",
+      label: "Роль",
       options: [
-        { label: 'Администратор', value: 'admin' },
-        { label: 'Пользователь', value: 'user' },
+        { label: "Администратор", value: "admin" },
+        { label: "Пользователь", value: "user" },
       ],
-      admin: { position: 'sidebar' },
+      admin: { position: "sidebar" },
     },
     {
-      name: 'isBanned',
-      type: 'checkbox',
+      name: "isBanned",
+      type: "checkbox",
       defaultValue: false,
-      label: 'Забанен',
-      admin: { position: 'sidebar' },
+      label: "Забанен",
+      admin: { position: "sidebar" },
     },
     {
-      name: 'bio',
-      type: 'textarea',
-      label: 'О себе',
+      name: "bio",
+      type: "textarea",
+      label: "О себе",
     },
   ],
-}
+};
