@@ -45,7 +45,7 @@ export function FeedCard({ элемент }: FeedCardProps) {
       : элемент.excerpt;
 
   return (
-    <div className="flex gap-4 p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/50 transition-colors">
+    <div className="relative flex gap-4 p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/50 transition-colors">
       {/* Статистика — вертикальная на десктопе */}
       <div className="hidden sm:flex flex-col items-center gap-2 min-w-[56px] font-[family-name:var(--font-code)] text-xs">
         {/* Голоса */}
@@ -119,7 +119,7 @@ export function FeedCard({ элемент }: FeedCardProps) {
           <span>{элемент.views} просм.</span>
         </div>
 
-        {/* Заголовок с префиксом типа */}
+        {/* Заголовок с префиксом типа — stretched link покрывает всю карточку */}
         <h2 className="text-sm sm:text-base mb-1.5">
           <span
             className="font-[family-name:var(--font-code)] text-xs mr-2"
@@ -129,7 +129,7 @@ export function FeedCard({ элемент }: FeedCardProps) {
           </span>
           <Link
             href={элемент.url}
-            className="hover:text-[var(--color-primary)] transition-colors"
+            className="hover:text-[var(--color-primary)] transition-colors after:absolute after:inset-0 after:content-['']"
           >
             {элемент.title}
           </Link>
@@ -144,8 +144,8 @@ export function FeedCard({ элемент }: FeedCardProps) {
 
         {/* Теги и метаданные */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Теги */}
-          <div className="flex flex-wrap gap-1">
+          {/* Теги — relative z-10 чтобы были кликабельны поверх stretched link */}
+          <div className="relative z-10 flex flex-wrap gap-1">
             {элемент.tags.map((тег) => (
               <Link
                 key={тег.slug}
