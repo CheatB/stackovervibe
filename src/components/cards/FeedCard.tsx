@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { форматДату } from "@/lib/date";
 
 /** Элемент ленты — может быть гайдом, инструментом, вопросом, постом или фреймворком */
@@ -36,6 +39,7 @@ interface FeedCardProps {
 }
 
 export function FeedCard({ элемент }: FeedCardProps) {
+  const router = useRouter();
   const типИнфо = ПРЕФИКСЫ_ТИПОВ[элемент.type];
   const имяАвтора =
     элемент.author?.displayName || элемент.author?.telegramUsername || "Аноним";
@@ -44,8 +48,17 @@ export function FeedCard({ элемент }: FeedCardProps) {
       ? элемент.excerpt.slice(0, 147) + "..."
       : элемент.excerpt;
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("a, button")) return;
+    router.push(элемент.url);
+  };
+
   return (
-    <div className="relative flex gap-4 p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/50 transition-colors">
+    <div
+      onClick={handleCardClick}
+      className="relative flex gap-4 p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/50 transition-colors cursor-pointer"
+    >
       {/* Статистика — вертикальная на десктопе */}
       <div className="hidden sm:flex flex-col items-center gap-2 min-w-[56px] font-[family-name:var(--font-code)] text-xs">
         {/* Голоса */}
@@ -119,7 +132,7 @@ export function FeedCard({ элемент }: FeedCardProps) {
           <span>{элемент.views} просм.</span>
         </div>
 
-        {/* Заголовок с префиксом типа — stretched link покрывает всю карточку */}
+        {/* Заголовок с префиксом типа */}
         <h2 className="text-sm sm:text-base mb-1.5">
           <span
             className="font-[family-name:var(--font-code)] text-xs mr-2"
@@ -129,7 +142,7 @@ export function FeedCard({ элемент }: FeedCardProps) {
           </span>
           <Link
             href={элемент.url}
-            className="hover:text-[var(--color-primary)] transition-colors after:absolute after:inset-0 after:content-['']"
+            className="hover:text-[var(--color-primary)] transition-colors"
           >
             {элемент.title}
           </Link>
@@ -144,8 +157,7 @@ export function FeedCard({ элемент }: FeedCardProps) {
 
         {/* Теги и метаданные */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Теги — relative z-10 чтобы были кликабельны поверх stretched link */}
-          <div className="relative z-10 flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1">
             {элемент.tags.map((тег) => (
               <Link
                 key={тег.slug}
