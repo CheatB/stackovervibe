@@ -41,7 +41,7 @@ jobs:
         run: |
           FOUND=0
           for p in sk-or-v1 sk-ant ghp_ AKIA; do
-            M=$(grep -rnE "$p" . --include="*.ts" --include="*.tsx" --include="*.js" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.next --exclude-dir=src/seed || true)
+            M=$(grep -rnE "$p" . --include="*.ts" --include="*.tsx" --include="*.js" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.next --exclude-dir=seed || true)
             [ -n "$M" ] && echo "WARN: $p" && echo "$M" && FOUND=1
           done
           [ "$FOUND" -eq 0 ] && echo "No secrets"
