@@ -40,9 +40,14 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 12 — Первый фреймворк создан и задеплоен
-**Этап:** Всё задеплоено
+**Фаза:** 12+ — AdminEditButton
+**Этап:** Компонент создан, интегрирован в 5 страниц
 **Следующая задача:** —
+
+### AdminEditButton — кнопка редактирования для админа — ГОТОВО
+- [x] AdminEditButton.tsx — client-компонент, fetch /api/users/me, role === 'admin' → [edit]
+- [x] Интеграция: framework, tools, posts, questions, path (5 страниц)
+- [x] TypeScript check — 0 новых ошибок
 
 ### Фаза 10: Обогащение контента — ГОТОВО
 - [x] 10.1 enrich-tools.ts — скрипт обновления через Payload local API

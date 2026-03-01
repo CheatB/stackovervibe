@@ -10,6 +10,7 @@ import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { DownloadButton } from "@/components/DownloadButton";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { AdminEditButton } from "@/components/ui/AdminEditButton";
 import { форматДату } from "@/lib/date";
 
 const СТЕК_ЛЕЙБЛЫ: Record<string, string> = {
@@ -103,9 +104,10 @@ export default async function FrameworkDetailPage({
 
       {/* Заголовок */}
       <div className="mb-6">
-        <h1 className="text-xl md:text-2xl font-bold mb-3">
-          {фреймворк.title}
-        </h1>
+        <div className="flex items-center gap-2 mb-3">
+          <h1 className="text-xl md:text-2xl font-bold">{фреймворк.title}</h1>
+          <AdminEditButton collection="frameworks" id={фреймворк.id} />
+        </div>
 
         {/* Бейджи */}
         <div className="flex flex-wrap gap-2 mb-3">

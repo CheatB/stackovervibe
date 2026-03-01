@@ -1,91 +1,103 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { getGuideBySlug, getPathGuides } from '@/lib/payload'
-import { generatePageMetadata } from '@/lib/seo'
-import { RichTextRenderer } from '@/components/content/RichTextRenderer'
-import { JsonLd } from '@/components/seo/JsonLd'
-import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav'
-import { ReactionButtons } from '@/components/social/ReactionButtons'
-import { CommentList } from '@/components/social/CommentList'
-import { ShareButtons } from '@/components/social/ShareButtons'
-import { ViewsTracker } from '@/components/ViewsTracker'
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getGuideBySlug, getPathGuides } from "@/lib/payload";
+import { generatePageMetadata } from "@/lib/seo";
+import { RichTextRenderer } from "@/components/content/RichTextRenderer";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
+import { ReactionButtons } from "@/components/social/ReactionButtons";
+import { CommentList } from "@/components/social/CommentList";
+import { ShareButtons } from "@/components/social/ShareButtons";
+import { ViewsTracker } from "@/components/ViewsTracker";
+import { AdminEditButton } from "@/components/ui/AdminEditButton";
 
-const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 interface ПараметрыСтраницы {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
 /** Генерация метаданных для SEO */
-export async function generateMetadata({ params }: ПараметрыСтраницы): Promise<Metadata> {
-  const { slug } = await params
-  const гайд = await getGuideBySlug(slug)
-  if (!гайд) return { title: 'Не найдено' }
+export async function generateMetadata({
+  params,
+}: ПараметрыСтраницы): Promise<Metadata> {
+  const { slug } = await params;
+  const гайд = await getGuideBySlug(slug);
+  if (!гайд) return { title: "Не найдено" };
 
   return generatePageMetadata({
     title: гайд.seoTitle || гайд.title,
     description: гайд.seoDescription || гайд.excerpt || undefined,
     url: `/path/${slug}`,
-    type: 'article',
-  })
+    type: "article",
+  });
 }
 
 /** Статическая генерация — все опубликованные гайды из пути */
 export async function generateStaticParams() {
   try {
-    const гайды = await getPathGuides()
-    return гайды.map((г) => ({ slug: г.slug }))
+    const гайды = await getPathGuides();
+    return гайды.map((г) => ({ slug: г.slug }));
   } catch {
-    return []
+    return [];
   }
 }
 
 export default async function GuideSlugPage({ params }: ПараметрыСтраницы) {
-  const { slug } = await params
-  const гайд = await getGuideBySlug(slug)
+  const { slug } = await params;
+  const гайд = await getGuideBySlug(slug);
 
-  if (!гайд) notFound()
+  if (!гайд) notFound();
 
   /* Соседние гайды для навигации «предыдущий / следующий» */
-  const всеГайды = await getPathGuides()
-  const текущийИндекс = всеГайды.findIndex((г) => г.id === гайд.id)
-  const предыдущий = текущийИндекс > 0 ? всеГайды[текущийИндекс - 1] : null
+  const всеГайды = await getPathGuides();
+  const текущийИндекс = всеГайды.findIndex((г) => г.id === гайд.id);
+  const предыдущий = текущийИндекс > 0 ? всеГайды[текущийИндекс - 1] : null;
   const следующий =
     текущийИндекс >= 0 && текущийИндекс < всеГайды.length - 1
       ? всеГайды[текущийИндекс + 1]
-      : null
+      : null;
 
   return (
     <article className="max-w-3xl mx-auto space-y-8">
       <ViewsTracker contentType="guide" contentId={String(гайд.id)} />
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'Article',
+          "@context": "https://schema.org",
+          "@type": "Article",
           headline: гайд.title,
           description: гайд.excerpt || undefined,
           url: `${САЙТ_URL}/path/${гайд.slug}`,
-          publisher: { '@type': 'Organization', name: 'Stackovervibe' },
+          publisher: { "@type": "Organization", name: "Stackovervibe" },
           ...(гайд.publishedAt && { datePublished: гайд.publishedAt }),
           ...(гайд.updatedAt && { dateModified: гайд.updatedAt }),
         }}
       />
       <JsonLd
         data={{
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
           itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Главная', item: САЙТ_URL },
-            { '@type': 'ListItem', position: 2, name: 'Путь новичка', item: `${САЙТ_URL}/path` },
-            { '@type': 'ListItem', position: 3, name: гайд.title },
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Главная",
+              item: САЙТ_URL,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Путь новичка",
+              item: `${САЙТ_URL}/path`,
+            },
+            { "@type": "ListItem", position: 3, name: гайд.title },
           ],
         }}
       />
-      <BreadcrumbNav items={[
-        { label: 'path', href: '/path' },
-        { label: гайд.title },
-      ]} />
+      <BreadcrumbNav
+        items={[{ label: "path", href: "/path" }, { label: гайд.title }]}
+      />
 
       {/* Заголовок */}
       <header>
@@ -94,9 +106,14 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
             Шаг {текущийИндекс + 1} из {всеГайды.length}
           </span>
         )}
-        <h1 className="text-3xl md:text-4xl mt-2">{гайд.title}</h1>
+        <div className="flex items-center gap-2 mt-2">
+          <h1 className="text-3xl md:text-4xl">{гайд.title}</h1>
+          <AdminEditButton collection="guides" id={гайд.id} />
+        </div>
         {гайд.excerpt && (
-          <p className="text-lg text-[var(--color-text-muted)] mt-3">{гайд.excerpt}</p>
+          <p className="text-lg text-[var(--color-text-muted)] mt-3">
+            {гайд.excerpt}
+          </p>
         )}
       </header>
 
@@ -111,7 +128,10 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
       {/* Реакции и шеринг */}
       <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">
         <ReactionButtons contentType="guides" contentId={String(гайд.id)} />
-        <ShareButtons title={гайд.title} url={`${САЙТ_URL}/path/${гайд.slug}`} />
+        <ShareButtons
+          title={гайд.title}
+          url={`${САЙТ_URL}/path/${гайд.slug}`}
+        />
       </div>
 
       {/* Комментарии */}
@@ -124,7 +144,9 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
             href={`/path/${предыдущий.slug}`}
             className="group flex flex-col text-left"
           >
-            <span className="text-xs text-[var(--color-text-muted)]">← Назад</span>
+            <span className="text-xs text-[var(--color-text-muted)]">
+              ← Назад
+            </span>
             <span className="text-sm group-hover:text-[var(--color-primary)] transition-colors">
               {предыдущий.title}
             </span>
@@ -138,7 +160,9 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
             href={`/path/${следующий.slug}`}
             className="group flex flex-col text-right"
           >
-            <span className="text-xs text-[var(--color-text-muted)]">Далее →</span>
+            <span className="text-xs text-[var(--color-text-muted)]">
+              Далее →
+            </span>
             <span className="text-sm group-hover:text-[var(--color-primary)] transition-colors">
               {следующий.title}
             </span>
@@ -148,5 +172,5 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
         )}
       </nav>
     </article>
-  )
+  );
 }

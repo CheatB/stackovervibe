@@ -12,6 +12,7 @@ import { ReactionButtons } from "@/components/social/ReactionButtons";
 import { CommentList } from "@/components/social/CommentList";
 import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
+import { AdminEditButton } from "@/components/ui/AdminEditButton";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -136,7 +137,10 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
             </a>
           )}
         </div>
-        <h1 className="text-3xl md:text-4xl">{инструмент.title}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl md:text-4xl">{инструмент.title}</h1>
+          <AdminEditButton collection="tools" id={инструмент.id} />
+        </div>
         {инструмент.shortDescription && (
           <p className="text-lg text-[var(--color-text-muted)]">
             {инструмент.shortDescription}

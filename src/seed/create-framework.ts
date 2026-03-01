@@ -18,14 +18,14 @@ const фреймворкДанные = {
   title: "Вайбкодинг с нуля — пошаговая методология",
   slug: "vibecoding-methodology",
   description:
-    "Полная методология разработки проектов с помощью AI: от идеи до деплоя. Проверено на реальных проектах. Без воды, без магии — конкретные шаги, которые работают.",
+    "Полная методология разработки проектов с помощью AI: от идеи до деплоя. Security Pipeline, Quality Gates, Anti-Mirage. Проверено на реальных проектах.",
   stack: "claude" as const,
   level: "beginner" as const,
   tags: [] as number[], // ID тегов — заполняются по месту (на проде: 27, 26, 29, 28, 30)
   status: "published" as const,
   seoTitle: "Вайбкодинг с нуля — пошаговая методология разработки с AI",
   seoDescription:
-    "Полное руководство по вайбкодингу: от нуля до рабочего проекта. 7 фаз, конкретные промпты, реальные примеры. Проверено на 6 проектах.",
+    "Полное руководство по вайбкодингу: 7 фаз, Security Pipeline, Quality Gates, Anti-Mirage check. Проверено на 6 проектах.",
 
   body: root([
     // ======== ПРОСТЫМ ЯЗЫКОМ ========
@@ -388,6 +388,61 @@ await payload.update({
       "JSON-LD разметка (Article, HowTo, BreadcrumbList)",
       "sitemap.xml обновляется автоматически",
     ]),
+
+    hr(),
+
+    // ======== SECURITY PIPELINE ========
+    heading(2, "Фаза 4.5: Security Pipeline"),
+    paragraph(
+      "Безопасность — не финальная проверка, а встроенный этап. Три инструмента работают автоматически на каждом коммите и PR.",
+    ),
+
+    heading(3, "Vet — LLM-верификация кода"),
+    paragraph(
+      "**Vet** (verify-everything) — CLI-инструмент, который анализирует код через Claude. Ловит то, что не видят линтеры: hardcoded секреты в нестандартных местах, race conditions, утечки ресурсов, небезопасный код.",
+    ),
+    list([
+      "**Pre-commit hook** — проверяет каждый коммит автоматически",
+      "**CI/CD** — анализирует все изменения в Pull Request",
+      "**Еженедельный аудит** — полный скан проекта по расписанию",
+    ]),
+    codeBlock(
+      `# Локальная проверка
+vet "описание изменений" --agentic --quiet
+
+# Security-фокус
+vet "security" --enabled-issue-codes hardcoded_secret insecure_code race_condition`,
+      "bash",
+    ),
+
+    heading(3, "agents-lint — свежесть CLAUDE.md"),
+    paragraph(
+      "CLAUDE.md врёт — это нормально. Проект развивается, пути меняются, скрипты переименовываются. **agents-lint** проверяет что CLAUDE.md не протух: все пути существуют, скрипты запускаются, секции Setup/Build на месте.",
+    ),
+    codeBlock(
+      `# Проверка свежесть
+npx agents-lint
+
+# Результат: Freshness Score 0-100
+# < 80 = CLAUDE.md нужно обновить`,
+      "bash",
+    ),
+
+    heading(3, "Автоматизация: три уровня"),
+    list(
+      [
+        "**Коммит** — pre-commit hook запускает vet + agents-lint автоматически",
+        "**Pull Request** — GitHub Actions: vet-review + agents-lint + security-scan",
+        "**Еженедельно** — полный аудит: npm audit + поиск секретов + vet security",
+      ],
+      true,
+    ),
+    paragraph(
+      "Все шаблоны хранятся централизованно. При создании нового проекта — одна команда копирует hook и CI workflows.",
+    ),
+    quote(
+      "Правило: security-инструменты не замедляют разработку — они работают в фоне. Ты узнаёшь о проблемах ДО того, как они попадут в прод.",
+    ),
 
     hr(),
 
