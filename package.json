@@ -11,7 +11,8 @@
     "payload": "payload",
     "generate:types": "payload generate:types",
     "generate:schema": "payload generate:db-schema",
-    "seed": "payload run src/seed/index.ts"
+    "seed": "payload run src/seed/index.ts",
+    "test": "npx tsc --noEmit"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.77.0",
