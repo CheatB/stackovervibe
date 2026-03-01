@@ -1,0 +1,64 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 7 * * 1"
+
+jobs:
+  npm-audit:
+    name: npm audit
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: npm audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+      - run: npm audit --json > npm-audit.json || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: npm-audit
+          path: npm-audit.json
+          retention-days: 30
+
+  secrets-scan:
+    name: Secret leak detection
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan
+        run: |
+          FOUND=0
+          for p in sk-or-v1 sk-ant ghp_ AKIA; do
+            M=$(grep -rnE "$p" . --include="*.ts" --include="*.tsx" --include="*.js" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.next || true)
+            [ -n "$M" ] && echo "WARN: $p" && echo "$M" && FOUND=1
+          done
+          [ "$FOUND" -eq 0 ] && echo "No secrets"
+
+  vet-security:
+    name: Vet security
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install verify-everything
+      - name: Vet scan
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          vet "security" --base-commit HEAD~5 --enabled-issue-codes hardcoded_secret insecure_code race_condition resource_leakage --confidence-threshold 0.8 --quiet || true

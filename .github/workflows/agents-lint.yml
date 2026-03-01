@@ -1,0 +1,17 @@
+name: Agents Lint
+
+on:
+  push:
+    branches: [main]
+    paths: ['CLAUDE.md', 'AGENTS.md', '.claude/**']
+  pull_request:
+    branches: [main]
+    paths: ['CLAUDE.md', 'AGENTS.md', '.claude/**']
+
+jobs:
+  agents-lint:
+    name: CLAUDE.md freshness
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx agents-lint --max-warnings 0

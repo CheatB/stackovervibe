@@ -1,0 +1,33 @@
+name: Vet Code Review
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  vet-check:
+    name: Vet LLM Analysis
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install vet
+        run: pip install verify-everything
+
+      - name: Run vet
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          vet "PR review" \
+            --base-commit origin/main \
+            --output-format github \
+            --confidence-threshold 0.8 \
+            --quiet
+        continue-on-error: true
