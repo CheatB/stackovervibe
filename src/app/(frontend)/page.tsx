@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getFeedPage, getHotQuestions, getSiteStats } from "@/lib/payload";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { FeedFilters } from "@/components/FeedFilters";
@@ -56,6 +57,22 @@ export default async function HomePage({
       {/* Разделитель */}
       <div className="text-center text-[var(--color-border)] font-[family-name:var(--font-code)] text-xs select-none mb-6 overflow-hidden">
         ════════════════════════════════════════
+      </div>
+
+      {/* CTA — создать контент */}
+      <div className="flex flex-wrap gap-3 mb-6 font-[family-name:var(--font-code)] text-sm">
+        <Link
+          href="/questions/ask"
+          className="px-4 py-2 rounded border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 transition-colors"
+        >
+          {">"} задать вопрос
+        </Link>
+        <Link
+          href="/framework/create"
+          className="px-4 py-2 rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)]/10 transition-colors"
+        >
+          {">"} создать фреймворк
+        </Link>
       </div>
 
       {/* Фильтры */}
