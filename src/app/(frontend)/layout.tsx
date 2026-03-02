@@ -12,16 +12,30 @@ import "@/styles/effects.css";
 /** Все фронтенд-страницы рендерятся динамически (SSR) — данные из CMS всегда свежие */
 export const dynamic = "force-dynamic";
 
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const ОПИСАНИЕ =
+  "Структурированная база знаний по вайбкодингу. Гайды, инструменты, конфиги — всё в одном месте.";
+
 export const metadata: Metadata = {
   title: {
     default: "Stackovervibe — База знаний по вайбкодингу",
     template: "%s — Stackovervibe",
   },
-  description:
-    "Структурированная база знаний по вайбкодингу. Гайды, инструменты, конфиги — всё в одном месте.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  ),
+  description: ОПИСАНИЕ,
+  metadataBase: new URL(САЙТ_URL),
+  openGraph: {
+    title: "Stackovervibe — База знаний по вайбкодингу",
+    description: ОПИСАНИЕ,
+    url: САЙТ_URL,
+    siteName: "Stackovervibe",
+    type: "website",
+    locale: "ru_RU",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stackovervibe — База знаний по вайбкодингу",
+    description: ОПИСАНИЕ,
+  },
 };
 
 export default function FrontendLayout({
