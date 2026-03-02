@@ -78,7 +78,8 @@ export function FeedCard({ элемент }: FeedCardProps) {
         </div>
 
         {/* Ответы / Скачивания */}
-        {элемент.type === "framework" ? (
+        {элемент.type === "framework" ||
+        (элемент.type === "tool" && элемент.downloads > 0) ? (
           <div className="flex flex-col items-center px-1.5 py-0.5 rounded border border-[var(--color-border)] text-[var(--color-text-muted)]">
             <span className="text-base font-bold">{элемент.downloads}</span>
             <span className="text-[10px]">скач.</span>
@@ -118,7 +119,8 @@ export function FeedCard({ элемент }: FeedCardProps) {
           >
             ↑{элемент.votes} голос
           </span>
-          {элемент.type === "framework" ? (
+          {элемент.type === "framework" ||
+          (элемент.type === "tool" && элемент.downloads > 0) ? (
             <span>↓{элемент.downloads} скач.</span>
           ) : (
             <span

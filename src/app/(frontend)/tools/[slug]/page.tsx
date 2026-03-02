@@ -13,6 +13,7 @@ import { CommentList } from "@/components/social/CommentList";
 import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
+import { DownloadButton } from "@/components/DownloadButton";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -126,16 +127,6 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
               {инструмент.category.title}
             </span>
           )}
-          {инструмент.githubUrl && (
-            <a
-              href={инструмент.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-[var(--color-accent)] hover:text-[var(--color-primary)]"
-            >
-              GitHub →
-            </a>
-          )}
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-3xl md:text-4xl">{инструмент.title}</h1>
@@ -147,6 +138,25 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
           </p>
         )}
       </header>
+
+      {/* Забрать себе */}
+      <div className="flex items-center gap-4 p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)]">
+        <DownloadButton
+          contentId={String(инструмент.id)}
+          slug={инструмент.slug}
+          contentType="tool"
+        />
+        {инструмент.githubUrl && (
+          <a
+            href={инструмент.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 text-sm font-bold font-[family-name:var(--font-code)] text-[var(--color-accent)] border border-[var(--color-accent)] rounded hover:bg-[var(--color-accent)]/10 transition"
+          >
+            GitHub ↗
+          </a>
+        )}
+      </div>
 
       {/* Код инструмента */}
       {инструмент.code && (

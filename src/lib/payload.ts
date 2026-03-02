@@ -450,7 +450,7 @@ export async function getFeedPage(options: {
               votes: ((и.likes as number) || 0) - ((и.dislikes as number) || 0),
               views: (и as any).views || 0,
               answersCount: 0,
-              downloads: 0,
+              downloads: (и as any).downloads || 0,
               tags: Array.isArray(и.tags)
                 ? и.tags
                     .filter((t: any) => typeof t === "object")

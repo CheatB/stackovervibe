@@ -40,9 +40,18 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 12+ — AdminEditButton
-**Этап:** Компонент создан, интегрирован в 5 страниц
+**Фаза:** 13 — Скачать + GitHub для инструментов (vibe-tools)
+**Этап:** Реализовано, готово к коммиту
 **Следующая задача:** —
+
+### Фаза 13: Скачать .md + GitHub для инструментов — ГОТОВО
+- [x] Tools.ts — поле downloads (number, default 0, readOnly)
+- [x] api/tools/[id]/download/route.ts — POST API, инкремент downloads, markdown с type-specific полями
+- [x] DownloadButton.tsx — универсальный (contentType: framework | tool)
+- [x] tools/[slug]/page.tsx — блок "Забрать себе" (DownloadButton + GitHub ↗)
+- [x] FeedCard.tsx — downloads для tools (если > 0)
+- [x] payload.ts — feed читает downloads из tool данных
+- [x] TypeScript check — 0 новых ошибок
 
 ### AdminEditButton — кнопка редактирования для админа — ГОТОВО
 - [x] AdminEditButton.tsx — client-компонент, fetch /api/users/me, role === 'admin' → [edit]

@@ -3,17 +3,22 @@
 import { useState } from "react";
 
 interface DownloadButtonProps {
-  frameworkId: string;
+  contentId: string;
   slug: string;
+  contentType?: "framework" | "tool";
 }
 
-export function DownloadButton({ frameworkId, slug }: DownloadButtonProps) {
+export function DownloadButton({
+  contentId,
+  slug,
+  contentType = "framework",
+}: DownloadButtonProps) {
   const [загрузка, setЗагрузка] = useState(false);
 
   const скачать = async () => {
     setЗагрузка(true);
     try {
-      const ответ = await fetch(`/api/frameworks/${frameworkId}/download`, {
+      const ответ = await fetch(`/api/${contentType}s/${contentId}/download`, {
         method: "POST",
       });
 

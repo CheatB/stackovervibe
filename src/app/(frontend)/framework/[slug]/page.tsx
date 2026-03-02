@@ -181,7 +181,7 @@ export default async function FrameworkDetailPage({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-4">
             <DownloadButton
-              frameworkId={String(фреймворк.id)}
+              contentId={String(фреймворк.id)}
               slug={фреймворк.slug}
             />
             <ReactionButtons
