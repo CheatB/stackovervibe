@@ -1,32 +1,17 @@
-'use client'
-
-import { useState } from 'react'
+import { CopyButton } from "./CopyButton";
+import { DownloadCodeButton } from "./DownloadCodeButton";
 
 interface CodeBlockProps {
-  code: string
-  language?: string
-  filename?: string
+  code: string;
+  language?: string;
+  filename?: string;
 }
 
-export function CodeBlock({ code, language = 'text', filename }: CodeBlockProps) {
-  const [скопировано, setСкопировано] = useState(false)
-
-  const копировать = async () => {
-    await navigator.clipboard.writeText(code)
-    setСкопировано(true)
-    setTimeout(() => setСкопировано(false), 2000)
-  }
-
-  const скачать = () => {
-    const blob = new Blob([code], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = filename || `code.${language}`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
+export function CodeBlock({
+  code,
+  language = "text",
+  filename,
+}: CodeBlockProps) {
   return (
     <div className="my-6 rounded-lg border border-[var(--color-border)] overflow-hidden bg-[#0d0d0d]">
       {/* Шапка — терминальный стиль */}
@@ -43,19 +28,12 @@ export function CodeBlock({ code, language = 'text', filename }: CodeBlockProps)
           )}
         </div>
         <div className="flex gap-2 flex-shrink-0">
-          <button
-            onClick={копировать}
-            className="px-3 py-1 text-xs rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
-          >
-            {скопировано ? 'Скопировано!' : 'Копировать'}
-          </button>
+          <CopyButton code={code} />
           {filename && (
-            <button
-              onClick={скачать}
-              className="px-3 py-1 text-xs rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
-            >
-              Скачать
-            </button>
+            <DownloadCodeButton
+              code={code}
+              filename={filename || `code.${language}`}
+            />
           )}
         </div>
       </div>
@@ -67,5 +45,5 @@ export function CodeBlock({ code, language = 'text', filename }: CodeBlockProps)
         </code>
       </pre>
     </div>
-  )
+  );
 }

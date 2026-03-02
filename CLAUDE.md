@@ -40,8 +40,8 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 13 — Скачать + GitHub для инструментов (vibe-tools)
-**Этап:** Реализовано, готово к коммиту
+**Фаза:** 13+ — Оптимизация производительности
+**Этап:** 4 оптимизации готовы, ждёт коммит + деплой
 **Следующая задача:** —
 
 ### Фаза 13: Скачать .md + GitHub для инструментов — ГОТОВО
@@ -51,6 +51,13 @@ npm run lint       # ESLint
 - [x] tools/[slug]/page.tsx — блок "Забрать себе" (DownloadButton + GitHub ↗)
 - [x] FeedCard.tsx — downloads для tools (если > 0)
 - [x] payload.ts — feed читает downloads из tool данных
+- [x] TypeScript check — 0 новых ошибок
+
+### Оптимизация производительности длинных страниц — ГОТОВО
+- [x] ClickSpark — RAF только при клике, 0fps в покое
+- [x] CRT-overlay — GPU-слой (will-change + translateZ)
+- [x] CodeBlock — серверный компонент + tiny client кнопки (CopyButton, DownloadCodeButton)
+- [x] content-visibility: auto на секциях и pre-блоках
 - [x] TypeScript check — 0 новых ошибок
 
 ### AdminEditButton — кнопка редактирования для админа — ГОТОВО

@@ -32,7 +32,6 @@ export default function ClickSpark({
 }: ClickSparkProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
-  const startTimeRef = useRef<number | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -96,19 +95,20 @@ export default function ClickSpark({
     [easing],
   );
 
-  useEffect(() => {
-    if (reducedMotion) return;
+  const animatingRef = useRef(false);
+
+  const startAnimation = useCallback(() => {
+    if (animatingRef.current || reducedMotion) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationId: number;
-    const draw = (timestamp: number) => {
-      if (!startTimeRef.current) startTimeRef.current = timestamp;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    animatingRef.current = true;
+    const resolvedColor = getResolvedColor();
 
-      const resolvedColor = getResolvedColor();
+    const draw = (timestamp: number) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       sparksRef.current = sparksRef.current.filter((spark) => {
         const elapsed = timestamp - spark.startTime;
@@ -131,15 +131,16 @@ export default function ClickSpark({
         return true;
       });
 
-      animationId = requestAnimationFrame(draw);
+      if (sparksRef.current.length > 0) {
+        requestAnimationFrame(draw);
+      } else {
+        animatingRef.current = false;
+      }
     };
-    animationId = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(animationId);
+    requestAnimationFrame(draw);
   }, [
-    sparkColor,
     sparkSize,
     sparkRadius,
-    sparkCount,
     duration,
     easeFunc,
     extraScale,
@@ -162,6 +163,7 @@ export default function ClickSpark({
       startTime: now,
     }));
     sparksRef.current.push(...newSparks);
+    startAnimation();
   };
 
   return (

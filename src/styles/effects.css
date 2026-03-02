@@ -11,6 +11,8 @@
     transparent 1px,
     transparent 2px
   );
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* === Глитч-эффект (4.3.2) === */
