@@ -1,7 +1,18 @@
 import type { CollectionConfig } from "payload";
+import { транслит } from "@/lib/utils";
 
 export const Tools: CollectionConfig = {
   slug: "tools",
+  hooks: {
+    beforeChange: [
+      ({ data, operation }) => {
+        if (operation === "create" && data?.title && !data?.slug) {
+          data.slug = транслит(data.title);
+        }
+        return data;
+      },
+    ],
+  },
   admin: {
     useAsTitle: "title",
     group: "Контент",
@@ -13,7 +24,10 @@ export const Tools: CollectionConfig = {
       if (req.user?.role === "admin") return true;
       return { status: { equals: "published" } };
     },
-    create: ({ req }) => req.user?.role === "admin",
+    create: ({ req }) => {
+      if (!req.user) return false;
+      return !req.user.isBanned;
+    },
     update: ({ req }) => req.user?.role === "admin",
     delete: ({ req }) => req.user?.role === "admin",
   },

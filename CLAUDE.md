@@ -40,9 +40,18 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 13+ — Оптимизация производительности
-**Этап:** 4 оптимизации готовы, ждёт коммит + деплой
+**Фаза:** 14 — UGC Create Pages
+**Этап:** Готово, ждёт коммит + деплой
 **Следующая задача:** —
+
+### Фаза 14: UGC Create Pages — ГОТОВО
+- [x] Tools.ts — access.create открыт для не-забаненных юзеров + beforeChange хук (авто-слаг)
+- [x] api/tools/route.ts — POST API создания инструментов (auth, валидация, draft статус)
+- [x] api/posts/route.ts — POST API создания постов (auth, валидация, pending статус)
+- [x] tools/create/page.tsx — форма: название, тип, описание, код, markdown, GitHub URL
+- [x] posts/new/page.tsx — форма: заголовок + контент (markdown)
+- [x] page.tsx — 4 CTA кнопки: вопрос, фреймворк, инструмент, пост
+- [x] TypeScript check — 0 новых ошибок
 
 ### Фаза 13: Скачать .md + GitHub для инструментов — ГОТОВО
 - [x] Tools.ts — поле downloads (number, default 0, readOnly)

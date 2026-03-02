@@ -73,6 +73,18 @@ export default async function HomePage({
         >
           {">"} создать фреймворк
         </Link>
+        <Link
+          href="/tools/create"
+          className="px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors"
+        >
+          {">"} создать инструмент
+        </Link>
+        <Link
+          href="/posts/new"
+          className="px-4 py-2 rounded border border-[var(--color-text-muted)] text-[var(--color-text-muted)] hover:bg-[var(--color-text-muted)]/10 transition-colors"
+        >
+          {">"} написать пост
+        </Link>
       </div>
 
       {/* Фильтры */}
