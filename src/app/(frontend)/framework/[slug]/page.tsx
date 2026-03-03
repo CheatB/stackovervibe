@@ -65,7 +65,7 @@ export default async function FrameworkDetailPage({
     фреймворк.editedAt && фреймворк.editedAt !== фреймворк.createdAt;
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-[720px] mx-auto">
       <ViewsTracker contentType="framework" contentId={String(фреймворк.id)} />
 
       {/* JSON-LD CreativeWork */}
@@ -129,23 +129,39 @@ export default async function FrameworkDetailPage({
         </p>
 
         {/* Мета */}
-        <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">
-          <span>
+        <div className="post-meta mt-3">
+          <span className="post-meta-item">
             опубликован{" "}
             {форматДату(фреймворк.publishedAt || фреймворк.createdAt)}
           </span>
           {isРедактирован && (
-            <span>изменён {форматДату(фреймворк.editedAt)}</span>
+            <>
+              <span className="post-meta-divider" />
+              <span className="post-meta-item">
+                изменён {форматДату(фреймворк.editedAt)}
+              </span>
+            </>
           )}
-          <span>просмотров: {фреймворк.views || 0}</span>
-          <span>скачиваний: {фреймворк.downloads || 0}</span>
+          <span className="post-meta-divider" />
+          <span className="post-meta-item">
+            просмотров: {фреймворк.views || 0}
+          </span>
+          <span className="post-meta-divider" />
+          <span className="post-meta-item">
+            скачиваний: {фреймворк.downloads || 0}
+          </span>
         </div>
       </div>
 
       {/* Тело */}
       <div className="mb-6 pb-6 border-b border-[var(--color-border)]">
         <div className="prose-custom mb-4">
-          {фреймворк.body && <RichTextRenderer content={фреймворк.body} />}
+          {фреймворк.body && (
+            <RichTextRenderer
+              content={фреймворк.body}
+              className="article-content"
+            />
+          )}
         </div>
 
         {/* GitHub */}

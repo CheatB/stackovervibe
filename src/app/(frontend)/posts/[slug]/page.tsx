@@ -56,7 +56,7 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
   }));
 
   return (
-    <article className="max-w-3xl mx-auto space-y-8">
+    <article className="max-w-[720px] mx-auto space-y-8">
       <ViewsTracker contentType="post" contentId={String(пост.id)} />
       <JsonLd
         data={{
@@ -79,42 +79,51 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
         items={[{ label: "posts", href: "/posts" }, { label: пост.title }]}
       />
 
-      <header>
+      <header className="mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <h1 className="text-3xl md:text-4xl">{пост.title}</h1>
+          <h1 className="text-2xl md:text-3xl">{пост.title}</h1>
           <AdminEditButton collection="posts" id={пост.id} />
         </div>
-        <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
+        <div className="post-meta">
           {автор && (
-            <span className="flex items-center gap-2">
-              {автор.avatarUrl && (
-                <img
-                  src={автор.avatarUrl}
-                  alt=""
-                  className="w-6 h-6 rounded-full"
-                />
-              )}
-              {автор.telegramUsername ? (
-                <a
-                  href={`/profile/${автор.telegramUsername}`}
-                  className="hover:text-[var(--color-primary)]"
-                >
-                  {автор.displayName || автор.telegramUsername}
-                </a>
-              ) : (
-                <span>{автор.displayName || "Аноним"}</span>
-              )}
-            </span>
+            <>
+              <span className="post-meta-item">
+                {автор.avatarUrl && (
+                  <img
+                    src={автор.avatarUrl}
+                    alt=""
+                    className="w-5 h-5 rounded-full"
+                  />
+                )}
+                {автор.telegramUsername ? (
+                  <a
+                    href={`/profile/${автор.telegramUsername}`}
+                    className="hover:text-[var(--color-primary)] no-underline"
+                  >
+                    {автор.displayName || автор.telegramUsername}
+                  </a>
+                ) : (
+                  <span>{автор.displayName || "Аноним"}</span>
+                )}
+              </span>
+              <span className="post-meta-divider" />
+            </>
           )}
           {пост.publishedAt && (
-            <time>
-              {new Date(пост.publishedAt).toLocaleDateString("ru-RU")}
-            </time>
+            <>
+              <span className="post-meta-item">
+                {new Date(пост.publishedAt).toLocaleDateString("ru-RU")}
+              </span>
+              <span className="post-meta-divider" />
+            </>
           )}
+          <span className="post-meta-item">{пост.views ?? 0} просмотров</span>
         </div>
       </header>
 
-      {пост.content && <RichTextRenderer content={пост.content} />}
+      {пост.content && (
+        <RichTextRenderer content={пост.content} className="article-content" />
+      )}
 
       <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 border-t border-[var(--color-border)]">
         <ReactionButtons
