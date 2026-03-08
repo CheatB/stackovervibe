@@ -85,8 +85,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const постыUrlы: MetadataRoute.Sitemap = посты.docs.map((п) => ({
     url: `${САЙТ_URL}/posts/${п.slug}`,
     lastModified: п.updatedAt ? new Date(п.updatedAt as string) : undefined,
-    changeFrequency: "monthly",
-    priority: 0.6,
+    changeFrequency: "weekly",
+    priority: 0.8,
   }));
 
   const тегиUrlы: MetadataRoute.Sitemap = теги.docs.map((т) => ({
