@@ -13,6 +13,7 @@ import { ViewsTracker } from "@/components/ViewsTracker";
 import { DownloadButton } from "@/components/DownloadButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
+import { RelatedContent } from "@/components/seo/RelatedContent";
 import { форматДату } from "@/lib/date";
 
 const СТЕК_ЛЕЙБЛЫ: Record<string, string> = {
@@ -227,6 +228,13 @@ export default async function FrameworkDetailPage({
           </div>
         </div>
       </div>
+
+      {/* Перелинковка по тегам */}
+      <RelatedContent
+        тегиSlug={теги.map((т: any) => т.slug)}
+        исключитьId={фреймворк.id}
+        исключитьТип="framework"
+      />
 
       {/* Комментарии */}
       <CommentList contentType="framework" contentId={String(фреймворк.id)} />

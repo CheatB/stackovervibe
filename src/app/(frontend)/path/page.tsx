@@ -7,10 +7,13 @@ import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import AnimatedContent from "@/components/animations/AnimatedContent";
 import BlurText from "@/components/animations/BlurText";
 
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
   title: "Путь новичка",
   description:
     "Пошаговый маршрут от нуля до рабочей среды вайбкодинга. Без воды, по делу.",
+  alternates: { canonical: `${САЙТ_URL}/path` },
 };
 
 export default async function PathPage() {

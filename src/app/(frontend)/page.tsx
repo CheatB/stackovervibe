@@ -1,15 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getFeedPage, getHotQuestions, getSiteStats } from "@/lib/payload";
 
 /** ISR: обновляем кэш раз в 60 сек */
 export const revalidate = 60;
+
+const САЙТ = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export const metadata: Metadata = {
+  alternates: { canonical: САЙТ },
+};
 import { JsonLd } from "@/components/seo/JsonLd";
 import { FeedFilters } from "@/components/FeedFilters";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
 import { Sidebar } from "@/components/Sidebar";
 import { HeroSection } from "@/components/HeroSection";
-
-const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default async function HomePage({
   searchParams,
@@ -42,13 +47,24 @@ export default async function HomePage({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Stackovervibe",
-          url: САЙТ_URL,
+          url: САЙТ,
           description: "Структурированная база знаний по вайбкодингу.",
           potentialAction: {
             "@type": "SearchAction",
-            target: `${САЙТ_URL}/search?q={search_term_string}`,
+            target: `${САЙТ}/search?q={search_term_string}`,
             "query-input": "required name=search_term_string",
           },
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Stackovervibe",
+          url: САЙТ,
+          description:
+            "Структурированная база знаний по вайбкодингу — гайды, инструменты, фреймворки.",
+          sameAs: ["https://t.me/CheatB", "https://github.com/CheatB"],
         }}
       />
 

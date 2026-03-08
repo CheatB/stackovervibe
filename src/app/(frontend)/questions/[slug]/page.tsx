@@ -12,6 +12,7 @@ import { AnswerForm } from "./AnswerForm";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
+import { RelatedContent } from "@/components/seo/RelatedContent";
 import { форматДату } from "@/lib/date";
 
 export async function generateMetadata({
@@ -246,6 +247,13 @@ export default async function QuestionPage({
           </p>
         )}
       </div>
+
+      {/* Перелинковка по тегам */}
+      <RelatedContent
+        тегиSlug={теги.map((т: any) => т.slug)}
+        исключитьId={вопрос.id}
+        исключитьТип="question"
+      />
 
       {/* Форма ответа */}
       {!isЗакрыт && (

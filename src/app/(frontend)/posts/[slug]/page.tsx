@@ -12,6 +12,7 @@ import { CommentList } from "@/components/social/CommentList";
 import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
+import { RelatedContent } from "@/components/seo/RelatedContent";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -139,6 +140,19 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
           title={пост.title}
         />
       </div>
+
+      {/* Перелинковка по тегам */}
+      <RelatedContent
+        тегиSlug={
+          Array.isArray((пост as any).tags)
+            ? (пост as any).tags
+                .filter((t: any) => typeof t === "object")
+                .map((t: any) => t.slug)
+            : []
+        }
+        исключитьId={пост.id}
+        исключитьТип="post"
+      />
 
       <section>
         <h2 className="text-xl mb-4">Комментарии ({комментарии.length})</h2>

@@ -8,10 +8,13 @@ import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import AnimatedContent from "@/components/animations/AnimatedContent";
 import BlurText from "@/components/animations/BlurText";
 
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
   title: "Инструменты",
   description:
     "Каталог скиллов, хуков, команд и правил для вайбкодинга. Копируй и используй.",
+  alternates: { canonical: `${САЙТ_URL}/tools` },
 };
 
 interface ПараметрыПоиска {

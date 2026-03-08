@@ -664,3 +664,127 @@ export async function getSiteStats() {
     frameworks: фреймворки.totalDocs,
   };
 }
+
+/** Связанный контент по общим тегам (для перелинковки) */
+export async function getRelatedByTags(
+  тегиSlug: string[],
+  исключитьId: number | string,
+  исключитьТип: string,
+  лимит = 5,
+): Promise<
+  Array<{
+    id: number | string;
+    type: string;
+    title: string;
+    url: string;
+    excerpt: string;
+  }>
+> {
+  if (тегиSlug.length === 0) return [];
+
+  const payload = await getPayloadClient();
+  const результаты: Array<{
+    id: number | string;
+    type: string;
+    title: string;
+    url: string;
+    excerpt: string;
+    совпадений: number;
+  }> = [];
+
+  const [инструменты, вопросы, посты, фреймворки] = await Promise.all([
+    payload.find({
+      collection: "tools",
+      where: { status: { equals: "published" } },
+      limit: 50,
+      depth: 1,
+      select: { title: true, slug: true, shortDescription: true, tags: true },
+    }),
+    payload.find({
+      collection: "questions",
+      where: { status: { in: ["published", "closed"] } },
+      limit: 50,
+      depth: 1,
+      select: { title: true, slug: true, tags: true },
+    }),
+    payload.find({
+      collection: "posts",
+      where: { status: { equals: "published" } },
+      limit: 50,
+      depth: 1,
+      select: { title: true, slug: true, tags: true },
+    }),
+    payload.find({
+      collection: "frameworks",
+      where: { status: { equals: "published" } },
+      limit: 50,
+      depth: 1,
+      select: { title: true, slug: true, description: true, tags: true },
+    }),
+  ]);
+
+  const считатьСовпадения = (теги: any[]) => {
+    if (!Array.isArray(теги)) return 0;
+    return теги.filter(
+      (t: any) => typeof t === "object" && тегиSlug.includes(t.slug),
+    ).length;
+  };
+
+  for (const и of инструменты.docs) {
+    const совп = считатьСовпадения(и.tags as any[]);
+    if (совп > 0 && !(исключитьТип === "tool" && и.id === исключитьId)) {
+      результаты.push({
+        id: и.id,
+        type: "tool",
+        title: и.title,
+        url: `/tools/${и.slug}`,
+        excerpt: (и.shortDescription as string) || "",
+        совпадений: совп,
+      });
+    }
+  }
+  for (const в of вопросы.docs) {
+    const совп = считатьСовпадения(в.tags as any[]);
+    if (совп > 0 && !(исключитьТип === "question" && в.id === исключитьId)) {
+      результаты.push({
+        id: в.id,
+        type: "question",
+        title: в.title,
+        url: `/questions/${в.slug}`,
+        excerpt: "",
+        совпадений: совп,
+      });
+    }
+  }
+  for (const п of посты.docs) {
+    const совп = считатьСовпадения(п.tags as any[]);
+    if (совп > 0 && !(исключитьТип === "post" && п.id === исключитьId)) {
+      результаты.push({
+        id: п.id,
+        type: "post",
+        title: п.title,
+        url: `/posts/${п.slug}`,
+        excerpt: "",
+        совпадений: совп,
+      });
+    }
+  }
+  for (const ф of фреймворки.docs) {
+    const совп = считатьСовпадения(ф.tags as any[]);
+    if (совп > 0 && !(исключитьТип === "framework" && ф.id === исключитьId)) {
+      результаты.push({
+        id: ф.id,
+        type: "framework",
+        title: ф.title,
+        url: `/framework/${ф.slug}`,
+        excerpt: (ф.description as string) || "",
+        совпадений: совп,
+      });
+    }
+  }
+
+  /* Сортировка: больше совпадающих тегов → выше */
+  результаты.sort((a, b) => b.совпадений - a.совпадений);
+
+  return результаты.slice(0, лимит).map(({ совпадений: _, ...rest }) => rest);
+}

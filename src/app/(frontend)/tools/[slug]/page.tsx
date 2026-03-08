@@ -16,6 +16,7 @@ import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
 import { DownloadButton } from "@/components/DownloadButton";
+import { RelatedContent } from "@/components/seo/RelatedContent";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -340,6 +341,19 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
 
       {/* Комментарии */}
       <CommentList contentType="tools" contentId={String(инструмент.id)} />
+
+      {/* Перелинковка по тегам */}
+      <RelatedContent
+        тегиSlug={
+          Array.isArray(инструмент.tags)
+            ? инструмент.tags
+                .filter((t: any) => typeof t === "object")
+                .map((t: any) => t.slug)
+            : []
+        }
+        исключитьId={инструмент.id}
+        исключитьТип="tool"
+      />
 
       {/* Связанные инструменты */}
       {связанные.length > 0 && (

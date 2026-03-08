@@ -5,9 +5,12 @@ import { getPosts } from "@/lib/payload";
 export const revalidate = 60;
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
   title: "Посты",
   description: "Статьи сообщества Stackovervibe о вайбкодинге",
+  alternates: { canonical: `${САЙТ_URL}/posts` },
 };
 
 interface ПараметрыПоиска {

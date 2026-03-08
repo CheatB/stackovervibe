@@ -21,11 +21,13 @@ export async function generateMetadata({
   const пользователь = await getUserByUsername(username);
   if (!пользователь) return { title: "Не найдено" };
 
+  const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   return {
     title: пользователь.displayName || `@${username}`,
     description:
       пользователь.bio ||
       `Профиль ${пользователь.displayName || username} на Stackovervibe`,
+    alternates: { canonical: `${САЙТ_URL}/profile/${username}` },
   };
 }
 
