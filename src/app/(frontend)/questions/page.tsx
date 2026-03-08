@@ -9,9 +9,9 @@ import type { FeedItem } from "@/components/cards/FeedCard";
 import ElectricBorder from "@/components/animations/ElectricBorder";
 
 export const metadata = generatePageMetadata({
-  title: "Вопросы",
+  title: "Вопросы по вайбкодингу — Q&A от сообщества",
   description:
-    "Вопросы и ответы по вайбкодингу. Задавайте вопросы, делитесь опытом, помогайте другим.",
+    "Вопросы и ответы по вайбкодингу: как настроить Claude, Cursor, Copilot, решить ошибки и создать проект с AI. Задавай вопрос — сообщество поможет.",
   url: "/questions",
 });
 

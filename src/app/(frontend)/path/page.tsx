@@ -10,9 +10,9 @@ import BlurText from "@/components/animations/BlurText";
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "Путь новичка",
+  title: "Как начать вайбкодить — пошаговый путь с нуля",
   description:
-    "Пошаговый маршрут от нуля до рабочей среды вайбкодинга. Без воды, по делу.",
+    "Пошаговый гайд по вайбкодингу: от установки Claude/Cursor до первого проекта. 8 шагов от нуля до рабочей среды — без воды, по делу.",
   alternates: { canonical: `${САЙТ_URL}/path` },
 };
 
@@ -24,11 +24,12 @@ export default async function PathPage() {
       <BreadcrumbNav items={[{ label: "path" }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">
-          <BlurText text="Путь новичка" delay={80} />
+          <BlurText text="Как начать вайбкодить" delay={80} />
         </h1>
         <p className="text-[var(--color-text-muted)] max-w-2xl">
-          Пошаговый маршрут от нуля до рабочей среды вайбкодинга. Проходи по
-          порядку — каждый шаг строится на предыдущем.
+          Пошаговый гайд по вайбкодингу с нуля — от установки инструментов до
+          первого проекта. Проходи по порядку, каждый шаг строится на
+          предыдущем.
         </p>
       </div>
 

@@ -11,9 +11,9 @@ import BlurText from "@/components/animations/BlurText";
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "Инструменты",
+  title: "Инструменты для вайбкодинга — скиллы, хуки, команды",
   description:
-    "Каталог скиллов, хуков, команд и правил для вайбкодинга. Копируй и используй.",
+    "Каталог инструментов для вайбкодинга: скиллы, хуки, команды и правила для Claude, Cursor, Copilot. Скачивай .md и используй в своих проектах.",
   alternates: { canonical: `${САЙТ_URL}/tools` },
 };
 
@@ -34,10 +34,11 @@ export default async function ToolsPage({ searchParams }: ПараметрыПо
       <BreadcrumbNav items={[{ label: "tools" }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">
-          <BlurText text="Инструменты" delay={80} />
+          <BlurText text="Инструменты для вайбкодинга" delay={80} />
         </h1>
         <p className="text-[var(--color-text-muted)] max-w-2xl">
-          Каталог скиллов, хуков, команд и правил. Фильтруй по типу и категории.
+          Скиллы, хуки, команды и правила для Claude, Cursor и других
+          AI-ассистентов. Скачивай .md и закидывай в свой проект.
         </p>
       </div>
 

@@ -8,8 +8,9 @@ import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "Посты",
-  description: "Статьи сообщества Stackovervibe о вайбкодинге",
+  title: "Посты о вайбкодинге — статьи от сообщества",
+  description:
+    "Статьи о вайбкодинге от практиков: кейсы, лайфхаки, разборы инструментов. Делись своим опытом — напиши пост.",
   alternates: { canonical: `${САЙТ_URL}/posts` },
 };
 

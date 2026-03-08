@@ -11,17 +11,17 @@ import "@/styles/effects.css";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const ОПИСАНИЕ =
-  "Структурированная база знаний по вайбкодингу. Гайды, инструменты, конфиги — всё в одном месте.";
+  "Вайбкодинг от А до Я: пошаговые гайды, инструменты для Claude и Cursor, фреймворки и Q&A от сообщества. Начни вайбкодить сегодня.";
 
 export const metadata: Metadata = {
   title: {
-    default: "Stackovervibe — База знаний по вайбкодингу",
+    default: "Stackovervibe — Вайбкодинг: гайды, инструменты, фреймворки",
     template: "%s — Stackovervibe",
   },
   description: ОПИСАНИЕ,
   metadataBase: new URL(САЙТ_URL),
   openGraph: {
-    title: "Stackovervibe — База знаний по вайбкодингу",
+    title: "Stackovervibe — Вайбкодинг: гайды, инструменты, фреймворки",
     description: ОПИСАНИЕ,
     url: САЙТ_URL,
     siteName: "Stackovervibe",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stackovervibe — База знаний по вайбкодингу",
+    title: "Stackovervibe — Вайбкодинг: гайды, инструменты, фреймворки",
     description: ОПИСАНИЕ,
   },
 };
@@ -163,6 +163,7 @@ export default function FrontendLayout({
                 <Link href="/posts">posts/</Link>
                 <Link href="/questions">questions/</Link>
                 <Link href="/search">search</Link>
+                <Link href="/about">about</Link>
               </div>
               <p className="text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">
                 &copy; {new Date().getFullYear()} stackovervibe // собрано
