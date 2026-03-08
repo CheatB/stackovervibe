@@ -86,6 +86,12 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
           name: инструмент.title,
           description: инструмент.shortDescription || undefined,
           url: `${САЙТ_URL}/tools/${инструмент.slug}`,
+          ...((инструмент as any).createdAt && {
+            datePublished: (инструмент as any).createdAt,
+          }),
+          ...((инструмент as any).updatedAt && {
+            dateModified: (инструмент as any).updatedAt,
+          }),
         }}
       />
       <JsonLd

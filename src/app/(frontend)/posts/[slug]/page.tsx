@@ -68,6 +68,7 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
           headline: пост.title,
           url: `${САЙТ_URL}/posts/${пост.slug}`,
           ...(пост.publishedAt && { datePublished: пост.publishedAt }),
+          ...(пост.updatedAt && { dateModified: пост.updatedAt }),
           ...(автор && {
             author: {
               "@type": "Person",

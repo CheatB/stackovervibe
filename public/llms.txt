@@ -1,0 +1,27 @@
+# Stackovervibe — База знаний по вайбкодингу
+
+> Stackovervibe — русскоязычная база знаний по вайбкодингу (vibe coding). Гайды, инструменты, фреймворки и Q&A для разработки с помощью AI.
+
+## Основные разделы
+
+- /path — Путь новичка: 8 пошаговых гайдов от установки Claude Code до деплоя
+- /tools — Каталог инструментов: 47 скиллов, хуков, команд и правил для Claude Code и Cursor
+- /framework — AI-фреймворки: методологии вайбкодинга от сообщества
+- /questions — Q&A: вопросы и ответы по вайбкодингу
+- /posts — Статьи: SEO-гайды, сравнения инструментов, практические кейсы
+
+## Ключевые темы
+
+- Что такое вайбкодинг (vibe coding) и как начать
+- Claude Code: установка, CLAUDE.md, скиллы, хуки, MCP-серверы
+- Cursor: .cursorrules, Composer, настройка
+- Промпт-инжиниринг для AI-кодинга
+- Сравнения: Cursor vs Claude Code vs Copilot vs Windsurf
+- Telegram-боты, лендинги, SaaS с помощью AI
+- Вайбкодинг vs nocode (Tilda, Bubble)
+
+## Контакт
+
+- Сайт: https://stackovervibe.ru
+- GitHub: https://github.com/CheatB
+- Telegram: https://t.me/cheatb

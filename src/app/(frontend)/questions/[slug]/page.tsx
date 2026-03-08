@@ -70,6 +70,9 @@ export default async function QuestionPage({
             name: вопрос.title,
             text: вопрос.title,
             dateCreated: вопрос.publishedAt || вопрос.createdAt,
+            ...((вопрос as any).updatedAt && {
+              dateModified: (вопрос as any).updatedAt,
+            }),
             author: { "@type": "Person", name: авторИмя },
             answerCount: ответы.length,
             upvoteCount: вопрос.likes || 0,
