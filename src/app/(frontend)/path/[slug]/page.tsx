@@ -13,6 +13,9 @@ import { CommentList } from "@/components/social/CommentList";
 import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
+import { TableOfContents } from "@/components/seo/TableOfContents";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { форматДату } from "@/lib/date";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -117,15 +120,31 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
             {гайд.excerpt}
           </p>
         )}
+        <div className="flex flex-wrap gap-3 mt-3 text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">
+          {гайд.publishedAt && (
+            <span>
+              {new Date(гайд.publishedAt).toLocaleDateString("ru-RU")}
+            </span>
+          )}
+          {гайд.updatedAt && гайд.updatedAt !== гайд.publishedAt && (
+            <span>обновлено {форматДату(гайд.updatedAt)}</span>
+          )}
+        </div>
       </header>
 
-      {/* Контент */}
+      {/* Оглавление + Контент */}
       {гайд.content && (
-        <RichTextRenderer
-          content={гайд.content}
-          className="[&_h2]:text-2xl [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:mt-8 [&_h3]:mb-3"
-        />
+        <>
+          <TableOfContents content={гайд.content as any} />
+          <RichTextRenderer
+            content={гайд.content}
+            className="[&_h2]:text-2xl [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:mt-8 [&_h3]:mb-3"
+          />
+        </>
       )}
+
+      {/* FAQ-секция */}
+      <FaqSection элементы={(гайд as any).faq ?? []} />
 
       {/* Реакции и шеринг */}
       <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">

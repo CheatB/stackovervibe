@@ -14,6 +14,7 @@ import { DownloadButton } from "@/components/DownloadButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
 import { RelatedContent } from "@/components/seo/RelatedContent";
+import { TableOfContents } from "@/components/seo/TableOfContents";
 import { форматДату } from "@/lib/date";
 
 const СТЕК_ЛЕЙБЛЫ: Record<string, string> = {
@@ -160,10 +161,13 @@ export default async function FrameworkDetailPage({
       <div className="mb-6 pb-6 border-b border-[var(--color-border)]">
         <div className="prose-custom mb-4">
           {фреймворк.body && (
-            <RichTextRenderer
-              content={фреймворк.body}
-              className="article-content"
-            />
+            <>
+              <TableOfContents content={фреймворк.body as any} />
+              <RichTextRenderer
+                content={фреймворк.body}
+                className="article-content"
+              />
+            </>
           )}
         </div>
 

@@ -40,24 +40,28 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 15 — SEO Epic (Wave 2 done, Wave 3 next)
-**Этап:** Wave 1+2 задеплоены, GSC/Вебмастер верифицированы
-**Следующая задача:** Wave 3 (контент-стратегия) или OG-картинки
+**Фаза:** 15 — SEO Epic (Wave 3 done)
+**Этап:** ToC + FAQ + даты интегрированы, ждёт деплой
+**Следующая задача:** Wave 4 (внешнее SEO) или расширение thin questions
 
 ### Фаза 15: SEO Epic — В ПРОЦЕССЕ
 #### Wave 1: Technical SEO — ГОТОВО
-- [x] ISR revalidate=60 на всех страницах, убран force-dynamic
-- [x] Preload шрифтов, AVIF, Cache-Control immutable
-- [x] robots.txt (Host, disallow /search), sitemap (+/about, +/privacy, -/search)
-- [x] noindex неоптимизированных тегов
+- [x] ISR revalidate=60, preload шрифтов, AVIF, Cache-Control
+- [x] robots.txt (disallow UGC forms), sitemap (163 URL)
 - [x] GSC + Яндекс.Вебмастер верифицированы
 #### Wave 2: On-page SEO — ГОТОВО
-- [x] RelatedContent — перелинковка по тегам на 4 типах страниц
-- [x] Canonical URL на всех страницах
-- [x] Organization JSON-LD на главной
-- [x] Meta description + H1 оптимизированы под ключевые запросы
-- [x] Страница /about (E-E-A-T: автор, миссия, статистика)
-#### Wave 3-5: не начаты
+- [x] RelatedContent, Canonical URL, Organization JSON-LD
+- [x] Meta description + H1 оптимизированы, страница /about (E-E-A-T)
+#### Wave 3: Content Strategy — ГОТОВО
+- [x] 11 SEO-статей (вайбкодинг, Claude Code, промпт-инжиниринг и т.д.)
+- [x] llms.txt для LLM-поисковиков
+- [x] dateModified в JSON-LD (posts, tools, questions, guides)
+- [x] Sitemap priority tuning (posts 0.8, weekly)
+- [x] TableOfContents — оглавление из Lexical JSON (posts, path, framework)
+- [x] FaqSection + JSON-LD FAQPage (posts, path) + CMS-поле faq
+- [x] Heading id (якоря) в RichTextRenderer
+- [x] Видимые даты обновления на posts и path
+#### Wave 4-5: не начаты
 
 ### Фаза 14: UGC Create Pages — ГОТОВО
 - [x] Tools.ts — access.create открыт для не-забаненных юзеров + beforeChange хук (авто-слаг)

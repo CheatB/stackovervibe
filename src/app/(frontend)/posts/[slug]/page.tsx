@@ -13,6 +13,9 @@ import { ShareButtons } from "@/components/social/ShareButtons";
 import { ViewsTracker } from "@/components/ViewsTracker";
 import { AdminEditButton } from "@/components/ui/AdminEditButton";
 import { RelatedContent } from "@/components/seo/RelatedContent";
+import { TableOfContents } from "@/components/seo/TableOfContents";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { форматДату } from "@/lib/date";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -121,13 +124,30 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
               <span className="post-meta-divider" />
             </>
           )}
+          {пост.updatedAt && пост.updatedAt !== пост.publishedAt && (
+            <>
+              <span className="post-meta-item">
+                обновлено {форматДату(пост.updatedAt)}
+              </span>
+              <span className="post-meta-divider" />
+            </>
+          )}
           <span className="post-meta-item">{пост.views ?? 0} просмотров</span>
         </div>
       </header>
 
       {пост.content && (
-        <RichTextRenderer content={пост.content} className="article-content" />
+        <>
+          <TableOfContents content={пост.content as any} />
+          <RichTextRenderer
+            content={пост.content}
+            className="article-content"
+          />
+        </>
       )}
+
+      {/* FAQ-секция для SEO-статей */}
+      <FaqSection элементы={(пост as any).faq ?? []} />
 
       <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 border-t border-[var(--color-border)]">
         <ReactionButtons
