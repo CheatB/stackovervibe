@@ -65,6 +65,12 @@ export default function FrontendLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        {/* Верификация поисковиков */}
+        <meta
+          name="google-site-verification"
+          content="V_GFPEk5e1g0uKu_Vk6fIeZXIMOfNjXhXgtLL_hQ9lA"
+        />
+        <meta name="yandex-verification" content="f5752e467596c4b5" />
       </head>
       <body className="min-h-screen flex flex-col">
         {/* Глобальные эффекты: ClickSpark + Noise */}
