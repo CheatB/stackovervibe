@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getPathGuides } from "@/lib/payload";
+
+export const revalidate = 60;
 import { PathStepCard } from "@/components/cards/PathStepCard";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import AnimatedContent from "@/components/animations/AnimatedContent";

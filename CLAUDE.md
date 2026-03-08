@@ -40,9 +40,24 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 14 — UGC Create Pages
-**Этап:** Готово, ждёт коммит + деплой
-**Следующая задача:** —
+**Фаза:** 15 — SEO Epic (Wave 1: Technical SEO)
+**Этап:** Wave 1 почти готов, ждёт коммит + деплой
+**Следующая задача:** 7.2.x (GSC + Yandex Webmaster) → Wave 2 (On-page SEO)
+
+### Фаза 15: SEO Epic — В ПРОЦЕССЕ
+#### Wave 1: Technical SEO
+- [x] 7.1.1 layout.tsx — убран force-dynamic, включён ISR
+- [x] 7.1.2 revalidate=60 на 15 страницах, force-dynamic для /search
+- [x] 7.1.4 Preload 3 критических шрифтов (Inter/JetBrains/Space Mono cyrillic)
+- [x] 7.1.5 AVIF формат в next.config.ts
+- [x] 7.1.6 Cache-Control immutable для fonts + static
+- [x] 7.3.1 robots.txt — Host для Яндекса, disallow /search
+- [x] 7.3.2 sitemap — убран /search, добавлен /privacy
+- [x] 7.4.1 noindex для неоптимизированных тегов (тонкие страницы)
+- [ ] 7.1.3 Проверить TTFB (после деплоя)
+- [ ] 7.1.7 PageSpeed baseline (после деплоя)
+- [ ] 7.2.x GSC + Yandex Webmaster (нужен аккаунт)
+#### Wave 2-5: не начаты
 
 ### Фаза 14: UGC Create Pages — ГОТОВО
 - [x] Tools.ts — access.create открыт для не-забаненных юзеров + beforeChange хук (авто-слаг)

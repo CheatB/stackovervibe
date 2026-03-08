@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGuideBySlug, getPathGuides } from "@/lib/payload";
+
+export const revalidate = 60;
 import { generatePageMetadata } from "@/lib/seo";
 import { RichTextRenderer } from "@/components/content/RichTextRenderer";
 import { JsonLd } from "@/components/seo/JsonLd";

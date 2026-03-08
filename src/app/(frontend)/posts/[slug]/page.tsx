@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getComments } from "@/lib/payload";
+
+export const revalidate = 60;
 import { generatePageMetadata } from "@/lib/seo";
 import { RichTextRenderer } from "@/components/content/RichTextRenderer";
 import { JsonLd } from "@/components/seo/JsonLd";

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getQuestionBySlug, getAnswersByQuestion } from "@/lib/payload";
+
+export const revalidate = 60;
 import { generatePageMetadata } from "@/lib/seo";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import { RichTextRenderer } from "@/components/content/RichTextRenderer";

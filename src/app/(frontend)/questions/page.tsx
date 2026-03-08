@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getQuestions } from "@/lib/payload";
+
+export const revalidate = 60;
 import { generatePageMetadata } from "@/lib/seo";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import { FeedCard } from "@/components/cards/FeedCard";

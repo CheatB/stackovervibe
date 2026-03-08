@@ -9,9 +9,6 @@ import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import "@/styles/globals.css";
 import "@/styles/effects.css";
 
-/** Все фронтенд-страницы рендерятся динамически (SSR) — данные из CMS всегда свежие */
-export const dynamic = "force-dynamic";
-
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const ОПИСАНИЕ =
   "Структурированная база знаний по вайбкодингу. Гайды, инструменты, конфиги — всё в одном месте.";
@@ -45,6 +42,30 @@ export default function FrontendLayout({
 }) {
   return (
     <html lang="ru" className="dark">
+      <head>
+        {/* Preload критических шрифтов — убираем FOIT */}
+        <link
+          rel="preload"
+          href="/fonts/inter-cyrillic.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/jetbrains-mono-cyrillic.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/space-mono-400-latin-ext.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-screen flex flex-col">
         {/* Глобальные эффекты: ClickSpark + Noise */}
         <LayoutEffects>

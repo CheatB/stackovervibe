@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTools, getCategories } from "@/lib/payload";
+
+export const revalidate = 60;
 import { ToolCard } from "@/components/cards/ToolCard";
 import { ToolsFilter } from "@/components/ToolsFilter";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";

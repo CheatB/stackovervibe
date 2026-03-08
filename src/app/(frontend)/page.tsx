@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { getFeedPage, getHotQuestions, getSiteStats } from "@/lib/payload";
+
+/** ISR: обновляем кэш раз в 60 сек */
+export const revalidate = 60;
 import { JsonLd } from "@/components/seo/JsonLd";
 import { FeedFilters } from "@/components/FeedFilters";
 import { InfiniteScroll } from "@/components/InfiniteScroll";
