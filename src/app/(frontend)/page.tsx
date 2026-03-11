@@ -78,6 +78,50 @@ export default async function HomePage({
         ════════════════════════════════════════
       </div>
 
+      {/* SEO-блок: описание сайта */}
+      <section className="mb-8 p-6 rounded border border-[var(--color-border)] bg-[var(--color-surface)]">
+        <h2 className="text-lg font-bold mb-4 font-[family-name:var(--font-code)] text-[var(--color-primary)]">
+          Что такое Stackovervibe?
+        </h2>
+        <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
+          Stackovervibe — структурированная база знаний по вайбкодингу.
+          Вайбкодинг — это способ создавать приложения, сайты и ботов с помощью
+          AI: ты описываешь что хочешь словами, а нейросеть пишет код. Здесь
+          собраны проверенные гайды, инструменты и фреймворки для работы с
+          Claude Code, Cursor, Windsurf и другими AI-ассистентами.
+        </p>
+
+        <div className="grid sm:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h3 className="font-bold mb-1 text-[var(--color-text)]">
+              Путь новичка
+            </h3>
+            <p className="text-[var(--color-text-muted)] text-xs leading-relaxed">
+              Пошаговые гайды от &quot;что такое вайбкодинг&quot; до деплоя
+              своего проекта. Начни с нуля — дойди до рабочего продукта.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold mb-1 text-[var(--color-text)]">
+              Инструменты и скиллы
+            </h3>
+            <p className="text-[var(--color-text-muted)] text-xs leading-relaxed">
+              Каталог скиллов, хуков, команд и плагинов для Claude Code. Скачай
+              .md и закинь в свой проект — AI заработает лучше.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold mb-1 text-[var(--color-text)]">
+              Вопросы и ответы
+            </h3>
+            <p className="text-[var(--color-text-muted)] text-xs leading-relaxed">
+              Сообщество разработчиков, которые пишут код с AI. Задавай вопросы,
+              делись опытом, получай ответы от практиков.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA — создать контент */}
       <div className="flex flex-wrap gap-3 mb-6 font-[family-name:var(--font-code)] text-sm">
         <Link
