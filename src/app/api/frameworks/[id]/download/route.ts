@@ -42,6 +42,39 @@ export async function POST(
 
   const тело = lexicalToMarkdown(фреймворк.body);
 
+  /* Быстрый старт — только для vibe-framework (наш проект с инструментами) */
+  const этоВайбФреймворк = фреймворк.githubUrl?.includes(
+    "CheatB/vibe-framework",
+  );
+  const быстрыйСтарт = этоВайбФреймворк
+    ? [
+        "## Быстрый старт",
+        "",
+        "Этот файл — описание методологии. Для работы нужны инструменты (скиллы, хуки, команды, правила).",
+        "",
+        "```bash",
+        "# 1. Клонируй репозиторий с инструментами",
+        `git clone ${фреймворк.githubUrl}`,
+        "",
+        "# 2. Скопируй в рабочую директорию Claude",
+        "cd vibe-framework && ./sync.sh pull",
+        "```",
+        "",
+        "**Что внутри репозитория:**",
+        "- `rules/` — правила (quality-gates, anti-mirage, security, coding-standards и др.)",
+        "- `commands/` — slash-команды (/new-project, /deploy, /ship, /done и др.)",
+        "- `skills/` — скиллы (legal-compliance, monetization, gtm, analytics и др.)",
+        "- `hooks/` — хуки (автоформат, проверка debug-кода, прогресс-трекер)",
+        "- `CLAUDE.md` — точка входа для AI-ассистента",
+        "- `sync.sh` — скрипт синхронизации с `~/.claude/`",
+        "",
+        `Подробнее: ${фреймворк.githubUrl}`,
+        "",
+        "---",
+        "",
+      ].join("\n")
+    : "";
+
   const md = [
     `# ${фреймворк.title}`,
     "",
@@ -54,6 +87,7 @@ export async function POST(
     "",
     "---",
     "",
+    быстрыйСтарт,
     тело,
   ]
     .filter((строка) => строка !== "")
