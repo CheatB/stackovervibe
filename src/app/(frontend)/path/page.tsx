@@ -6,6 +6,7 @@ import { PathStepCard } from "@/components/cards/PathStepCard";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import AnimatedContent from "@/components/animations/AnimatedContent";
 import BlurText from "@/components/animations/BlurText";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -21,6 +22,26 @@ export default async function PathPage() {
 
   return (
     <div className="space-y-8">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Как начать вайбкодить — пошаговый путь с нуля",
+          description:
+            "Пошаговый гайд по вайбкодингу: от установки Claude/Cursor до первого проекта.",
+          url: `${САЙТ_URL}/path`,
+          numberOfItems: гайды.length,
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: гайды.map((г, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              url: `${САЙТ_URL}/path/${г.slug}`,
+              name: г.title,
+            })),
+          },
+        }}
+      />
       <BreadcrumbNav items={[{ label: "path" }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">

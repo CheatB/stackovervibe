@@ -4,6 +4,7 @@ import { getPosts } from "@/lib/payload";
 
 export const revalidate = 60;
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -25,6 +26,26 @@ export default async function PostsPage({ searchParams }: ПараметрыПо
 
   return (
     <div className="space-y-8">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Посты о вайбкодинге — статьи от сообщества",
+          description:
+            "Статьи о вайбкодинге от практиков: кейсы, лайфхаки, разборы инструментов.",
+          url: `${САЙТ_URL}/posts`,
+          numberOfItems: посты.length,
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: посты.map((п, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              url: `${САЙТ_URL}/posts/${п.slug}`,
+              name: п.title,
+            })),
+          },
+        }}
+      />
       <BreadcrumbNav items={[{ label: "posts" }]} />
       <div>
         <h1 className="text-3xl md:text-4xl mb-4">Посты</h1>

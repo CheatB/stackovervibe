@@ -7,6 +7,9 @@ import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import { FeedCard } from "@/components/cards/FeedCard";
 import type { FeedItem } from "@/components/cards/FeedCard";
 import ElectricBorder from "@/components/animations/ElectricBorder";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = generatePageMetadata({
   title: "Вопросы по вайбкодингу — Q&A от сообщества",
@@ -55,6 +58,26 @@ export default async function QuestionsPage({
 
   return (
     <div>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Вопросы по вайбкодингу — Q&A от сообщества",
+          description:
+            "Вопросы и ответы по вайбкодингу: Claude Code, Cursor AI, промпт-инжиниринг.",
+          url: `${САЙТ_URL}/questions`,
+          numberOfItems: docs.length,
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: docs.slice(0, 30).map((в, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              url: `${САЙТ_URL}/questions/${в.slug}`,
+              name: в.title,
+            })),
+          },
+        }}
+      />
       <BreadcrumbNav items={[{ label: "questions", href: "/questions" }]} />
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">

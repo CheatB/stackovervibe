@@ -1,6 +1,7 @@
 import type { CollectionConfig, CollectionAfterChangeHook } from "payload";
 import { sendTelegramMessage } from "@/lib/telegram-bot";
 import { транслит } from "@/lib/utils";
+import { уведомитьIndexNow } from "@/lib/indexnow";
 
 /** Уведомления автору при смене статуса поста */
 const уведомитьАвтора: CollectionAfterChangeHook = async ({
@@ -74,7 +75,14 @@ export const Posts: CollectionConfig = {
     delete: ({ req }) => req.user?.role === "admin",
   },
   hooks: {
-    afterChange: [уведомитьАвтора],
+    afterChange: [
+      уведомитьАвтора,
+      ({ doc }) => {
+        if (doc?.slug && doc?.status === "published") {
+          уведомитьIndexNow([`/posts/${doc.slug}`]);
+        }
+      },
+    ],
     beforeChange: [
       ({ data, operation }) => {
         if (operation === "create" && data?.title && !data?.slug) {

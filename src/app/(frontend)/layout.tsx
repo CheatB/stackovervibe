@@ -33,6 +33,18 @@ export const metadata: Metadata = {
     title: "Stackovervibe — Вайбкодинг: гайды, инструменты, фреймворки",
     description: ОПИСАНИЕ,
   },
+  robots: {
+    index: true,
+    follow: true,
+    "max-snippet": -1,
+    "max-image-preview": "large" as const,
+    "max-video-preview": -1,
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": `${САЙТ_URL}/feed.xml`,
+    },
+  },
 };
 
 export default function FrontendLayout({
@@ -65,6 +77,9 @@ export default function FrontendLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        {/* hreflang — ru сайт */}
+        <link rel="alternate" hrefLang="ru" href={САЙТ_URL} />
+        <link rel="alternate" hrefLang="x-default" href={САЙТ_URL} />
         {/* Верификация поисковиков */}
         <meta
           name="google-site-verification"
@@ -164,6 +179,9 @@ export default function FrontendLayout({
                 <Link href="/questions">questions/</Link>
                 <Link href="/search">search</Link>
                 <Link href="/about">about</Link>
+                <a href="/feed.xml" title="RSS">
+                  rss
+                </a>
               </div>
               <p className="text-xs text-[var(--color-text-muted)] font-[family-name:var(--font-code)]">
                 &copy; {new Date().getFullYear()} stackovervibe // собрано

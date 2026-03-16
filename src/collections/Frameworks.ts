@@ -1,5 +1,6 @@
 import type { CollectionConfig, CollectionBeforeChangeHook } from "payload";
 import { транслит } from "@/lib/utils";
+import { уведомитьIndexNow } from "@/lib/indexnow";
 
 /** Авто-slug + publishedAt при создании, editedAt при обновлении */
 const подготовитьДанные: CollectionBeforeChangeHook = ({ data, operation }) => {
@@ -52,6 +53,13 @@ export const Frameworks: CollectionConfig = {
   },
   hooks: {
     beforeChange: [подготовитьДанные],
+    afterChange: [
+      ({ doc }) => {
+        if (doc?.slug && doc?.status === "published") {
+          уведомитьIndexNow([`/framework/${doc.slug}`]);
+        }
+      },
+    ],
   },
   fields: [
     {

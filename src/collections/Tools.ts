@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { транслит } from "@/lib/utils";
+import { уведомитьIndexNow } from "@/lib/indexnow";
 
 export const Tools: CollectionConfig = {
   slug: "tools",
@@ -10,6 +11,13 @@ export const Tools: CollectionConfig = {
           data.slug = транслит(data.title);
         }
         return data;
+      },
+    ],
+    afterChange: [
+      ({ doc }) => {
+        if (doc?.slug && doc?.status === "published") {
+          уведомитьIndexNow([`/tools/${doc.slug}`]);
+        }
       },
     ],
   },

@@ -6,6 +6,9 @@ export const revalidate = 60;
 import { generatePageMetadata } from "@/lib/seo";
 import { BreadcrumbNav } from "@/components/seo/BreadcrumbNav";
 import { FeedCard } from "@/components/cards/FeedCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+const САЙТ_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
@@ -27,6 +30,26 @@ export default async function FrameworksListPage({
 
   return (
     <div className="space-y-8">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Фреймворки — AI-методологии от сообщества",
+          description:
+            "Каталог фреймворков и методологий для работы с AI-ассистентами.",
+          url: `${САЙТ_URL}/framework`,
+          numberOfItems: docs.length,
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: docs.map((ф, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              url: `${САЙТ_URL}/framework/${ф.slug}`,
+              name: ф.title,
+            })),
+          },
+        }}
+      />
       <BreadcrumbNav items={[{ label: "framework" }]} />
 
       {/* Hero-блок */}

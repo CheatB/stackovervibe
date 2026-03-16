@@ -1,227 +1,252 @@
-import type { CollectionConfig, CollectionBeforeChangeHook, CollectionAfterChangeHook } from 'payload'
-import { транслит } from '@/lib/utils'
-import { sendTelegramMessage } from '@/lib/telegram-bot'
+import type {
+  CollectionConfig,
+  CollectionBeforeChangeHook,
+  CollectionAfterChangeHook,
+} from "payload";
+import { транслит } from "@/lib/utils";
+import { sendTelegramMessage } from "@/lib/telegram-bot";
+import { уведомитьIndexNow } from "@/lib/indexnow";
 
 /** Авто-slug + publishedAt при создании */
 const подготовитьДанные: CollectionBeforeChangeHook = ({ data, operation }) => {
-  if (!data) return data
-  if (operation === 'create') {
+  if (!data) return data;
+  if (operation === "create") {
     if (data.title && !data.slug) {
-      data.slug = транслит(data.title)
+      data.slug = транслит(data.title);
     }
     if (!data.publishedAt) {
-      data.publishedAt = new Date().toISOString()
+      data.publishedAt = new Date().toISOString();
     }
   }
-  if (operation === 'update' && !data.editedAt) {
-    data.editedAt = new Date().toISOString()
+  if (operation === "update" && !data.editedAt) {
+    data.editedAt = new Date().toISOString();
   }
-  return data
-}
+  return data;
+};
 
 /** TG-уведомление автору при закрытии вопроса */
-const уведомитьОЗакрытии: CollectionAfterChangeHook = async ({ doc, previousDoc, operation }) => {
-  if (operation !== 'update') return doc
+const уведомитьОЗакрытии: CollectionAfterChangeHook = async ({
+  doc,
+  previousDoc,
+  operation,
+}) => {
+  if (operation !== "update") return doc;
 
-  const былОткрыт = previousDoc?.status === 'published'
-  const сталЗакрыт = doc.status === 'closed'
+  const былОткрыт = previousDoc?.status === "published";
+  const сталЗакрыт = doc.status === "closed";
 
-  if (!былОткрыт || !сталЗакрыт) return doc
+  if (!былОткрыт || !сталЗакрыт) return doc;
 
-  const автор = typeof doc.author === 'object' ? doc.author : null
-  if (!автор?.telegramId) return doc
+  const автор = typeof doc.author === "object" ? doc.author : null;
+  if (!автор?.telegramId) return doc;
 
-  const причина = doc.closedAs || 'не указана'
+  const причина = doc.closedAs || "не указана";
   await sendTelegramMessage(
     автор.telegramId,
     `🔒 Ваш вопрос «${doc.title}» закрыт.\nПричина: ${причина}`,
-  )
+  );
 
-  return doc
-}
+  return doc;
+};
 
 export const Questions: CollectionConfig = {
-  slug: 'questions',
+  slug: "questions",
   admin: {
-    useAsTitle: 'title',
-    group: 'Контент',
-    defaultColumns: ['title', 'author', 'status', 'answersCount', 'publishedAt'],
-    listSearchableFields: ['title', 'slug'],
+    useAsTitle: "title",
+    group: "Контент",
+    defaultColumns: [
+      "title",
+      "author",
+      "status",
+      "answersCount",
+      "publishedAt",
+    ],
+    listSearchableFields: ["title", "slug"],
   },
   access: {
     read: ({ req }) => {
-      if (req.user?.role === 'admin') return true
+      if (req.user?.role === "admin") return true;
       return {
-        status: { in: ['published', 'closed'] },
-      }
+        status: { in: ["published", "closed"] },
+      };
     },
     create: ({ req }) => {
-      if (!req.user) return false
-      return !req.user.isBanned
+      if (!req.user) return false;
+      return !req.user.isBanned;
     },
     update: ({ req }) => {
-      if (req.user?.role === 'admin') return true
-      if (!req.user || req.user.isBanned) return false
-      return { author: { equals: req.user.id } }
+      if (req.user?.role === "admin") return true;
+      if (!req.user || req.user.isBanned) return false;
+      return { author: { equals: req.user.id } };
     },
-    delete: ({ req }) => req.user?.role === 'admin',
+    delete: ({ req }) => req.user?.role === "admin",
   },
   hooks: {
     beforeChange: [подготовитьДанные],
-    afterChange: [уведомитьОЗакрытии],
+    afterChange: [
+      уведомитьОЗакрытии,
+      ({ doc }) => {
+        if (
+          doc?.slug &&
+          (doc?.status === "published" || doc?.status === "closed")
+        ) {
+          уведомитьIndexNow([`/questions/${doc.slug}`]);
+        }
+      },
+    ],
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
-      label: 'Заголовок',
+      label: "Заголовок",
       maxLength: 300,
     },
     {
-      name: 'slug',
-      type: 'text',
+      name: "slug",
+      type: "text",
       unique: true,
-      label: 'URL-слаг',
+      label: "URL-слаг",
       admin: {
-        position: 'sidebar',
-        description: 'Генерируется автоматически из заголовка',
+        position: "sidebar",
+        description: "Генерируется автоматически из заголовка",
       },
     },
     {
-      name: 'body',
-      type: 'richText',
+      name: "body",
+      type: "richText",
       required: true,
-      label: 'Тело вопроса',
+      label: "Тело вопроса",
     },
     {
-      name: 'author',
-      type: 'relationship',
-      relationTo: 'users',
+      name: "author",
+      type: "relationship",
+      relationTo: "users",
       required: true,
-      label: 'Автор',
-      admin: { position: 'sidebar', readOnly: true },
+      label: "Автор",
+      admin: { position: "sidebar", readOnly: true },
     },
     {
-      name: 'category',
-      type: 'relationship',
-      relationTo: 'categories',
-      label: 'Категория',
-      admin: { position: 'sidebar' },
+      name: "category",
+      type: "relationship",
+      relationTo: "categories",
+      label: "Категория",
+      admin: { position: "sidebar" },
     },
     {
-      name: 'tags',
-      type: 'relationship',
-      relationTo: 'tags',
+      name: "tags",
+      type: "relationship",
+      relationTo: "tags",
       hasMany: true,
-      label: 'Теги',
-      admin: { position: 'sidebar' },
+      label: "Теги",
+      admin: { position: "sidebar" },
     },
     /* Статус */
     {
-      name: 'status',
-      type: 'select',
-      defaultValue: 'published',
-      label: 'Статус',
+      name: "status",
+      type: "select",
+      defaultValue: "published",
+      label: "Статус",
       options: [
-        { label: 'Опубликован', value: 'published' },
-        { label: 'Закрыт', value: 'closed' },
+        { label: "Опубликован", value: "published" },
+        { label: "Закрыт", value: "closed" },
       ],
-      admin: { position: 'sidebar' },
+      admin: { position: "sidebar" },
     },
     /* Закрытие */
     {
-      name: 'closedAs',
-      type: 'select',
-      label: 'Причина закрытия',
+      name: "closedAs",
+      type: "select",
+      label: "Причина закрытия",
       options: [
-        { label: 'Дубликат', value: 'duplicate' },
-        { label: 'Не по теме', value: 'off-topic' },
-        { label: 'Слишком широкий', value: 'too-broad' },
-        { label: 'Неясный', value: 'unclear' },
-        { label: 'Основан на мнении', value: 'opinion-based' },
+        { label: "Дубликат", value: "duplicate" },
+        { label: "Не по теме", value: "off-topic" },
+        { label: "Слишком широкий", value: "too-broad" },
+        { label: "Неясный", value: "unclear" },
+        { label: "Основан на мнении", value: "opinion-based" },
       ],
       admin: {
-        position: 'sidebar',
-        condition: (data) => data?.status === 'closed',
+        position: "sidebar",
+        condition: (data) => data?.status === "closed",
       },
     },
     {
-      name: 'closedReason',
-      type: 'textarea',
-      label: 'Комментарий к закрытию',
+      name: "closedReason",
+      type: "textarea",
+      label: "Комментарий к закрытию",
       admin: {
-        position: 'sidebar',
-        condition: (data) => data?.status === 'closed',
+        position: "sidebar",
+        condition: (data) => data?.status === "closed",
       },
     },
     {
-      name: 'linkedQuestionId',
-      type: 'relationship',
-      relationTo: 'questions',
-      label: 'Связанный вопрос (дубликат)',
+      name: "linkedQuestionId",
+      type: "relationship",
+      relationTo: "questions",
+      label: "Связанный вопрос (дубликат)",
       admin: {
-        position: 'sidebar',
-        condition: (data) => data?.closedAs === 'duplicate',
+        position: "sidebar",
+        condition: (data) => data?.closedAs === "duplicate",
       },
     },
     /* Счётчики */
     {
-      name: 'views',
-      type: 'number',
+      name: "views",
+      type: "number",
       defaultValue: 0,
-      label: 'Просмотры',
-      admin: { position: 'sidebar', readOnly: true },
+      label: "Просмотры",
+      admin: { position: "sidebar", readOnly: true },
     },
     {
-      name: 'answersCount',
-      type: 'number',
+      name: "answersCount",
+      type: "number",
       defaultValue: 0,
-      label: 'Ответов',
-      admin: { position: 'sidebar', readOnly: true },
+      label: "Ответов",
+      admin: { position: "sidebar", readOnly: true },
     },
     {
-      name: 'likes',
-      type: 'number',
+      name: "likes",
+      type: "number",
       defaultValue: 0,
-      label: 'Лайки',
-      admin: { position: 'sidebar', readOnly: true },
+      label: "Лайки",
+      admin: { position: "sidebar", readOnly: true },
     },
     {
-      name: 'dislikes',
-      type: 'number',
+      name: "dislikes",
+      type: "number",
       defaultValue: 0,
-      label: 'Дизлайки',
-      admin: { position: 'sidebar', readOnly: true },
+      label: "Дизлайки",
+      admin: { position: "sidebar", readOnly: true },
     },
     /* Даты */
     {
-      name: 'editedAt',
-      type: 'date',
-      label: 'Дата редактирования',
-      admin: { position: 'sidebar', readOnly: true },
+      name: "editedAt",
+      type: "date",
+      label: "Дата редактирования",
+      admin: { position: "sidebar", readOnly: true },
     },
     {
-      name: 'publishedAt',
-      type: 'date',
-      label: 'Дата публикации',
+      name: "publishedAt",
+      type: "date",
+      label: "Дата публикации",
       admin: {
-        position: 'sidebar',
-        date: { pickerAppearance: 'dayAndTime' },
+        position: "sidebar",
+        date: { pickerAppearance: "dayAndTime" },
       },
     },
     /* SEO */
     {
-      name: 'seoTitle',
-      type: 'text',
-      label: 'SEO-заголовок',
-      admin: { position: 'sidebar' },
+      name: "seoTitle",
+      type: "text",
+      label: "SEO-заголовок",
+      admin: { position: "sidebar" },
     },
     {
-      name: 'seoDescription',
-      type: 'textarea',
-      label: 'SEO-описание',
-      admin: { position: 'sidebar' },
+      name: "seoDescription",
+      type: "textarea",
+      label: "SEO-описание",
+      admin: { position: "sidebar" },
     },
   ],
-}
+};

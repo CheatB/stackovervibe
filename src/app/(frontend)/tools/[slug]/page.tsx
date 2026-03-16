@@ -82,16 +82,40 @@ export default async function ToolSlugPage({ params }: ПараметрыСтр�
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "HowTo",
+          "@type": "SoftwareApplication",
           name: инструмент.title,
           description: инструмент.shortDescription || undefined,
           url: `${САЙТ_URL}/tools/${инструмент.slug}`,
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Cross-platform",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "RUB",
+          },
           ...((инструмент as any).createdAt && {
             datePublished: (инструмент as any).createdAt,
           }),
           ...((инструмент as any).updatedAt && {
             dateModified: (инструмент as any).updatedAt,
           }),
+          ...((инструмент as any).author &&
+          typeof (инструмент as any).author === "object"
+            ? {
+                author: {
+                  "@type": "Person",
+                  name:
+                    (инструмент as any).author.displayName ||
+                    (инструмент as any).author.telegramUsername ||
+                    "Stackovervibe",
+                },
+              }
+            : {
+                author: {
+                  "@type": "Organization",
+                  name: "Stackovervibe",
+                },
+              }),
         }}
       />
       <JsonLd

@@ -40,9 +40,9 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 15 — SEO Epic (Wave 3 done)
-**Этап:** ToC + FAQ + даты интегрированы, ждёт деплой
-**Следующая задача:** Wave 4 (внешнее SEO) или расширение thin questions
+**Фаза:** 15 — SEO Epic (Wave 4 done)
+**Этап:** Wave 4 завершена, ждёт деплой + настройку INDEXNOW_KEY на проде
+**Следующая задача:** Wave 5 (контент-маркетинг, линкбилдинг) или расширение thin questions
 
 ### Фаза 15: SEO Epic — В ПРОЦЕССЕ
 #### Wave 1: Technical SEO — ГОТОВО
@@ -61,7 +61,17 @@ npm run lint       # ESLint
 - [x] FaqSection + JSON-LD FAQPage (posts, path) + CMS-поле faq
 - [x] Heading id (якоря) в RichTextRenderer
 - [x] Видимые даты обновления на posts и path
-#### Wave 4-5: не начаты
+#### Wave 4: Advanced SEO — ГОТОВО
+- [x] Кастомная 404 страница (терминальный стиль, поиск, ссылки на разделы)
+- [x] CollectionPage + ItemList JSON-LD на листингах (/path, /tools, /questions, /posts, /framework)
+- [x] SoftwareApplication schema на /tools/[slug] (было HowTo)
+- [x] robots meta (max-snippet:-1, max-image-preview:large) глобально
+- [x] RSS feed (/feed.xml) — посты, вопросы, гайды
+- [x] hreflang (ru + x-default) в layout
+- [x] IndexNow интеграция (afterChange хуки в Posts, Tools, Questions, Frameworks)
+- [x] Sitemap: lastModified на всех статичных URL
+- [x] RSS ссылка в footer + alternates в metadata
+#### Wave 5: не начата
 
 ### Фаза 14: UGC Create Pages — ГОТОВО
 - [x] Tools.ts — access.create открыт для не-забаненных юзеров + beforeChange хук (авто-слаг)
