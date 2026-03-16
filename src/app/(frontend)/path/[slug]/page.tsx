@@ -74,9 +74,23 @@ export default async function GuideSlugPage({ params }: ПараметрыСтр
           headline: гайд.title,
           description: гайд.excerpt || undefined,
           url: `${САЙТ_URL}/path/${гайд.slug}`,
-          publisher: { "@type": "Organization", name: "Stackovervibe" },
+          author: {
+            "@type": "Person",
+            name: "Иван Марцинкевич",
+            url: `${САЙТ_URL}/about`,
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "Stackovervibe",
+            url: САЙТ_URL,
+            logo: {
+              "@type": "ImageObject",
+              url: `${САЙТ_URL}/icon.svg`,
+            },
+          },
           ...(гайд.publishedAt && { datePublished: гайд.publishedAt }),
           ...(гайд.updatedAt && { dateModified: гайд.updatedAt }),
+          inLanguage: "ru",
         }}
       />
       <JsonLd

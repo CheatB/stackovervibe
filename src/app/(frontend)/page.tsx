@@ -68,10 +68,12 @@ export default async function HomePage({
         }}
       />
 
-      <h1 className="sr-only">Stackovervibe — база знаний по вайбкодингу</h1>
-
       {/* ASCII Logo + GlitchText + DecryptedText + FaultyTerminal фон */}
       <HeroSection />
+
+      <h1 className="text-base sm:text-lg font-bold font-[family-name:var(--font-code)] text-[var(--color-primary)] text-center mb-1">
+        Stackovervibe — база знаний по вайбкодингу
+      </h1>
 
       {/* Разделитель */}
       <div className="text-center text-[var(--color-border)] font-[family-name:var(--font-code)] text-xs select-none mb-6 overflow-hidden">

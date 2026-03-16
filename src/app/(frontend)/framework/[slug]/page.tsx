@@ -61,7 +61,8 @@ export default async function FrameworkDetailPage({
   if (!фреймворк) notFound();
 
   const автор = typeof фреймворк.author === "object" ? фреймворк.author : null;
-  const авторИмя = автор?.displayName || автор?.telegramUsername || "Аноним";
+  const авторИмя =
+    автор?.displayName || автор?.telegramUsername || "Иван Марцинкевич";
   const теги = Array.isArray(фреймворк.tags)
     ? фреймворк.tags.filter((t: any) => typeof t === "object")
     : [];

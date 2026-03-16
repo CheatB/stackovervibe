@@ -72,13 +72,27 @@ export default async function PostSlugPage({ params }: ПараметрыСтр�
           url: `${САЙТ_URL}/posts/${пост.slug}`,
           ...(пост.publishedAt && { datePublished: пост.publishedAt }),
           ...(пост.updatedAt && { dateModified: пост.updatedAt }),
-          ...(автор && {
-            author: {
-              "@type": "Person",
-              name: автор.displayName || автор.telegramUsername,
+          author:
+            автор?.displayName || автор?.telegramUsername
+              ? {
+                  "@type": "Person",
+                  name: автор.displayName || автор.telegramUsername,
+                }
+              : {
+                  "@type": "Person",
+                  name: "Иван Марцинкевич",
+                  url: `${САЙТ_URL}/about`,
+                },
+          publisher: {
+            "@type": "Organization",
+            name: "Stackovervibe",
+            url: САЙТ_URL,
+            logo: {
+              "@type": "ImageObject",
+              url: `${САЙТ_URL}/icon.svg`,
             },
-          }),
-          publisher: { "@type": "Organization", name: "Stackovervibe" },
+          },
+          inLanguage: "ru",
         }}
       />
 
