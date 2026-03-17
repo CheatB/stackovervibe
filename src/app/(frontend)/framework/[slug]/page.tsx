@@ -158,23 +158,15 @@ export default async function FrameworkDetailPage({
         </div>
       </div>
 
-      {/* Тело — content-visibility для быстрого рендера длинного контента */}
       <div className="mb-6 pb-6 border-b border-[var(--color-border)]">
         <div className="prose-custom mb-4">
           {фреймворк.body && (
             <>
               <TableOfContents content={фреймворк.body as any} />
-              <div
-                style={{
-                  contentVisibility: "auto",
-                  containIntrinsicSize: "auto 5000px",
-                }}
-              >
-                <RichTextRenderer
-                  content={фреймворк.body}
-                  className="article-content"
-                />
-              </div>
+              <RichTextRenderer
+                content={фреймворк.body}
+                className="article-content"
+              />
             </>
           )}
         </div>

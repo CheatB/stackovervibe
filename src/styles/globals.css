@@ -160,17 +160,12 @@ pre {
   background: var(--color-text-muted);
 }
 
-/* === Оптимизация рендера длинных страниц === */
-.prose section,
-.prose-invert section,
-.prose-custom > *,
-.article-content > * {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 200px;
-}
-
+/* === Оптимизация рендера: только code-блоки (без якорей) ===
+   content-visibility: auto на контентных элементах ломает
+   якорную навигацию — браузер reflow'ит всё при скролле к #id */
 .prose pre,
 .prose-invert pre,
+.prose-custom pre,
 .article-content pre {
   content-visibility: auto;
   contain-intrinsic-size: auto 150px;

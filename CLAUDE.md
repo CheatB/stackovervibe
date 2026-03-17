@@ -40,9 +40,9 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 15 — SEO Epic (Wave 4 done)
-**Этап:** Wave 4 завершена, ждёт деплой + настройку INDEXNOW_KEY на проде
-**Следующая задача:** Wave 5 (контент-маркетинг, линкбилдинг) или расширение thin questions
+**Фаза:** 15 — SEO Epic (Wave 4+)
+**Этап:** E-E-A-T доработка JSON-LD (author, publisher, inLanguage) — в процессе, незакоммичено
+**Следующая задача:** Унифицировать publisher/author JSON-LD на framework/[slug], затем Wave 5
 
 ### Фаза 15: SEO Epic — В ПРОЦЕССЕ
 #### Wave 1: Technical SEO — ГОТОВО
@@ -71,6 +71,12 @@ npm run lint       # ESLint
 - [x] IndexNow интеграция (afterChange хуки в Posts, Tools, Questions, Frameworks)
 - [x] Sitemap: lastModified на всех статичных URL
 - [x] RSS ссылка в footer + alternates в metadata
+#### Wave 4+: E-E-A-T JSON-LD — В ПРОЦЕССЕ (незакоммичено)
+- [x] author Person + publisher с logo в posts/[slug] и path/[slug]
+- [x] H1 видимый на главной (был sr-only)
+- [x] inLanguage: "ru" в JSON-LD
+- [ ] Унифицировать publisher/author на framework/[slug] (пока старый формат)
+- [ ] Вынести общий publisher JSON-LD в shared-константу
 #### Wave 5: не начата
 
 ### Фаза 14: UGC Create Pages — ГОТОВО
