@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { форматДату } from "@/lib/date";
@@ -38,7 +39,9 @@ interface FeedCardProps {
   элемент: FeedItem;
 }
 
-export function FeedCard({ элемент }: FeedCardProps) {
+export const FeedCard = React.memo(function FeedCard({
+  элемент,
+}: FeedCardProps) {
   const router = useRouter();
   const типИнфо = ПРЕФИКСЫ_ТИПОВ[элемент.type];
   const имяАвтора =
@@ -183,4 +186,4 @@ export function FeedCard({ элемент }: FeedCardProps) {
       </div>
     </div>
   );
-}
+});

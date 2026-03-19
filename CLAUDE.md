@@ -40,8 +40,8 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 15 — SEO Epic (Wave 4+)
-**Этап:** E-E-A-T доработка JSON-LD (author, publisher, inLanguage) — в процессе, незакоммичено
+**Фаза:** 15 — SEO Epic (Wave 4+) + UX-фиксы
+**Этап:** Аудит и оптимизация производительности фронтенда — ГОТОВО, незакоммичено
 **Следующая задача:** Унифицировать publisher/author JSON-LD на framework/[slug], затем Wave 5
 
 ### Фаза 15: SEO Epic — В ПРОЦЕССЕ
@@ -78,6 +78,14 @@ npm run lint       # ESLint
 - [ ] Унифицировать publisher/author на framework/[slug] (пока старый формат)
 - [ ] Вынести общий publisher JSON-LD в shared-константу
 #### Wave 5: не начата
+
+### UX/Perf: Аудит и оптимизация фронтенда — ГОТОВО
+- [x] ClickSpark — из обёртки контента в фиксированный оверлей (не мешает выделению текста)
+- [x] GridMotion — убран gsap.ticker (60fps loop), анимация по RAF только при движении мыши
+- [x] ElectricBorder — 4 октавы вместо 10, IntersectionObserver (пауза за экраном)
+- [x] CRT overlay — убран лишний will-change
+- [x] DecryptedText — увеличен интервал обновления (75ms вместо 50ms)
+- [x] FeedCard — обёрнут в React.memo
 
 ### Фаза 14: UGC Create Pages — ГОТОВО
 - [x] Tools.ts — access.create открыт для не-забаненных юзеров + beforeChange хук (авто-слаг)

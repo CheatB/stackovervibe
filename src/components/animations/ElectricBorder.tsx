@@ -227,6 +227,7 @@ export default function ElectricBorder({
     if (!ctx) return;
 
     const borderOffset = 60;
+    let isVisible = true;
 
     const updateSize = () => {
       const rect = container.getBoundingClientRect();
@@ -244,7 +245,10 @@ export default function ElectricBorder({
     let { width, height } = updateSize();
 
     const drawElectricBorder = (currentTime: number) => {
-      if (!canvas || !ctx) return;
+      if (!canvas || !ctx || !isVisible) {
+        animationRef.current = null;
+        return;
+      }
       const deltaTime = (currentTime - lastFrameTimeRef.current) / 1000;
       timeRef.current += deltaTime * speed;
       lastFrameTimeRef.current = currentTime;
@@ -262,7 +266,7 @@ export default function ElectricBorder({
       const radius = Math.min(borderRadius, maxRadius);
       const approxPerimeter =
         2 * (borderWidth + borderHeight) + 2 * Math.PI * radius;
-      const sampleCount = Math.floor(approxPerimeter / 2);
+      const sampleCount = Math.floor(approxPerimeter / 4);
 
       ctx.beginPath();
       for (let i = 0; i <= sampleCount; i++) {
@@ -277,7 +281,7 @@ export default function ElectricBorder({
         );
         const xN = octavedNoise(
           progress * 8,
-          10,
+          4,
           1.6,
           0.7,
           chaos,
@@ -288,7 +292,7 @@ export default function ElectricBorder({
         );
         const yN = octavedNoise(
           progress * 8,
-          10,
+          4,
           1.6,
           0.7,
           chaos,
@@ -307,6 +311,19 @@ export default function ElectricBorder({
       animationRef.current = requestAnimationFrame(drawElectricBorder);
     };
 
+    /** Останавливаем анимацию когда элемент не виден */
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && animationRef.current === null) {
+          lastFrameTimeRef.current = performance.now();
+          animationRef.current = requestAnimationFrame(drawElectricBorder);
+        }
+      },
+      { threshold: 0 },
+    );
+    io.observe(container);
+
     const ro = new ResizeObserver(() => {
       const s = updateSize();
       width = s.width;
@@ -318,6 +335,7 @@ export default function ElectricBorder({
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
       ro.disconnect();
+      io.disconnect();
     };
   }, [
     color,

@@ -38,11 +38,17 @@ export default function GridMotion({
 
   useEffect(() => {
     if (reducedMotion || isMobile) return;
-    gsap.ticker.lagSmoothing(0);
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseXRef.current = e.clientX;
     };
-    const updateMotion = () => {
+
+    /** Обновляем позицию строк только при изменении мыши, не на каждый frame */
+    let lastAppliedX = mouseXRef.current;
+    let rafId: number | null = null;
+
+    const applyMotion = () => {
+      rafId = null;
       const maxMoveAmount = 300;
       const baseDuration = 0.8;
       const inertiaFactors = [0.6, 0.4, 0.3, 0.2];
@@ -62,12 +68,20 @@ export default function GridMotion({
           });
         }
       });
+      lastAppliedX = mouseXRef.current;
     };
-    const removeLoop = gsap.ticker.add(updateMotion);
-    window.addEventListener("mousemove", handleMouseMove);
+
+    const onMouseMove = (e: MouseEvent) => {
+      handleMouseMove(e);
+      if (rafId === null && Math.abs(mouseXRef.current - lastAppliedX) > 5) {
+        rafId = requestAnimationFrame(applyMotion);
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      removeLoop();
+      window.removeEventListener("mousemove", onMouseMove);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [reducedMotion, isMobile]);
 

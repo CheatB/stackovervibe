@@ -10,7 +10,6 @@ interface ClickSparkProps {
   duration?: number;
   easing?: "linear" | "ease-in" | "ease-out" | "ease-in-out";
   extraScale?: number;
-  children?: React.ReactNode;
 }
 
 interface Spark {
@@ -20,6 +19,7 @@ interface Spark {
   startTime: number;
 }
 
+/** Фиксированный оверлей для искр при клике — не оборачивает контент */
 export default function ClickSpark({
   sparkColor = "var(--color-primary)",
   sparkSize = 10,
@@ -28,7 +28,6 @@ export default function ClickSpark({
   duration = 400,
   easing = "ease-out",
   extraScale = 1.0,
-  children,
 }: ClickSparkProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
@@ -42,7 +41,6 @@ export default function ClickSpark({
     return () => mql.removeEventListener("change", handler);
   }, []);
 
-  /** Получаем resolved цвет из CSS-переменной */
   const getResolvedColor = useCallback((): string => {
     if (sparkColor.startsWith("var(")) {
       const el = document.documentElement;
@@ -52,31 +50,18 @@ export default function ClickSpark({
     return sparkColor;
   }, [sparkColor]);
 
+  /** Ресайз canvas под viewport */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const parent = canvas.parentElement;
-    if (!parent) return;
 
-    let resizeTimeout: ReturnType<typeof setTimeout>;
     const resizeCanvas = () => {
-      const { width, height } = parent.getBoundingClientRect();
-      if (canvas.width !== width || canvas.height !== height) {
-        canvas.width = width;
-        canvas.height = height;
-      }
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(resizeCanvas, 100);
-    };
-    const ro = new ResizeObserver(handleResize);
-    ro.observe(parent);
     resizeCanvas();
-    return () => {
-      ro.disconnect();
-      clearTimeout(resizeTimeout);
-    };
+    window.addEventListener("resize", resizeCanvas);
+    return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
   const easeFunc = useCallback(
@@ -148,31 +133,39 @@ export default function ClickSpark({
     getResolvedColor,
   ]);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  /** Слушаем клики на document — не мешаем выделению текста */
+  useEffect(() => {
     if (reducedMotion) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const now = performance.now();
-    const newSparks: Spark[] = Array.from({ length: sparkCount }, (_, i) => ({
-      x,
-      y,
-      angle: (2 * Math.PI * i) / sparkCount,
-      startTime: now,
-    }));
-    sparksRef.current.push(...newSparks);
-    startAnimation();
-  };
+
+    const handleClick = (e: MouseEvent) => {
+      // Пропускаем если пользователь выделяет текст
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 0) return;
+
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const now = performance.now();
+      const newSparks: Spark[] = Array.from({ length: sparkCount }, (_, i) => ({
+        x: e.clientX,
+        y: e.clientY,
+        angle: (2 * Math.PI * i) / sparkCount,
+        startTime: now,
+      }));
+      sparksRef.current.push(...newSparks);
+      startAnimation();
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [sparkCount, startAnimation, reducedMotion]);
+
+  if (reducedMotion) return null;
 
   return (
-    <div className="relative w-full h-full" onClick={handleClick}>
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 pointer-events-none z-[9998]"
-      />
-      {children}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[9998]"
+      aria-hidden="true"
+    />
   );
 }
