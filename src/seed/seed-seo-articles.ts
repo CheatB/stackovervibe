@@ -604,7 +604,21 @@ async function seed() {
     });
 
     if (существующие.length > 0) {
-      console.log(`  [SKIP] ${статья.slug} — уже существует`);
+      const тегиIds = (статья.теги || [])
+        .map((slug: string) => кэшТегов[slug])
+        .filter(Boolean);
+      await payload.update({
+        collection: "posts",
+        id: существующие[0].id,
+        data: {
+          title: статья.title,
+          content: статья.content as any,
+          tags: тегиIds,
+          seoTitle: статья.seoTitle,
+          seoDescription: статья.seoDescription,
+        },
+      });
+      console.log(`  [UPD] ${статья.slug} — обновлён`);
       continue;
     }
 
