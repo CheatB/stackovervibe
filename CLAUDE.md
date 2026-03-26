@@ -40,9 +40,9 @@ npm run lint       # ESLint
 
 ## ПРОГРЕСС (обновляй после каждого блока!)
 
-**Фаза:** 15 — SEO Epic (Wave 4+) + UX-фиксы
-**Этап:** Аудит и оптимизация производительности фронтенда — ГОТОВО, незакоммичено
-**Следующая задача:** Унифицировать publisher/author JSON-LD на framework/[slug], затем Wave 5
+**Фаза:** 15 — SEO Epic (Wave 4+) + UX-фиксы + API/MCP
+**Этап:** MCP сервер + API-ключи — ГОТОВО, незакоммичено
+**Следующая задача:** Коммит, затем унифицировать publisher/author JSON-LD на framework/[slug], затем Wave 5
 
 ### Фаза 15: SEO Epic — В ПРОЦЕССЕ
 #### Wave 1: Technical SEO — ГОТОВО
@@ -77,6 +77,10 @@ npm run lint       # ESLint
 - [x] inLanguage: "ru" в JSON-LD
 - [ ] Унифицировать publisher/author на framework/[slug] (пока старый формат)
 - [ ] Вынести общий publisher JSON-LD в shared-константу
+#### API + MCP сервер для агентов — ГОТОВО
+- [x] getCurrentUser() — поддержка Authorization header (API-ключи Payload CMS)
+- [x] MCP сервер (mcp-server/) — 8 тулов: create_post, create_question, create_tool, create_framework, create_answer, search, get_feed, list_tags
+- [x] TypeScript сборка без ошибок, smoke-тест пройден
 #### Wave 5: не начата
 
 ### UX/Perf: Аудит и оптимизация фронтенда — ГОТОВО
